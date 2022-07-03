@@ -1,10 +1,12 @@
 package tankgame.game;
 
 import tankgame.GameConstants;
+import tankgame.ResourceHandler;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Tank extends MovableObject {
 
@@ -21,12 +23,12 @@ public class Tank extends MovableObject {
     private boolean LeftPressed;
 
     private boolean shootPressed;
+    private int tick = 100;
+    private int ticksTillNextShot = 100;
+
+    private ArrayList<Bullet> bullets = new ArrayList<>();
 
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
-//        super(x, y, img);
-//        this.vx = vx;
-//        this.vy = vy;
-//        this.angle = angle;
         super(x, y, 2, vx, vy, angle, img);
     }
 
@@ -74,7 +76,6 @@ public class Tank extends MovableObject {
         this.shootPressed = false;
     }
 
-    @Override
     public void update() {
         if (this.UpPressed) {
             this.moveForwards();
@@ -92,33 +93,13 @@ public class Tank extends MovableObject {
             this.rotateRight();
         }
 
-        if(this.shootPressed) {
+        if(this.shootPressed && tick >= ticksTillNextShot) {
             this.shoot();
+            tick = 0;
         }
+        updateBullets();
+        tick++;
     }
-
-//    void update() {
-//        if (this.UpPressed) {
-//            this.moveForwards();
-//        }
-//
-//        if (this.DownPressed) {
-//            this.moveBackwards();
-//        }
-//
-//        if (this.LeftPressed) {
-//            this.rotateLeft();
-//        }
-//
-//        if (this.RightPressed) {
-//            this.rotateRight();
-//        }
-//
-//        if(this.shootPressed) {
-//            this.shoot();
-//        }
-//
-//    }
 
     private void rotateLeft() {
         this.angle -= this.ROTATIONSPEED;
@@ -144,17 +125,21 @@ public class Tank extends MovableObject {
         checkBorder();
     }
 
-//    @Override
-//    protected void moveForwards() {
-//        vx = Math.round(R * Math.cos(Math.toRadians(angle)));
-//        vy = Math.round(R * Math.sin(Math.toRadians(angle)));
-//        x += vx;
-//        y += vy;
-//        checkBorder();
-//    }
-
     private void shoot() {
+        Bullet bullet = new Bullet(this.x, this.y, 0, 0, this.angle, GameConstants.BULLET_SPEED, ResourceHandler.bulletImg);
+        bullets.add(bullet);
+    }
 
+    private void updateBullets() {
+        for(int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).update();
+        }
+    }
+
+    private void drawBullets(Graphics g) {
+        for(Bullet bullet : bullets) {
+            bullet.drawImage(g);
+        }
     }
 
 
@@ -184,10 +169,6 @@ public class Tank extends MovableObject {
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-        // Shows hitboxes
-        //g2d.setColor(Color.RED);
-        //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        //g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
-
+        drawBullets(g);
     }
 }

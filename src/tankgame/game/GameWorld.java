@@ -2,6 +2,7 @@ package tankgame.game;
 
 import tankgame.GameConstants;
 import tankgame.Launcher;
+import tankgame.ResourceHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,17 +10,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
-
     private Tank t1;
-
-    private Tank t2; // testing 2nd tank
-
-    private Bullet bullet; // testing bullet
-
+    private Tank t2;
     private Launcher lf;
     private long tick = 0;
 
@@ -40,7 +37,7 @@ public class GameWorld extends JPanel implements Runnable {
                 this.t1.update(); // update tank
 
                 this.t2.update(); // testing 2nd tank
-                this.bullet.update(); // testing bullet
+                //this.bullet.update(); // testing bullet
 
                 this.repaint();   // redraw game
 
@@ -84,37 +81,11 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.GAME_SCREEN_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        BufferedImage t1img = null;
-        BufferedImage t2img = null;
-        BufferedImage bulletImg = null; // testing bullet
-        try {
-            /*
-             * note class loaders read files from the out folder (build folder in Netbeans) and not the
-             * current working directory. When running a jar, class loaders will read from withing the jar.
-             */
-            t1img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
-                            "Could not find tank1.png")
-            );
+        ResourceHandler resourceHandler = ResourceHandler.getInstance();
+        resourceHandler.initializeResources("tank1.png", "tank1.png", "bullet.gif");
 
-            t2img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
-                            "Could not find tank1.png")
-            );
-
-            bulletImg = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("bullet.gif"),
-                            "Could not find bullet.gif")
-            );
-
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-
-        t1 = new Tank(300, 300, 0, 0, (short) 0, t1img);
-        t2 = new Tank(600, 600, 0, 0, (short) 0, t2img);
-        bullet = new Bullet(500, 500, 1, 1, (short) 0, GameConstants.BULLET_SPEED, bulletImg); // testing bullet
+        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.t1img);
+        t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.t2img);
         TankController tc1 = new TankController(
                 t1,
                 KeyEvent.VK_W,
@@ -142,7 +113,7 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics();
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
-        this.bullet.drawImage(buffer); // testing bullet
         g2.drawImage(world, 0, 0, null);
     }
+
 }

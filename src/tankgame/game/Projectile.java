@@ -13,7 +13,6 @@ public abstract class Projectile extends MovableObject {
         vy = Math.round(R * Math.sin(Math.toRadians(angle)));
         x += vx;
         y += vy;
-        System.out.println(x + " | " + y);
     }
 
 }

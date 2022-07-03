@@ -16,7 +16,4 @@ public abstract class MovableObject extends GameObject {
         this.angle = angle;
         this.R = R;
     }
-
-    public abstract void update();
-
 }
