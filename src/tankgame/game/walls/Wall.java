@@ -1,4 +1,7 @@
-package tankgame.game;
+package tankgame.game.walls;
+
+import tankgame.game.Collidable;
+import tankgame.game.GameObject;
 
 import java.awt.image.BufferedImage;
 

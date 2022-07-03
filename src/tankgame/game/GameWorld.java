@@ -3,15 +3,13 @@ package tankgame.game;
 import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
+import tankgame.game.walls.BreakableWall;
+import tankgame.game.walls.UnbreakableWall;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
@@ -19,6 +17,9 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t2;
     private Launcher lf;
     private long tick = 0;
+
+    private UnbreakableWall unbreakableWall;
+    private BreakableWall breakableWall;
 
     /**
      *
@@ -34,10 +35,9 @@ public class GameWorld extends JPanel implements Runnable {
             this.resetGame();
             while (true) {
                 this.tick++;
-                this.t1.update(); // update tank
+                this.t1.update();
+                this.t2.update();
 
-                this.t2.update(); // testing 2nd tank
-                //this.bullet.update(); // testing bullet
 
                 this.repaint();   // redraw game
 
@@ -82,10 +82,18 @@ public class GameWorld extends JPanel implements Runnable {
                 BufferedImage.TYPE_INT_RGB);
 
         ResourceHandler resourceHandler = ResourceHandler.getInstance();
-        resourceHandler.initializeResources("tank1.png", "tank1.png", "bullet.gif");
+        resourceHandler.initializeResources(
+                "lucas.png",
+                "dawn.png",
+                "pokeball.png",
+                "breakableRock.png",
+                "unbreakableRock.png"
+        );
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.t1img);
         t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.t2img);
+        unbreakableWall = new UnbreakableWall(500, 500, ResourceHandler.unbreakableWallImg);
+        breakableWall = new BreakableWall(400, 400, ResourceHandler.breakableWallImg);
         TankController tc1 = new TankController(
                 t1,
                 KeyEvent.VK_W,
@@ -113,6 +121,12 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics();
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
+
+
+        this.breakableWall.drawImage(buffer);
+        this.unbreakableWall.drawImage(buffer);
+
+
         g2.drawImage(world, 0, 0, null);
     }
 

@@ -14,6 +14,10 @@ public class ResourceHandler {
     public static BufferedImage t2img;
     public static BufferedImage bulletImg;
 
+    public static BufferedImage breakableWallImg;
+
+    public static BufferedImage unbreakableWallImg;
+
     private ResourceHandler() {}
 
     public static ResourceHandler getInstance() {
@@ -22,7 +26,7 @@ public class ResourceHandler {
         return resourceHandler;
     }
 
-    public void initializeResources(String t1, String t2, String bullet) {
+    public void initializeResources(String t1, String t2, String bullet, String breakableWall, String unbreakableWall) {
         try {
             /*
              * note class loaders read files from the out folder (build folder in Netbeans) and not the
@@ -41,6 +45,16 @@ public class ResourceHandler {
             bulletImg = ImageIO.read(
                     Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(bullet),
                             String.format("Could not find %s", bullet))
+            );
+
+            breakableWallImg = ImageIO.read(
+                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(breakableWall),
+                            String.format("Could not find %s", breakableWall))
+            );
+
+            unbreakableWallImg = ImageIO.read(
+                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(unbreakableWall),
+                            String.format("Could not find %s", unbreakableWall))
             );
 
         } catch (IOException ex) {
