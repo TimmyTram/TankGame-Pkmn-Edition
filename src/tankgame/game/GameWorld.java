@@ -15,6 +15,11 @@ public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
 
     private Tank t1;
+
+    private Tank t2; // testing 2nd tank
+
+    private Bullet bullet; // testing bullet
+
     private Launcher lf;
     private long tick = 0;
 
@@ -33,6 +38,10 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 this.tick++;
                 this.t1.update(); // update tank
+
+                this.t2.update(); // testing 2nd tank
+                this.bullet.update(); // testing bullet
+
                 this.repaint();   // redraw game
 
                 /*
@@ -76,6 +85,8 @@ public class GameWorld extends JPanel implements Runnable {
                 BufferedImage.TYPE_INT_RGB);
 
         BufferedImage t1img = null;
+        BufferedImage t2img = null;
+        BufferedImage bulletImg = null; // testing bullet
         try {
             /*
              * note class loaders read files from the out folder (build folder in Netbeans) and not the
@@ -85,14 +96,43 @@ public class GameWorld extends JPanel implements Runnable {
                     Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
                             "Could not find tank1.png")
             );
+
+            t2img = ImageIO.read(
+                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
+                            "Could not find tank1.png")
+            );
+
+            bulletImg = ImageIO.read(
+                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("bullet.gif"),
+                            "Could not find bullet.gif")
+            );
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, t1img);
-        TankController tc1 = new TankController(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
+        t2 = new Tank(600, 600, 0, 0, (short) 0, t2img);
+        bullet = new Bullet(500, 500, 1, 1, (short) 0, GameConstants.BULLET_SPEED, bulletImg); // testing bullet
+        TankController tc1 = new TankController(
+                t1,
+                KeyEvent.VK_W,
+                KeyEvent.VK_S,
+                KeyEvent.VK_A,
+                KeyEvent.VK_D,
+                KeyEvent.VK_SPACE
+        );
+        TankController tc2 = new TankController(
+                t2,
+                KeyEvent.VK_UP,
+                KeyEvent.VK_DOWN,
+                KeyEvent.VK_LEFT,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.VK_ENTER
+        );
         this.lf.getJf().addKeyListener(tc1);
+        this.lf.getJf().addKeyListener(tc2);
     }
 
 
@@ -101,6 +141,8 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics();
         this.t1.drawImage(buffer);
+        this.t2.drawImage(buffer);
+        this.bullet.drawImage(buffer); // testing bullet
         g2.drawImage(world, 0, 0, null);
     }
 }

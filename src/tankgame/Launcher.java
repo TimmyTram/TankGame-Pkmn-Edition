@@ -70,22 +70,20 @@ public class Launcher {
 
     public void setFrame(String type){
         this.jf.setVisible(false); // hide the JFrame
-        switch(type){
-            case "start":
+        switch (type) {
+            case "start" ->
                 // set the size of the jFrame to the expected size for the start panel
-                this.jf.setSize(GameConstants.START_MENU_SCREEN_WIDTH,GameConstants.START_MENU_SCREEN_HEIGHT);
-                break;
-            case "game":
+                    this.jf.setSize(GameConstants.START_MENU_SCREEN_WIDTH, GameConstants.START_MENU_SCREEN_HEIGHT);
+            case "game" -> {
                 // set the size of the jFrame to the expected size for the game panel
-                this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH,GameConstants.GAME_SCREEN_HEIGHT);
+                this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
                 //start a new thread for the game to run. This will ensure our JFrame is responsive and
                 // not stuck executing the game loop.
                 (new Thread(this.gamePanel)).start();
-                break;
-            case "end":
+            }
+            case "end" ->
                 // set the size of the jFrame to the expected size for the end panel
-                this.jf.setSize(GameConstants.END_MENU_SCREEN_WIDTH,GameConstants.END_MENU_SCREEN_HEIGHT);
-                break;
+                    this.jf.setSize(GameConstants.END_MENU_SCREEN_WIDTH, GameConstants.END_MENU_SCREEN_HEIGHT);
         }
         this.cl.show(mainPanel, type); // change current panel shown on main panel tp the panel denoted by type.
         this.jf.setVisible(true); // show the JFrame

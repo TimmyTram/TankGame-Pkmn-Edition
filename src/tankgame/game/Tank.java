@@ -6,29 +6,28 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Tank {
-    private float x;
-    private float y;
-    private float vx;
-    private float vy;
-    private float angle;
+public class Tank extends MovableObject {
 
+//    private float vx;
+//    private float vy;
+//    private float angle;
+//
     private float R = 2;
     private float ROTATIONSPEED = 2.25f;
 
-    private BufferedImage img;
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
     private boolean LeftPressed;
 
+    private boolean shootPressed;
+
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
-        this.x = x;
-        this.y = y;
-        this.vx = vx;
-        this.vy = vy;
-        this.img = img;
-        this.angle = angle;
+//        super(x, y, img);
+//        this.vx = vx;
+//        this.vy = vy;
+//        this.angle = angle;
+        super(x, y, 2, vx, vy, angle, img);
     }
 
     void setX(float x){ this.x = x; }
@@ -51,6 +50,10 @@ public class Tank {
         this.LeftPressed = true;
     }
 
+    public void toggleShootPressed() {
+        this.shootPressed = true;
+    }
+
     void unToggleUpPressed() {
         this.UpPressed = false;
     }
@@ -67,7 +70,12 @@ public class Tank {
         this.LeftPressed = false;
     }
 
-    void update() {
+    public void unToggleShootPressed() {
+        this.shootPressed = false;
+    }
+
+    @Override
+    public void update() {
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -84,8 +92,33 @@ public class Tank {
             this.rotateRight();
         }
 
-
+        if(this.shootPressed) {
+            this.shoot();
+        }
     }
+
+//    void update() {
+//        if (this.UpPressed) {
+//            this.moveForwards();
+//        }
+//
+//        if (this.DownPressed) {
+//            this.moveBackwards();
+//        }
+//
+//        if (this.LeftPressed) {
+//            this.rotateLeft();
+//        }
+//
+//        if (this.RightPressed) {
+//            this.rotateRight();
+//        }
+//
+//        if(this.shootPressed) {
+//            this.shoot();
+//        }
+//
+//    }
 
     private void rotateLeft() {
         this.angle -= this.ROTATIONSPEED;
@@ -111,6 +144,19 @@ public class Tank {
         checkBorder();
     }
 
+//    @Override
+//    protected void moveForwards() {
+//        vx = Math.round(R * Math.cos(Math.toRadians(angle)));
+//        vy = Math.round(R * Math.sin(Math.toRadians(angle)));
+//        x += vx;
+//        y += vy;
+//        checkBorder();
+//    }
+
+    private void shoot() {
+
+    }
+
 
     private void checkBorder() {
         if (x < 30) {
@@ -132,15 +178,16 @@ public class Tank {
         return "x=" + x + ", y=" + y + ", angle=" + angle;
     }
 
-
-    void drawImage(Graphics g) {
+    @Override
+    public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-        g2d.setColor(Color.RED);
+        // Shows hitboxes
+        //g2d.setColor(Color.RED);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+        //g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
 
     }
 }
