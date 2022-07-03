@@ -1,6 +1,5 @@
 package tankgame.game.walls;
 
-import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
 
 import java.awt.*;
@@ -16,9 +15,5 @@ public class UnbreakableWall extends Wall {
     @Override
     public void checkCollision(Collidable obj) {
 
-    }
-    @Override
-    public void drawImage(Graphics g) {
-        g.drawImage(ResourceHandler.unbreakableWallImg, (int) x, (int) y, null);
     }
 }

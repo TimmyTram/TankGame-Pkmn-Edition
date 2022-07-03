@@ -18,6 +18,12 @@ public class ResourceHandler {
 
     public static BufferedImage unbreakableWallImg;
 
+    public static BufferedImage spreadImg;
+
+    public static BufferedImage barrageImg;
+
+    public static BufferedImage speedImg;
+
     private ResourceHandler() {}
 
     public static ResourceHandler getInstance() {
@@ -26,41 +32,37 @@ public class ResourceHandler {
         return resourceHandler;
     }
 
-    public void initializeResources(String t1, String t2, String bullet, String breakableWall, String unbreakableWall) {
+    public void initializeResources(
+            String t1,
+            String t2,
+            String bullet,
+            String breakableWall,
+            String unbreakableWall,
+            String spread,
+            String barrage,
+            String speed
+    ) {
+        t1img = readImg(t1);
+        t2img = readImg(t2);
+        bulletImg = readImg(bullet);
+        breakableWallImg = readImg(breakableWall);
+        unbreakableWallImg = readImg(unbreakableWall);
+        spreadImg = readImg(spread);
+        barrageImg = readImg(barrage);
+        speedImg = readImg(speed);
+    }
+
+    private BufferedImage readImg(String resource) {
         try {
-            /*
-             * note class loaders read files from the out folder (build folder in Netbeans) and not the
-             * current working directory. When running a jar, class loaders will read from withing the jar.
-             */
-            t1img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(t1),
-                            String.format("Could not find %s", t1))
+            return ImageIO.read(
+                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(resource),
+                            String.format("Could not find %s", resource))
             );
-
-            t2img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(t2),
-                            String.format("Could not find %s", t2))
-            );
-
-            bulletImg = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(bullet),
-                            String.format("Could not find %s", bullet))
-            );
-
-            breakableWallImg = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(breakableWall),
-                            String.format("Could not find %s", breakableWall))
-            );
-
-            unbreakableWallImg = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(unbreakableWall),
-                            String.format("Could not find %s", unbreakableWall))
-            );
-
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
+        return null;
     }
 
 }

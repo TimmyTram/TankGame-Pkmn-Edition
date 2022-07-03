@@ -1,13 +1,13 @@
-package tankgame.game.walls;
+package tankgame.game.powerups;
 
 import tankgame.game.Collidable;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class BreakableWall extends Wall {
+public class Spread extends PowerUp {
 
-    public BreakableWall(float x, float y, BufferedImage img) {
+    public Spread(float x, float y, BufferedImage img) {
         super(x, y, img);
     }
 

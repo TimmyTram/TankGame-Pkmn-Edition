@@ -3,6 +3,7 @@ package tankgame.game.powerups;
 import tankgame.game.Collidable;
 import tankgame.game.GameObject;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class PowerUp extends GameObject implements Collidable {
@@ -11,7 +12,7 @@ public abstract class PowerUp extends GameObject implements Collidable {
     }
 
     @Override
-    public void checkCollision(Collidable obj) {
-
+    public void drawImage(Graphics g) {
+        g.drawImage(super.img, (int) x, (int) y, null);
     }
 }

@@ -3,6 +3,9 @@ package tankgame.game;
 import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
+import tankgame.game.powerups.Barrage;
+import tankgame.game.powerups.SpeedBoost;
+import tankgame.game.powerups.Spread;
 import tankgame.game.walls.BreakableWall;
 import tankgame.game.walls.UnbreakableWall;
 
@@ -18,8 +21,21 @@ public class GameWorld extends JPanel implements Runnable {
     private Launcher lf;
     private long tick = 0;
 
+    /*
+        -------------------------------- TESTING OBJECTS --------------------------------
+     */
     private UnbreakableWall unbreakableWall;
     private BreakableWall breakableWall;
+
+    private Spread spread;
+
+    private Barrage barrage;
+
+    private SpeedBoost speed;
+
+    /*
+        -------------------------------- TESTING OBJECTS --------------------------------
+     */
 
     /**
      *
@@ -87,13 +103,29 @@ public class GameWorld extends JPanel implements Runnable {
                 "dawn.png",
                 "pokeball.png",
                 "breakableRock.png",
-                "unbreakableRock.png"
+                "unbreakableRock.png",
+                "spread.png",
+                "barrage.png",
+                "speed.png"
         );
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.t1img);
         t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.t2img);
+
+        /*
+        -------------------------------- TESTING OBJECTS --------------------------------
+        */
         unbreakableWall = new UnbreakableWall(500, 500, ResourceHandler.unbreakableWallImg);
         breakableWall = new BreakableWall(400, 400, ResourceHandler.breakableWallImg);
+
+        spread = new Spread(700, 700, ResourceHandler.spreadImg);
+        barrage = new Barrage(800, 800, ResourceHandler.barrageImg);
+        speed = new SpeedBoost(900, 800, ResourceHandler.speedImg);
+
+        /*
+        -------------------------------- TESTING OBJECTS --------------------------------
+        */
+
         TankController tc1 = new TankController(
                 t1,
                 KeyEvent.VK_W,
@@ -122,10 +154,18 @@ public class GameWorld extends JPanel implements Runnable {
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
 
-
+        /*
+        -------------------------------- TESTING OBJECTS --------------------------------
+        */
         this.breakableWall.drawImage(buffer);
         this.unbreakableWall.drawImage(buffer);
 
+        this.spread.drawImage(buffer);
+        this.barrage.drawImage(buffer);
+        this.speed.drawImage(buffer);
+        /*
+        -------------------------------- TESTING OBJECTS --------------------------------
+        */
 
         g2.drawImage(world, 0, 0, null);
     }
