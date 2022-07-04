@@ -28,4 +28,12 @@ public abstract class GameObject {
         return new Rectangle((int) this.x, (int) this.y, this.width, this.height);
     }
 
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
 }

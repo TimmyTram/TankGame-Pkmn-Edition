@@ -8,6 +8,7 @@ import tankgame.game.powerups.SpeedBoost;
 import tankgame.game.powerups.Spread;
 import tankgame.game.walls.BreakableWall;
 import tankgame.game.walls.UnbreakableWall;
+import tankgame.game.walls.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,8 @@ public class GameWorld extends JPanel implements Runnable {
         -------------------------------- TESTING OBJECTS --------------------------------
      */
     private UnbreakableWall unbreakableWall;
+
+    private UnbreakableWall unbreakableWall2;
     private BreakableWall breakableWall;
 
     private Spread spread;
@@ -35,6 +38,7 @@ public class GameWorld extends JPanel implements Runnable {
     private SpeedBoost speed;
 
     private final ProjectileHandler projectileHandler = new ProjectileHandler();
+    private ArrayList<Tank> tanks = new ArrayList<>();
 
     /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -102,7 +106,7 @@ public class GameWorld extends JPanel implements Runnable {
 
         ResourceHandler resourceHandler = ResourceHandler.getInstance();
         resourceHandler.initializeResources(
-                "lucas.png",
+                "tank1.png",
                 "dawn.png",
                 "pokeball.png",
                 GameConstants.RESOURCE_BREAKABLE_WALL,
@@ -114,11 +118,14 @@ public class GameWorld extends JPanel implements Runnable {
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img(), projectileHandler);
         t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img(), projectileHandler);
+        tanks.add(t1);
+        tanks.add(t2);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
         unbreakableWall = new UnbreakableWall(500, 500, resourceHandler.getUnbreakableWallImg());
+        unbreakableWall2 = new UnbreakableWall(500, 548, resourceHandler.getUnbreakableWallImg());
         breakableWall = new BreakableWall(400, 400, resourceHandler.getBreakableWallImg());
 
         spread = new Spread(700, 700, resourceHandler.getSpreadImg());
@@ -161,6 +168,7 @@ public class GameWorld extends JPanel implements Runnable {
         // this is just so we can see things properly.
         buffer.setColor(Color.black);
         buffer.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
+        buffer.setColor(Color.white);
         /*
         -------------------------------- TEMPORARY CODE --------------------------------
         */
@@ -174,6 +182,7 @@ public class GameWorld extends JPanel implements Runnable {
         */
         this.breakableWall.drawImage(buffer);
         this.unbreakableWall.drawImage(buffer);
+        this.unbreakableWall2.drawImage(buffer);
 
         this.spread.drawImage(buffer);
         this.barrage.drawImage(buffer);
@@ -195,38 +204,80 @@ public class GameWorld extends JPanel implements Runnable {
         Need to handle any tank vs any powerup []
      */
     public void checkCollisions() {
-        Rectangle tank1 = t1.getBounds();
-        Rectangle tank2 = t2.getBounds();
-        Rectangle uwall = unbreakableWall.getBounds();
-        Rectangle bwall = breakableWall.getBounds();
+        ArrayList<Wall> walls = new ArrayList<>();
+        walls.add(unbreakableWall);
+        walls.add(unbreakableWall2);
+        walls.add(breakableWall);
 
-        if(tank1.intersects(uwall)) {
-            System.out.println("uwall intersecting. via tank1");
+        float offset = 1.1f;
+        for(Tank tank : tanks) { // really buggy tank vs wall revisit later?
+            //System.out.println("Tank Vx: " + tank.getVx() + " | Tank Vy: " + tank.getVy());
+            for (Wall wall : walls) {
+                Rectangle uwall = wall.getBounds();
+                if(tank.getBoundsHorizontal().intersects(uwall)) {
+                    if(tank.getVx() > 0) { // collision for left side of object
+                        tank.setVx(0);
+                        tank.setX(wall.getX() - (wall.getWidth() * offset));
+                    }
+                    if(tank.getVx() < 0) { // collision for right side of object
+                        tank.setVx(0);
+                        tank.setX(wall.getX() + (wall.getWidth() * offset));
+                    }
+                } else if(tank.getBoundsVertical().intersects(uwall)) {
+                    if (tank.getVy() > 0) { // collision for top side of object
+                        tank.setVy(0);
+                        tank.setY(wall.getY() - (wall.getHeight() * offset));
+                    }
+                    if (tank.getVy() < 0) { // collision for bottom side of object
+                        tank.setVy(0);
+                        tank.setY(wall.getY() + wall.getHeight() * offset);
+                    }
+                }
+            }
         }
 
-        if(tank2.intersects(uwall)) {
-            System.out.println("uwall intersecting. via tank 2");
-        }
 
         ArrayList<Projectile> projectiles = projectileHandler.getProjectiles();
         for(Projectile projectile : projectiles) {
             Rectangle r = projectile.getBounds();
-            if(r.intersects(tank1) && projectile.getOwnership() != t1) {
-                System.out.println("hit tank1!");
-            }
 
-            if(r.intersects(tank2) && projectile.getOwnership() != t2) {
-                System.out.println("hit tank2!");
-            }
-            if(r.intersects(uwall)) {
-                System.out.println("intersects with wall");
-                if(projectileHandler.destroyProjectile(projectile)) {
-                    return;
+            for(Tank tank : tanks) {
+                if(r.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
+                    System.out.println("Hit tank " + (tanks.indexOf(tank) + 1) + "!");
+                    if(projectileHandler.destroyProjectile(projectile)) {
+                        tank.takeDamage();
+                        return;
+                    }
                 }
+            }
 
+            for(Wall wall : walls) {
+                Rectangle uwall = wall.getBounds();
+                if(r.intersects(uwall)) {
+                    System.out.println("intersects with wall");
+                    if(projectileHandler.destroyProjectile(projectile)) {
+                        return;
+                    }
+                }
             }
         }
 
     }
 
 }
+
+/*
+if(tank.getVx() > 0 && (Math.abs(tank.getVx()) > Math.abs(tank.getVy()))) {
+                    tank.setVx(0);
+                    tank.setX(unbreakableWall.getX() - unbreakableWall.getWidth());
+                } else if(tank.getVx() < 0 && (Math.abs(tank.getVx()) > Math.abs(tank.getVy()))) {
+                    tank.setVx(0);
+                    tank.setX(unbreakableWall.getX() + unbreakableWall.getWidth());
+                } else if(tank.getVy() > 0 && (Math.abs(tank.getVx()) < Math.abs(tank.getVy()))) {
+                    tank.setVy(0);
+                    tank.setY(unbreakableWall.getY() - unbreakableWall.getHeight());
+                } else if(tank.getVy() < 0 && (Math.abs(tank.getVx()) < Math.abs(tank.getVy()))) {
+                    tank.setVy(0);
+                    tank.setY(unbreakableWall.getY() + unbreakableWall.getHeight());
+                }
+ */
