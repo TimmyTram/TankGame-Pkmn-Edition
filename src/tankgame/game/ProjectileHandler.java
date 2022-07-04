@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class ProjectileHandler {
 
-
     private ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public ProjectileHandler() {}

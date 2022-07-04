@@ -22,6 +22,9 @@ public class Tank extends MovableObject {
     private int ticksTillNextShot = 100;
     private final ProjectileHandler projectileHandler;
 
+    private int healthPoints = 100;
+    private int damage = 10;
+
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, ProjectileHandler projectileHandler) {
         super(x, y, 2, vx, vy, angle, img);
         this.projectileHandler = projectileHandler;
@@ -127,9 +130,14 @@ public class Tank extends MovableObject {
                 0,
                 this.angle,
                 GameConstants.BULLET_SPEED,
-                ResourceHandler.getInstance().getBulletImg()
+                ResourceHandler.getInstance().getBulletImg(),
+                this
         );
         this.projectileHandler.spawnProjectile(bullet);
+    }
+
+    public void takeDamage() {
+        this.healthPoints -= this.damage;
     }
 
     private void checkBorder() {
@@ -158,5 +166,6 @@ public class Tank extends MovableObject {
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
+        //g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
     }
 }

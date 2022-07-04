@@ -1,12 +1,14 @@
 package tankgame.game;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Projectile extends MovableObject {
 
-    public Projectile(float x, float y, float vx, float vy, float angle, float R, BufferedImage img) {
+    private Tank ownership;
+
+    public Projectile(float x, float y, float vx, float vy, float angle, float R, BufferedImage img, Tank ownership) {
         super(x, y, vx, vy, angle, R, img);
+        this.ownership = ownership;
     }
 
     public void update() {
@@ -15,4 +17,9 @@ public abstract class Projectile extends MovableObject {
         x += vx;
         y += vy;
     }
+
+    public Tank getOwnership() {
+        return this.ownership;
+    }
+
 }
