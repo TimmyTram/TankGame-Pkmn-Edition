@@ -10,10 +10,8 @@ import java.util.ArrayList;
 
 public class Tank extends MovableObject {
 
-//    private float vx;
-//    private float vy;
-//    private float angle;
-//
+    protected int width;
+    protected int height;
     private float R = 2;
     private float ROTATIONSPEED = 2.25f;
 
@@ -30,6 +28,11 @@ public class Tank extends MovableObject {
 
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
         super(x, y, 2, vx, vy, angle, img);
+        getImageDimension();
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return this.bullets;
     }
 
     void setX(float x){ this.x = x; }
@@ -97,7 +100,7 @@ public class Tank extends MovableObject {
             this.shoot();
             tick = 0;
         }
-        updateBullets();
+        //updateBullets();
         tick++;
     }
 
@@ -126,21 +129,33 @@ public class Tank extends MovableObject {
     }
 
     private void shoot() {
-        Bullet bullet = new Bullet(this.x, this.y, 0, 0, this.angle, GameConstants.BULLET_SPEED, ResourceHandler.bulletImg);
-        bullets.add(bullet);
+//        Bullet bullet = new Bullet(this.x, this.y, 0, 0, this.angle, GameConstants.BULLET_SPEED, ResourceHandler.getInstance().getBulletImg());
+//        bullets.add(bullet);
+        Bullet bullet = new Bullet(
+                this.x,
+                this.y,
+                0,
+                0,
+                this.angle,
+                GameConstants.BULLET_SPEED,
+                ResourceHandler.getInstance().getBulletImg()
+        );
+        ProjectileHandler.getInstance().spawnProjectile(bullet);
     }
 
-    private void updateBullets() {
+    public void updateBullets() {
         for(int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update();
         }
     }
 
-    private void drawBullets(Graphics g) {
+    public void drawBullets(Graphics g) {
         for(Bullet bullet : bullets) {
             bullet.drawImage(g);
         }
     }
+
+
 
 
     private void checkBorder() {
@@ -169,6 +184,16 @@ public class Tank extends MovableObject {
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-        drawBullets(g);
+        //drawBullets(g);
     }
+
+    protected void getImageDimension() {
+        width = super.img.getWidth();
+        height = super.img.getHeight();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle((int) super.x, (int) super.y, this.width, this.height);
+    }
+
 }

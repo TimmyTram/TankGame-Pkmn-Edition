@@ -10,19 +10,19 @@ import java.util.Objects;
 public class ResourceHandler {
 
     private static ResourceHandler resourceHandler = null;
-    public static BufferedImage t1img;
-    public static BufferedImage t2img;
-    public static BufferedImage bulletImg;
+    private BufferedImage t1img;
+    private BufferedImage t2img;
+    private BufferedImage bulletImg;
 
-    public static BufferedImage breakableWallImg;
+    private BufferedImage breakableWallImg;
 
-    public static BufferedImage unbreakableWallImg;
+    private BufferedImage unbreakableWallImg;
 
-    public static BufferedImage spreadImg;
+    private BufferedImage spreadImg;
 
-    public static BufferedImage barrageImg;
+    private BufferedImage barrageImg;
 
-    public static BufferedImage speedImg;
+    private BufferedImage speedImg;
 
     private ResourceHandler() {}
 
@@ -65,4 +65,35 @@ public class ResourceHandler {
         return null;
     }
 
+    public BufferedImage getT1img() {
+        return t1img;
+    }
+
+    public BufferedImage getT2img() {
+        return t2img;
+    }
+
+    public BufferedImage getBulletImg() {
+        return bulletImg;
+    }
+
+    public BufferedImage getBreakableWallImg() {
+        return breakableWallImg;
+    }
+
+    public BufferedImage getUnbreakableWallImg() {
+        return unbreakableWallImg;
+    }
+
+    public BufferedImage getSpreadImg() {
+        return spreadImg;
+    }
+
+    public BufferedImage getBarrageImg() {
+        return barrageImg;
+    }
+
+    public BufferedImage getSpeedImg() {
+        return speedImg;
+    }
 }

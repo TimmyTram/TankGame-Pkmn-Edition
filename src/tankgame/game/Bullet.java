@@ -8,6 +8,7 @@ public class Bullet extends Projectile {
 
     public Bullet(float x, float y, float vx, float vy, float angle, float R, BufferedImage img) {
         super(x, y, vx, vy, angle, R, img);
+        getImageDimension();
     }
 
     @Override

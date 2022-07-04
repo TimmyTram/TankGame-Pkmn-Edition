@@ -12,4 +12,14 @@ public class GameConstants {
 
     public static final int BULLET_SPEED = 4;
 
+    public static final String RESOURCE_BREAKABLE_WALL = "breakableRock.png";
+
+    public static final String RESOURCE_UNBREAKABLE_WALL = "unbreakableRock.png";
+
+    public static final String RESOURCE_SPREAD = "spread.png";
+
+    public static final String RESOURCE_BARRAGE = "barrage.png";
+
+    public static final String RESOURCE_SPEED = "speed.png";
+
 }

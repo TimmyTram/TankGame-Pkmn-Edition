@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
@@ -52,9 +53,11 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 this.tick++;
                 this.t1.update();
+//                this.t1.updateBullets();
                 this.t2.update();
-
-
+//                this.t2.updateBullets();
+                ProjectileHandler.getInstance().update();
+                checkCollisions();
                 this.repaint();   // redraw game
 
                 /*
@@ -102,25 +105,25 @@ public class GameWorld extends JPanel implements Runnable {
                 "lucas.png",
                 "dawn.png",
                 "pokeball.png",
-                "breakableRock.png",
-                "unbreakableRock.png",
-                "spread.png",
-                "barrage.png",
-                "speed.png"
+                GameConstants.RESOURCE_BREAKABLE_WALL,
+                GameConstants.RESOURCE_UNBREAKABLE_WALL,
+                GameConstants.RESOURCE_SPREAD,
+                GameConstants.RESOURCE_BARRAGE,
+                GameConstants.RESOURCE_SPEED
         );
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.t1img);
-        t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.t2img);
+        t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img());
+        t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img());
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
-        unbreakableWall = new UnbreakableWall(500, 500, ResourceHandler.unbreakableWallImg);
-        breakableWall = new BreakableWall(400, 400, ResourceHandler.breakableWallImg);
+        unbreakableWall = new UnbreakableWall(500, 500, resourceHandler.getUnbreakableWallImg());
+        breakableWall = new BreakableWall(400, 400, resourceHandler.getBreakableWallImg());
 
-        spread = new Spread(700, 700, ResourceHandler.spreadImg);
-        barrage = new Barrage(800, 800, ResourceHandler.barrageImg);
-        speed = new SpeedBoost(900, 800, ResourceHandler.speedImg);
+        spread = new Spread(700, 700, resourceHandler.getSpreadImg());
+        barrage = new Barrage(800, 800, resourceHandler.getBarrageImg());
+        speed = new SpeedBoost(900, 800, resourceHandler.getSpeedImg());
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -153,6 +156,9 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics();
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
+//        this.t1.drawBullets(buffer);
+//        this.t2.drawBullets(buffer);
+        ProjectileHandler.getInstance().drawProjectiles(buffer);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -168,6 +174,25 @@ public class GameWorld extends JPanel implements Runnable {
         */
 
         g2.drawImage(world, 0, 0, null);
+    }
+
+    public void checkCollisions() {
+        Rectangle tank = t1.getBounds();
+        Rectangle wall = unbreakableWall.getBounds();
+
+        if(tank.intersects(wall)) {
+            System.out.println("intersecting. via tank");
+        }
+
+//        ArrayList<Bullet> bullets = t1.getBullets();
+
+//        for(Bullet bullet : bullets) {
+//            Rectangle r = bullet.getBounds();
+//            if(r.intersects(wall)) {
+//                System.out.println("intersecting. via bullet");
+//            }
+//        }
+
     }
 
 }
