@@ -6,27 +6,27 @@ import java.util.ArrayList;
 
 public class ProjectileHandler {
 
-    private static ProjectileHandler projectileHandler = null;
 
     private ArrayList<Projectile> projectiles = new ArrayList<>();
 
-    private ProjectileHandler() {}
-
-    public static ProjectileHandler getInstance() {
-        if(projectileHandler == null)
-            projectileHandler = new ProjectileHandler();
-        return projectileHandler;
-    }
+    public ProjectileHandler() {}
 
     public ArrayList<Projectile> getProjectiles() {
         return this.projectiles;
     }
 
-    public boolean spawnProjectile(Projectile projectile) {
+    public void spawnProjectile(Projectile projectile) {
+        if(projectile == null) {
+            return;
+        }
+        projectiles.add(projectile);
+    }
+
+    public boolean destroyProjectile(Projectile projectile) {
         if(projectile == null) {
             return false;
         }
-        return projectiles.add(projectile);
+        return projectiles.remove(projectile);
     }
 
     public void update() {

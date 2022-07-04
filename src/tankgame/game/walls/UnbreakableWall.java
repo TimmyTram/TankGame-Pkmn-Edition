@@ -1,7 +1,5 @@
 package tankgame.game.walls;
 
-import tankgame.game.Collidable;
-
 import java.awt.image.BufferedImage;
 
 public class UnbreakableWall extends Wall {

@@ -34,6 +34,8 @@ public class GameWorld extends JPanel implements Runnable {
 
     private SpeedBoost speed;
 
+    private final ProjectileHandler projectileHandler = new ProjectileHandler();
+
     /*
         -------------------------------- TESTING OBJECTS --------------------------------
      */
@@ -53,10 +55,8 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 this.tick++;
                 this.t1.update();
-//                this.t1.updateBullets();
                 this.t2.update();
-//                this.t2.updateBullets();
-                ProjectileHandler.getInstance().update();
+                this.projectileHandler.update();
                 checkCollisions();
                 this.repaint();   // redraw game
 
@@ -112,8 +112,8 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.RESOURCE_SPEED
         );
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img());
-        t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img());
+        t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img(), projectileHandler);
+        t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img(), projectileHandler);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -156,9 +156,7 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics();
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
-//        this.t1.drawBullets(buffer);
-//        this.t2.drawBullets(buffer);
-        ProjectileHandler.getInstance().drawProjectiles(buffer);
+        this.projectileHandler.drawProjectiles(buffer);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -184,14 +182,15 @@ public class GameWorld extends JPanel implements Runnable {
             System.out.println("intersecting. via tank");
         }
 
-//        ArrayList<Bullet> bullets = t1.getBullets();
-
-//        for(Bullet bullet : bullets) {
-//            Rectangle r = bullet.getBounds();
-//            if(r.intersects(wall)) {
-//                System.out.println("intersecting. via bullet");
-//            }
-//        }
+        ArrayList<Projectile> projectiles = projectileHandler.getProjectiles();
+        for(Projectile projectile : projectiles) {
+            Rectangle r = projectile.getBounds();
+            if(r.intersects(wall)) {
+                if(projectileHandler.destroyProjectile(projectile)) {
+                    return;
+                }
+            }
+        }
 
     }
 
