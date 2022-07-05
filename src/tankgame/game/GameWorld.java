@@ -4,8 +4,9 @@ import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
 import tankgame.game.powerups.Barrage;
+import tankgame.game.powerups.PowerUp;
 import tankgame.game.powerups.SpeedBoost;
-import tankgame.game.powerups.Spread;
+import tankgame.game.powerups.Heal;
 import tankgame.game.walls.BreakableWall;
 import tankgame.game.walls.UnbreakableWall;
 import tankgame.game.walls.Wall;
@@ -31,13 +32,16 @@ public class GameWorld extends JPanel implements Runnable {
     private UnbreakableWall unbreakableWall2;
     private BreakableWall breakableWall;
 
-    private Spread spread;
+    private Heal heal;
 
     private Barrage barrage;
 
     private SpeedBoost speed;
 
     private final ProjectileHandler projectileHandler = new ProjectileHandler();
+    private final PowerUpHandler powerUpHandler = new PowerUpHandler();
+
+    private final WallHandler wallHandler = new WallHandler();
     private ArrayList<Tank> tanks = new ArrayList<>();
 
     /*
@@ -111,7 +115,7 @@ public class GameWorld extends JPanel implements Runnable {
                 "pokeball.png",
                 GameConstants.RESOURCE_BREAKABLE_WALL,
                 GameConstants.RESOURCE_UNBREAKABLE_WALL,
-                GameConstants.RESOURCE_SPREAD,
+                GameConstants.RESOURCE_HEAL,
                 GameConstants.RESOURCE_BARRAGE,
                 GameConstants.RESOURCE_SPEED
         );
@@ -128,9 +132,17 @@ public class GameWorld extends JPanel implements Runnable {
         unbreakableWall2 = new UnbreakableWall(500, 548, resourceHandler.getUnbreakableWallImg());
         breakableWall = new BreakableWall(400, 400, resourceHandler.getBreakableWallImg());
 
-        spread = new Spread(700, 700, resourceHandler.getSpreadImg());
+        heal = new Heal(700, 700, resourceHandler.getHealImg());
         barrage = new Barrage(800, 800, resourceHandler.getBarrageImg());
         speed = new SpeedBoost(900, 800, resourceHandler.getSpeedImg());
+
+        powerUpHandler.addPowerUps(heal);
+        powerUpHandler.addPowerUps(barrage);
+        powerUpHandler.addPowerUps(speed);
+
+        wallHandler.addWall(unbreakableWall);
+        wallHandler.addWall(unbreakableWall2);
+        wallHandler.addWall(breakableWall);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -180,13 +192,12 @@ public class GameWorld extends JPanel implements Runnable {
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
-        this.breakableWall.drawImage(buffer);
-        this.unbreakableWall.drawImage(buffer);
-        this.unbreakableWall2.drawImage(buffer);
+//        this.breakableWall.drawImage(buffer);
+//        this.unbreakableWall.drawImage(buffer);
+//        this.unbreakableWall2.drawImage(buffer);
 
-        this.spread.drawImage(buffer);
-        this.barrage.drawImage(buffer);
-        this.speed.drawImage(buffer);
+        this.wallHandler.drawWalls(buffer);
+        this.powerUpHandler.drawPowerUps(buffer);
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
@@ -197,19 +208,17 @@ public class GameWorld extends JPanel implements Runnable {
     /*
         TODO:
         We could make this a collisionHandler class but unsure for now just want to get this working
-        Need to handle tank1 vs bullet from tank2 []
-        Need to handle tank2 vs bullet from tank1 []
-        Need to handle wall vs any bullet []
-        Need to handle any tank vs any wall []
+        Need to handle tank1 vs bullet from tank2 [*]
+        Need to handle tank2 vs bullet from tank1 [*]
+        Need to handle wall vs any bullet [*]
+        Need to handle any tank vs any wall [*]
         Need to handle any tank vs any powerup []
      */
-    public void checkCollisions() {
-        ArrayList<Wall> walls = new ArrayList<>();
-        walls.add(unbreakableWall);
-        walls.add(unbreakableWall2);
-        walls.add(breakableWall);
+    private void checkCollisions() {
+        ArrayList<Wall> walls = this.wallHandler.getWalls();
+        ArrayList<PowerUp> powerUps = this.powerUpHandler.getPowerUps();
 
-        float offset = 1.1f;
+        float offset = 1.1f; // offset is to push away tank from being inside of wall
         for(Tank tank : tanks) { // really buggy tank vs wall revisit later?
             //System.out.println("Tank Vx: " + tank.getVx() + " | Tank Vy: " + tank.getVy());
             for (Wall wall : walls) {
@@ -236,7 +245,6 @@ public class GameWorld extends JPanel implements Runnable {
             }
         }
 
-
         ArrayList<Projectile> projectiles = projectileHandler.getProjectiles();
         for(Projectile projectile : projectiles) {
             Rectangle r = projectile.getBounds();
@@ -262,22 +270,17 @@ public class GameWorld extends JPanel implements Runnable {
             }
         }
 
+        for(Tank tank : tanks) {
+            for(PowerUp powerUp : powerUps) {
+                Rectangle pow = powerUp.getBounds();
+                if(tank.getBounds().intersects(pow)) {
+                    powerUp.empower(tank);
+                    powerUpHandler.destroyPowerUp(powerUp);
+                    return;
+                }
+            }
+        }
+
     }
 
 }
-
-/*
-if(tank.getVx() > 0 && (Math.abs(tank.getVx()) > Math.abs(tank.getVy()))) {
-                    tank.setVx(0);
-                    tank.setX(unbreakableWall.getX() - unbreakableWall.getWidth());
-                } else if(tank.getVx() < 0 && (Math.abs(tank.getVx()) > Math.abs(tank.getVy()))) {
-                    tank.setVx(0);
-                    tank.setX(unbreakableWall.getX() + unbreakableWall.getWidth());
-                } else if(tank.getVy() > 0 && (Math.abs(tank.getVx()) < Math.abs(tank.getVy()))) {
-                    tank.setVy(0);
-                    tank.setY(unbreakableWall.getY() - unbreakableWall.getHeight());
-                } else if(tank.getVy() < 0 && (Math.abs(tank.getVx()) < Math.abs(tank.getVy()))) {
-                    tank.setVy(0);
-                    tank.setY(unbreakableWall.getY() + unbreakableWall.getHeight());
-                }
- */

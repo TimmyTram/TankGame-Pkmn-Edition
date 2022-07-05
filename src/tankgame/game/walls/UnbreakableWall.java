@@ -6,6 +6,5 @@ public class UnbreakableWall extends Wall {
 
     public UnbreakableWall(float x, float y, BufferedImage img) {
         super(x, y, img);
-        super.getImageDimension();
     }
 }

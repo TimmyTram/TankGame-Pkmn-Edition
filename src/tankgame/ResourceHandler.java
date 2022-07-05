@@ -18,7 +18,7 @@ public class ResourceHandler {
 
     private BufferedImage unbreakableWallImg;
 
-    private BufferedImage spreadImg;
+    private BufferedImage healImg;
 
     private BufferedImage barrageImg;
 
@@ -38,7 +38,7 @@ public class ResourceHandler {
             String bullet,
             String breakableWall,
             String unbreakableWall,
-            String spread,
+            String heal,
             String barrage,
             String speed
     ) {
@@ -47,7 +47,7 @@ public class ResourceHandler {
         bulletImg = readImg(bullet);
         breakableWallImg = readImg(breakableWall);
         unbreakableWallImg = readImg(unbreakableWall);
-        spreadImg = readImg(spread);
+        healImg = readImg(heal);
         barrageImg = readImg(barrage);
         speedImg = readImg(speed);
     }
@@ -85,8 +85,8 @@ public class ResourceHandler {
         return unbreakableWallImg;
     }
 
-    public BufferedImage getSpreadImg() {
-        return spreadImg;
+    public BufferedImage getHealImg() {
+        return healImg;
     }
 
     public BufferedImage getBarrageImg() {

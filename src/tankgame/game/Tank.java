@@ -22,8 +22,13 @@ public class Tank extends MovableObject {
     private int ticksTillNextShot = 100;
     private final ProjectileHandler projectileHandler;
 
-    private int healthPoints = 100;
-    private int damage = 10;
+    private final int maxHealthPoints = 100;
+
+    private int currentHealthPoints = 100;
+    private final int damage = 10;
+
+    private int lives = 3;
+
 
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, ProjectileHandler projectileHandler) {
         super(x, y, 2, vx, vy, angle, img);
@@ -95,6 +100,15 @@ public class Tank extends MovableObject {
             this.shoot();
             tick = 0;
         }
+
+        if(currentHealthPoints <= 0) {
+            this.lives -= 1;
+        }
+
+        if(lives <= 0) {
+            System.out.println("game over");
+        }
+
         tick++;
     }
 
@@ -137,7 +151,20 @@ public class Tank extends MovableObject {
     }
 
     public void takeDamage() {
-        this.healthPoints -= this.damage;
+        this.currentHealthPoints -= this.damage;
+    }
+
+    public void heal(int amount) {
+        this.currentHealthPoints += amount;
+        this.currentHealthPoints = Math.min(currentHealthPoints, maxHealthPoints);
+    }
+
+    public void changeSpeed(float speed) {
+        this.R = speed;
+    }
+
+    public void changeDelayBetweenShots(int delay) {
+        this.ticksTillNextShot = delay;
     }
 
     private void checkBorder() {

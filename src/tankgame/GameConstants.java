@@ -16,7 +16,7 @@ public class GameConstants {
 
     public static final String RESOURCE_UNBREAKABLE_WALL = "unbreakableRock.png";
 
-    public static final String RESOURCE_SPREAD = "spread.png";
+    public static final String RESOURCE_HEAL = "heal.png";
 
     public static final String RESOURCE_BARRAGE = "barrage.png";
 
