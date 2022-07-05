@@ -2,6 +2,7 @@ package tankgame.game.walls;
 
 import tankgame.game.Collidable;
 import tankgame.game.GameObject;
+import tankgame.game.Projectile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,10 +11,13 @@ public abstract class Wall extends GameObject implements Collidable {
     protected int width;
     protected int height;
 
+    protected boolean destroyed = false;
+
     public Wall(float x, float y, BufferedImage img) {
         super(x, y, img);
         getImageDimension();
     }
+
 
     @Override
     public void drawImage(Graphics g) {
@@ -41,6 +45,12 @@ public abstract class Wall extends GameObject implements Collidable {
 
     public Rectangle getBounds() {
         return new Rectangle((int) super.x, (int) super.y, this.width, this.height);
+    }
+
+    public abstract void setDestroyed(boolean destroyed);
+
+    public boolean getDestroyed() {
+        return this.destroyed;
     }
 
 }

@@ -1,18 +1,13 @@
 package tankgame.game;
 
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class ProjectileHandler {
 
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private final ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public ProjectileHandler() {}
-
-    public ArrayList<Projectile> getProjectiles() {
-        return this.projectiles;
-    }
 
     public void spawnProjectile(Projectile projectile) {
         if(projectile == null) {
@@ -38,6 +33,17 @@ public class ProjectileHandler {
         for(Projectile projectile : projectiles) {
             projectile.drawImage(g);
         }
+    }
+
+    public int size() {
+        return this.projectiles.size();
+    }
+
+    public Projectile get(int index) {
+        if(index > this.size()) {
+            return null;
+        }
+        return this.projectiles.get(index);
     }
 
 }

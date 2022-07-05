@@ -7,13 +7,9 @@ import java.util.ArrayList;
 
 public class WallHandler {
 
-    private ArrayList<Wall> walls = new ArrayList<>();
+    private final ArrayList<Wall> walls = new ArrayList<>();
 
     public WallHandler() {}
-
-    public ArrayList<Wall> getWalls() {
-        return this.walls;
-    }
 
     public void addWall(Wall wall) {
         if(wall == null) {
@@ -33,6 +29,17 @@ public class WallHandler {
         for(Wall wall : walls) {
             wall.drawImage(g);
         }
+    }
+
+    public int size() {
+        return this.walls.size();
+    }
+
+    public Wall get(int index) {
+        if(index > this.size()) {
+            return null;
+        }
+        return this.walls.get(index);
     }
 
 }

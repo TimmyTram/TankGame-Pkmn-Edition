@@ -192,9 +192,6 @@ public class GameWorld extends JPanel implements Runnable {
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
-//        this.breakableWall.drawImage(buffer);
-//        this.unbreakableWall.drawImage(buffer);
-//        this.unbreakableWall2.drawImage(buffer);
 
         this.wallHandler.drawWalls(buffer);
         this.powerUpHandler.drawPowerUps(buffer);
@@ -205,34 +202,28 @@ public class GameWorld extends JPanel implements Runnable {
         g2.drawImage(world, 0, 0, null);
     }
 
-    /*
-        TODO:
-        We could make this a collisionHandler class but unsure for now just want to get this working
-        Need to handle tank1 vs bullet from tank2 [*]
-        Need to handle tank2 vs bullet from tank1 [*]
-        Need to handle wall vs any bullet [*]
-        Need to handle any tank vs any wall [*]
-        Need to handle any tank vs any powerup []
-     */
     private void checkCollisions() {
-        ArrayList<Wall> walls = this.wallHandler.getWalls();
-        ArrayList<PowerUp> powerUps = this.powerUpHandler.getPowerUps();
+        collisionWallVsTank();
+        collisionProjectile();
+        collisionTankVsPowerUp();
+    }
 
-        float offset = 1.1f; // offset is to push away tank from being inside of wall
-        for(Tank tank : tanks) { // really buggy tank vs wall revisit later?
-            //System.out.println("Tank Vx: " + tank.getVx() + " | Tank Vy: " + tank.getVy());
-            for (Wall wall : walls) {
-                Rectangle uwall = wall.getBounds();
-                if(tank.getBoundsHorizontal().intersects(uwall)) {
-                    if(tank.getVx() > 0) { // collision for left side of object
+    private void collisionWallVsTank() {
+        float offset = 1.1f;
+        for (Tank tank : tanks) {
+            for (int i = 0; i < this.wallHandler.size(); i++) {
+                Wall wall = this.wallHandler.get(i);
+                Rectangle wallRectangle = wall.getBounds();
+                if (tank.getBoundsHorizontal().intersects(wallRectangle)) {
+                    if (tank.getVx() > 0) { // collision for left side of object
                         tank.setVx(0);
                         tank.setX(wall.getX() - (wall.getWidth() * offset));
                     }
-                    if(tank.getVx() < 0) { // collision for right side of object
+                    if (tank.getVx() < 0) { // collision for right side of object
                         tank.setVx(0);
                         tank.setX(wall.getX() + (wall.getWidth() * offset));
                     }
-                } else if(tank.getBoundsVertical().intersects(uwall)) {
+                } else if (tank.getBoundsVertical().intersects(wallRectangle)) {
                     if (tank.getVy() > 0) { // collision for top side of object
                         tank.setVy(0);
                         tank.setY(wall.getY() - (wall.getHeight() * offset));
@@ -244,43 +235,47 @@ public class GameWorld extends JPanel implements Runnable {
                 }
             }
         }
+    }
 
-        ArrayList<Projectile> projectiles = projectileHandler.getProjectiles();
-        for(Projectile projectile : projectiles) {
-            Rectangle r = projectile.getBounds();
-
+    private void collisionProjectile() {
+        for(int i = 0; i < this.projectileHandler.size(); i++) {
+            Projectile projectile = this.projectileHandler.get(i);
+            Rectangle projectileRectangle = projectile.getBounds();
             for(Tank tank : tanks) {
-                if(r.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
+                if(projectileRectangle.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
                     System.out.println("Hit tank " + (tanks.indexOf(tank) + 1) + "!");
-                    if(projectileHandler.destroyProjectile(projectile)) {
+                    if(this.projectileHandler.destroyProjectile(projectile)) {
                         tank.takeDamage();
                         return;
                     }
                 }
             }
 
-            for(Wall wall : walls) {
-                Rectangle uwall = wall.getBounds();
-                if(r.intersects(uwall)) {
-                    System.out.println("intersects with wall");
-                    if(projectileHandler.destroyProjectile(projectile)) {
-                        return;
+            for(int j = 0; j < this.wallHandler.size(); j++) {
+                Wall wall = this.wallHandler.get(j);
+                Rectangle wallRectangle = wall.getBounds();
+                if(projectileRectangle.intersects(wallRectangle)) {
+                    wall.setDestroyed(true);
+                    this.projectileHandler.destroyProjectile(projectile);
+                    if(wall.getDestroyed()) {
+                        this.wallHandler.destroyWall(wall);
                     }
+                    return;
                 }
             }
         }
-
+    }
+    private void collisionTankVsPowerUp() {
         for(Tank tank : tanks) {
-            for(PowerUp powerUp : powerUps) {
-                Rectangle pow = powerUp.getBounds();
-                if(tank.getBounds().intersects(pow)) {
+            for(int i = 0; i < this.powerUpHandler.size(); i++) {
+                PowerUp powerUp = this.powerUpHandler.get(i);
+                Rectangle powerUpRectangle = powerUp.getBounds();
+                if(tank.getBounds().intersects(powerUpRectangle)) {
                     powerUp.empower(tank);
                     powerUpHandler.destroyPowerUp(powerUp);
                     return;
                 }
             }
         }
-
     }
-
 }
