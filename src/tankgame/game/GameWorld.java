@@ -30,7 +30,11 @@ public class GameWorld extends JPanel implements Runnable {
     private UnbreakableWall unbreakableWall;
 
     private UnbreakableWall unbreakableWall2;
+
+    private UnbreakableWall unbreakableWall3;
     private BreakableWall breakableWall;
+
+    private BreakableWall breakableWall2;
 
     private Heal heal;
 
@@ -38,11 +42,11 @@ public class GameWorld extends JPanel implements Runnable {
 
     private SpeedBoost speed;
 
-    private final ProjectileHandler projectileHandler = new ProjectileHandler();
-    private final PowerUpHandler powerUpHandler = new PowerUpHandler();
+    private GameCollections<Projectile> projectileGameCollections;
+    private GameCollections<PowerUp> powerUpGameCollections;
+    private GameCollections<Wall> wallGameCollections;
+    private GameCollections<Tank> tankGameCollections;
 
-    private final WallHandler wallHandler = new WallHandler();
-    private ArrayList<Tank> tanks = new ArrayList<>();
 
     /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -64,7 +68,7 @@ public class GameWorld extends JPanel implements Runnable {
                 this.tick++;
                 this.t1.update();
                 this.t2.update();
-                this.projectileHandler.update();
+                this.projectileGameCollections.update();
                 checkCollisions();
                 this.repaint();   // redraw game
 
@@ -108,6 +112,11 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.GAME_SCREEN_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
+        this.tankGameCollections = new GameCollections<>();
+        this.projectileGameCollections = new GameCollections<>();
+        this.powerUpGameCollections = new GameCollections<>();
+        this.wallGameCollections = new GameCollections<>();
+
         ResourceHandler resourceHandler = ResourceHandler.getInstance();
         resourceHandler.initializeResources(
                 "tank1.png",
@@ -120,29 +129,35 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.RESOURCE_SPEED
         );
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img(), projectileHandler);
-        t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img(), projectileHandler);
-        tanks.add(t1);
-        tanks.add(t2);
+        t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img(), this.projectileGameCollections);
+        t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img(), this.projectileGameCollections);
+        this.tankGameCollections.add(t1);
+        this.tankGameCollections.add(t2);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
         unbreakableWall = new UnbreakableWall(500, 500, resourceHandler.getUnbreakableWallImg());
         unbreakableWall2 = new UnbreakableWall(500, 548, resourceHandler.getUnbreakableWallImg());
+        unbreakableWall3 = new UnbreakableWall(548, 548, resourceHandler.getUnbreakableWallImg());
+        breakableWall2 = new BreakableWall(596, 548, resourceHandler.getBreakableWallImg());
+
         breakableWall = new BreakableWall(400, 400, resourceHandler.getBreakableWallImg());
 
         heal = new Heal(700, 700, resourceHandler.getHealImg());
         barrage = new Barrage(800, 800, resourceHandler.getBarrageImg());
         speed = new SpeedBoost(900, 800, resourceHandler.getSpeedImg());
 
-        powerUpHandler.addPowerUps(heal);
-        powerUpHandler.addPowerUps(barrage);
-        powerUpHandler.addPowerUps(speed);
 
-        wallHandler.addWall(unbreakableWall);
-        wallHandler.addWall(unbreakableWall2);
-        wallHandler.addWall(breakableWall);
+        this.powerUpGameCollections.add(heal);
+        this.powerUpGameCollections.add(barrage);
+        this.powerUpGameCollections.add(speed);
+
+        this.wallGameCollections.add(unbreakableWall);
+        this.wallGameCollections.add(unbreakableWall2);
+        this.wallGameCollections.add(unbreakableWall3);
+        this.wallGameCollections.add(breakableWall);
+        this.wallGameCollections.add(breakableWall2);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
@@ -184,17 +199,15 @@ public class GameWorld extends JPanel implements Runnable {
         /*
         -------------------------------- TEMPORARY CODE --------------------------------
         */
-
-        this.t1.drawImage(buffer);
-        this.t2.drawImage(buffer);
-        this.projectileHandler.drawProjectiles(buffer);
-
+        this.tankGameCollections.draw(buffer);
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
 
-        this.wallHandler.drawWalls(buffer);
-        this.powerUpHandler.drawPowerUps(buffer);
+        this.projectileGameCollections.draw(buffer);
+        this.wallGameCollections.draw(buffer);
+        this.powerUpGameCollections.draw(buffer);
+
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
@@ -209,10 +222,12 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     private void collisionWallVsTank() {
-        float offset = 1.1f;
-        for (Tank tank : tanks) {
-            for (int i = 0; i < this.wallHandler.size(); i++) {
-                Wall wall = this.wallHandler.get(i);
+        float offset = 1.2f;
+
+        for (int i = 0; i < this.tankGameCollections.size(); i++) {
+            Tank tank = this.tankGameCollections.get(i);
+            for (int j = 0; j < this.wallGameCollections.size(); j++) {
+                Wall wall = this.wallGameCollections.get(j);
                 Rectangle wallRectangle = wall.getBounds();
                 if (tank.getBoundsHorizontal().intersects(wallRectangle)) {
                     if (tank.getVx() > 0) { // collision for left side of object
@@ -238,27 +253,28 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     private void collisionProjectile() {
-        for(int i = 0; i < this.projectileHandler.size(); i++) {
-            Projectile projectile = this.projectileHandler.get(i);
+        for(int i = 0; i < this.projectileGameCollections.size(); i++) {
+            Projectile projectile = this.projectileGameCollections.get(i);
             Rectangle projectileRectangle = projectile.getBounds();
-            for(Tank tank : tanks) {
+            for(int j = 0; j < this.tankGameCollections.size(); j++) {
+                Tank tank = this.tankGameCollections.get(j);
                 if(projectileRectangle.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
-                    System.out.println("Hit tank " + (tanks.indexOf(tank) + 1) + "!");
-                    if(this.projectileHandler.destroyProjectile(projectile)) {
+                    System.out.println("Hit tank " + (this.tankGameCollections.indexOf(tank) + 1) + "!");
+                    if(this.projectileGameCollections.remove(projectile)) {
                         tank.takeDamage();
                         return;
                     }
                 }
             }
 
-            for(int j = 0; j < this.wallHandler.size(); j++) {
-                Wall wall = this.wallHandler.get(j);
+            for(int j = 0; j < this.wallGameCollections.size(); j++) {
+                Wall wall = this.wallGameCollections.get(j);
                 Rectangle wallRectangle = wall.getBounds();
                 if(projectileRectangle.intersects(wallRectangle)) {
                     wall.setDestroyed(true);
-                    this.projectileHandler.destroyProjectile(projectile);
+                    this.projectileGameCollections.remove(projectile);
                     if(wall.getDestroyed()) {
-                        this.wallHandler.destroyWall(wall);
+                        this.wallGameCollections.remove(wall);
                     }
                     return;
                 }
@@ -266,13 +282,14 @@ public class GameWorld extends JPanel implements Runnable {
         }
     }
     private void collisionTankVsPowerUp() {
-        for(Tank tank : tanks) {
-            for(int i = 0; i < this.powerUpHandler.size(); i++) {
-                PowerUp powerUp = this.powerUpHandler.get(i);
+        for(int i = 0; i < this.tankGameCollections.size(); i++) {
+            Tank tank = this.tankGameCollections.get(i);
+            for(int j = 0; j < this.powerUpGameCollections.size(); j++) {
+                PowerUp powerUp = this.powerUpGameCollections.get(j);
                 Rectangle powerUpRectangle = powerUp.getBounds();
                 if(tank.getBounds().intersects(powerUpRectangle)) {
                     powerUp.empower(tank);
-                    powerUpHandler.destroyPowerUp(powerUp);
+                    this.powerUpGameCollections.remove(powerUp);
                     return;
                 }
             }

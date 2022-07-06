@@ -36,4 +36,6 @@ public abstract class GameObject {
         return this.y;
     }
 
+    public abstract void update();
+
 }

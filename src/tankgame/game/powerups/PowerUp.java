@@ -24,6 +24,9 @@ public abstract class PowerUp extends GameObject implements Collidable {
         g.drawImage(super.img, (int) x, (int) y, null);
     }
 
+    @Override
+    public void update() {}
+
     protected void getImageDimension() {
         this.width = super.img.getWidth();
         this.height = super.img.getHeight();

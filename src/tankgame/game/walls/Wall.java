@@ -30,6 +30,11 @@ public abstract class Wall extends GameObject implements Collidable {
 
     }
 
+    @Override
+    public void update() {
+
+    }
+
     protected void getImageDimension() {
         this.width = super.img.getWidth();
         this.height = super.img.getHeight();

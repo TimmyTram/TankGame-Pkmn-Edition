@@ -20,7 +20,8 @@ public class Tank extends MovableObject {
     private boolean shootPressed;
     private int tick = 100;
     private int ticksTillNextShot = 100;
-    private final ProjectileHandler projectileHandler;
+
+    private final GameCollections<Projectile> projectileGameCollections;
 
     private final int maxHealthPoints = 100;
 
@@ -30,9 +31,9 @@ public class Tank extends MovableObject {
     private int lives = 3;
 
 
-    Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, ProjectileHandler projectileHandler) {
+    Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, GameCollections<Projectile> projectileGameCollections) {
         super(x, y, 2, vx, vy, angle, img);
-        this.projectileHandler = projectileHandler;
+        this.projectileGameCollections = projectileGameCollections;
     }
 
     void setX(float x){ this.x = x; }
@@ -79,6 +80,7 @@ public class Tank extends MovableObject {
         this.shootPressed = false;
     }
 
+    @Override
     public void update() {
         if (this.UpPressed) {
             this.moveForwards();
@@ -147,7 +149,8 @@ public class Tank extends MovableObject {
                 ResourceHandler.getInstance().getBulletImg(),
                 this
         );
-        this.projectileHandler.spawnProjectile(bullet);
+       // this.projectileHandler.spawnProjectile(bullet);
+        this.projectileGameCollections.add(bullet);
     }
 
     public void takeDamage() {
