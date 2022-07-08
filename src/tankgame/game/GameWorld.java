@@ -222,7 +222,7 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     private void collisionWallVsTank() {
-        float offset = 1.2f;
+        float offset = 1.09f;
 
         for (int i = 0; i < this.tankGameCollections.size(); i++) {
             Tank tank = this.tankGameCollections.get(i);
@@ -238,7 +238,8 @@ public class GameWorld extends JPanel implements Runnable {
                         tank.setVx(0);
                         tank.setX(wall.getX() + (wall.getWidth() * offset));
                     }
-                } else if (tank.getBoundsVertical().intersects(wallRectangle)) {
+                    // if diagonal based collision we want to prioritize the horizontal one for now.
+                } else if (tank.getBoundsVertical().intersects(wallRectangle) && !tank.getBoundsHorizontal().intersects(wallRectangle)) {
                     if (tank.getVy() > 0) { // collision for top side of object
                         tank.setVy(0);
                         tank.setY(wall.getY() - (wall.getHeight() * offset));

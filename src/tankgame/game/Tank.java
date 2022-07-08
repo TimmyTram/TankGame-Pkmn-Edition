@@ -149,7 +149,6 @@ public class Tank extends MovableObject {
                 ResourceHandler.getInstance().getBulletImg(),
                 this
         );
-       // this.projectileHandler.spawnProjectile(bullet);
         this.projectileGameCollections.add(bullet);
     }
 
