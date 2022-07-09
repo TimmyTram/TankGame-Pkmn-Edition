@@ -44,4 +44,6 @@ public abstract class PowerUp extends GameObject implements Collidable {
         return new Rectangle((int) super.x, (int) super.y, this.width, this.height);
     }
 
+    public abstract void playSound();
+
 }

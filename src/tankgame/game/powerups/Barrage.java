@@ -1,5 +1,7 @@
 package tankgame.game.powerups;
 
+import tankgame.GameConstants;
+import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
 import tankgame.game.Tank;
 
@@ -14,6 +16,11 @@ public class Barrage extends PowerUp {
     @Override
     public void empower(Tank tank) {
         tank.changeDelayBetweenShots(10);
+    }
+
+    @Override
+    public void playSound() {
+        ResourceHandler.getSound(GameConstants.RESOURCE_BARRAGE_SOUND).play();
     }
 
     @Override

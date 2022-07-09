@@ -150,6 +150,7 @@ public class Tank extends MovableObject {
                 this
         );
         this.projectileGameCollections.add(bullet);
+        ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1).play();
     }
 
     public void takeDamage() {

@@ -116,7 +116,10 @@ public class GameWorld extends JPanel implements Runnable {
         this.projectileGameCollections = new GameCollections<>();
         this.powerUpGameCollections = new GameCollections<>();
         this.wallGameCollections = new GameCollections<>();
+
         ResourceHandler.initImages();
+        ResourceHandler.initSounds();
+
         t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), this.projectileGameCollections);
         t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), this.projectileGameCollections);
         this.tankGameCollections.add(t1);
@@ -203,6 +206,9 @@ public class GameWorld extends JPanel implements Runnable {
         g2.drawImage(world, 0, 0, null);
     }
 
+    /*
+            THIS IS JUST A PLACEHOLDER FOR COLLISION FUNCTIONS | FINAL PLAN IS TO ACTUALLY PUT THESE COLLISION METHODS SOMEWHERE ELSE
+     */
     private void checkCollisions() {
         collisionWallVsTank();
         collisionProjectile();
@@ -250,6 +256,7 @@ public class GameWorld extends JPanel implements Runnable {
                 if(projectileRectangle.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
                     System.out.println("Hit tank " + (this.tankGameCollections.indexOf(tank) + 1) + "!");
                     if(this.projectileGameCollections.remove(projectile)) {
+                        ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
                         tank.takeDamage();
                         return;
                     }
@@ -262,7 +269,9 @@ public class GameWorld extends JPanel implements Runnable {
                 if(projectileRectangle.intersects(wallRectangle)) {
                     wall.setDestroyed(true);
                     this.projectileGameCollections.remove(projectile);
+                    ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
                     if(wall.getDestroyed()) {
+                        ResourceHandler.getSound(GameConstants.RESOURCE_ROCK_SMASH_SOUND).play();
                         this.wallGameCollections.remove(wall);
                     }
                     return;
@@ -278,6 +287,7 @@ public class GameWorld extends JPanel implements Runnable {
                 Rectangle powerUpRectangle = powerUp.getBounds();
                 if(tank.getBounds().intersects(powerUpRectangle)) {
                     powerUp.empower(tank);
+                    powerUp.playSound();
                     this.powerUpGameCollections.remove(powerUp);
                     return;
                 }

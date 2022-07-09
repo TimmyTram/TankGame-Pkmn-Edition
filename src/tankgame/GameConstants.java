@@ -42,4 +42,18 @@ public class GameConstants {
 
     public static final String RESOURCE_SPEED = "speed";
 
+    public static final String RESOURCE_BULLET_SOUND_1 = "throw_pokeball.wav";
+
+    public static final String RESOURCE_BULLET_SOUND_1_COLLIDE = "collide_pokeball.wav";
+
+    //public static final String RESOURCE_BULLET_SOUND_2 = ""; <-- Will add pokemon attack sound
+
+    public static final String RESOURCE_BARRAGE_SOUND = "barrage.wav";
+
+    public static final String RESOURCE_HEAL_SOUND = "heal.wav";
+
+    public static final String RESOURCE_SPEED_SOUND = "speed.wav";
+
+    public static final String RESOURCE_ROCK_SMASH_SOUND = "rock_smash.wav";
+
 }

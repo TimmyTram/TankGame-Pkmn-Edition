@@ -3,7 +3,6 @@ package tankgame;
 import tankgame.game.GameWorld;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,16 +12,18 @@ import java.util.Objects;
 
 public class ResourceHandler {
         private static Map<String, BufferedImage> images = new HashMap<>();
-        private static Map<String, Clip> sounds = new HashMap<>();
+        private static Map<String, AudioPlayer> sounds = new HashMap<>();
         private static Map<String, List<BufferedImage>> animations = new HashMap<>();
 
         public static BufferedImage getImage(String key) {
             return ResourceHandler.images.get(key);
         }
 
-        public static Clip getSound(String key) {
+        public static AudioPlayer getSound(String key) {
             return ResourceHandler.sounds.get(key);
         }
+
+
 
         public static List<BufferedImage> getAnimation(String key) {
             return ResourceHandler.animations.get(key);
@@ -37,7 +38,7 @@ public class ResourceHandler {
                 ResourceHandler.images.put(GameConstants.RESOURCE_UNBREAKABLE_WALL, readImg("walls/" + GameConstants.RESOURCE_UNBREAKABLE_WALL + ".png"));
                 ResourceHandler.images.put(GameConstants.RESOURCE_BREAKABLE_WALL, readImg("walls/" + GameConstants.RESOURCE_BREAKABLE_WALL + ".png"));
                 ResourceHandler.images.put(GameConstants.RESOURCE_BARRAGE, readImg("powerups/" + GameConstants.RESOURCE_BARRAGE + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_HEAL, readImg("powerups/" + GameConstants.RESOURCE_SPEED + ".png"));
+                ResourceHandler.images.put(GameConstants.RESOURCE_HEAL, readImg("powerups/" + GameConstants.RESOURCE_HEAL + ".png"));
                 ResourceHandler.images.put(GameConstants.RESOURCE_SPEED, readImg("powerups/" + GameConstants.RESOURCE_SPEED + ".png"));
                 ResourceHandler.images.put(GameConstants.RESOURCE_MENU_TITLE, readImg("menu/" + GameConstants.RESOURCE_MENU_TITLE + ".png"));
             } catch (IOException e) {
@@ -47,7 +48,12 @@ public class ResourceHandler {
         }
 
         public static void initSounds() {
-
+            ResourceHandler.sounds.put(GameConstants.RESOURCE_BULLET_SOUND_1, new AudioPlayer(GameConstants.RESOURCE_BULLET_SOUND_1));
+            ResourceHandler.sounds.put(GameConstants.RESOURCE_BULLET_SOUND_1_COLLIDE, new AudioPlayer(GameConstants.RESOURCE_BULLET_SOUND_1_COLLIDE));
+            ResourceHandler.sounds.put(GameConstants.RESOURCE_BARRAGE_SOUND, new AudioPlayer(GameConstants.RESOURCE_BARRAGE_SOUND));
+            ResourceHandler.sounds.put(GameConstants.RESOURCE_HEAL_SOUND, new AudioPlayer(GameConstants.RESOURCE_HEAL_SOUND));
+            ResourceHandler.sounds.put(GameConstants.RESOURCE_SPEED_SOUND, new AudioPlayer(GameConstants.RESOURCE_SPEED_SOUND));
+            ResourceHandler.sounds.put(GameConstants.RESOURCE_ROCK_SMASH_SOUND, new AudioPlayer(GameConstants.RESOURCE_ROCK_SMASH_SOUND));
         }
 
         public static void initAnimations() {

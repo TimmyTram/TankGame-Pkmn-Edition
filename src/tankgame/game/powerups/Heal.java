@@ -1,5 +1,7 @@
 package tankgame.game.powerups;
 
+import tankgame.GameConstants;
+import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
 import tankgame.game.Tank;
 
@@ -14,6 +16,11 @@ public class Heal extends PowerUp {
     @Override
     public void empower(Tank tank) {
         tank.heal(20);
+    }
+
+    @Override
+    public void playSound() {
+        ResourceHandler.getSound(GameConstants.RESOURCE_HEAL_SOUND).play();
     }
 
     @Override
