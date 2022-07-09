@@ -116,37 +116,25 @@ public class GameWorld extends JPanel implements Runnable {
         this.projectileGameCollections = new GameCollections<>();
         this.powerUpGameCollections = new GameCollections<>();
         this.wallGameCollections = new GameCollections<>();
-
-        ResourceHandler resourceHandler = ResourceHandler.getInstance();
-        resourceHandler.initializeResources(
-                "tank1.png",
-                "dawn.png",
-                "pokeball.png",
-                GameConstants.RESOURCE_BREAKABLE_WALL,
-                GameConstants.RESOURCE_UNBREAKABLE_WALL,
-                GameConstants.RESOURCE_HEAL,
-                GameConstants.RESOURCE_BARRAGE,
-                GameConstants.RESOURCE_SPEED
-        );
-
-        t1 = new Tank(300, 300, 0, 0, (short) 0, resourceHandler.getT1img(), this.projectileGameCollections);
-        t2 = new Tank(600, 600, 0, 0, (short) 0, resourceHandler.getT2img(), this.projectileGameCollections);
+        ResourceHandler.initImages();
+        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), this.projectileGameCollections);
+        t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), this.projectileGameCollections);
         this.tankGameCollections.add(t1);
         this.tankGameCollections.add(t2);
 
         /*
         -------------------------------- TESTING OBJECTS --------------------------------
         */
-        unbreakableWall = new UnbreakableWall(500, 500, resourceHandler.getUnbreakableWallImg());
-        unbreakableWall2 = new UnbreakableWall(500, 548, resourceHandler.getUnbreakableWallImg());
-        unbreakableWall3 = new UnbreakableWall(548, 548, resourceHandler.getUnbreakableWallImg());
-        breakableWall2 = new BreakableWall(596, 548, resourceHandler.getBreakableWallImg());
+        unbreakableWall = new UnbreakableWall(500, 500, ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL));
+        unbreakableWall2 = new UnbreakableWall(500, 548, ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL));
+        unbreakableWall3 = new UnbreakableWall(548, 548, ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL));
+        breakableWall2 = new BreakableWall(596, 548, ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL));
 
-        breakableWall = new BreakableWall(400, 400, resourceHandler.getBreakableWallImg());
+        breakableWall = new BreakableWall(400, 400, ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL));
 
-        heal = new Heal(700, 700, resourceHandler.getHealImg());
-        barrage = new Barrage(800, 800, resourceHandler.getBarrageImg());
-        speed = new SpeedBoost(900, 800, resourceHandler.getSpeedImg());
+        heal = new Heal(700, 700, ResourceHandler.getImage(GameConstants.RESOURCE_HEAL));
+        barrage = new Barrage(800, 800, ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE));
+        speed = new SpeedBoost(900, 800, ResourceHandler.getImage(GameConstants.RESOURCE_SPEED));
 
 
         this.powerUpGameCollections.add(heal);

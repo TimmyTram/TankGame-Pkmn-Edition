@@ -146,7 +146,7 @@ public class Tank extends MovableObject {
                 0,
                 this.angle,
                 GameConstants.BULLET_SPEED,
-                ResourceHandler.getInstance().getBulletImg(),
+                ResourceHandler.getImage("pokeball"),
                 this
         );
         this.projectileGameCollections.add(bullet);
