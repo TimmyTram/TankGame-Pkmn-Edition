@@ -140,8 +140,8 @@ public class Tank extends MovableObject {
 
     private void shoot() {
         Bullet bullet = new Bullet(
-                this.x,
-                this.y,
+                (float)(this.x + (Math.cos(Math.toRadians(angle))) + (this.img.getWidth() / 2.0)),
+                (float)(this.y + (Math.sin(Math.toRadians(angle))) + (this.img.getHeight() / 2.0)),
                 0,
                 0,
                 this.angle,
