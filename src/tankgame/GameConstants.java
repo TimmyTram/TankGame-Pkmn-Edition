@@ -2,6 +2,9 @@ package tankgame;
 
 public class GameConstants {
 
+    public static final int WORLD_WIDTH = 1920;
+    public static final int WORLD_HEIGHT = 1440;
+
     /*
      * -------------- MENU CONSTANTS ----------------
      */

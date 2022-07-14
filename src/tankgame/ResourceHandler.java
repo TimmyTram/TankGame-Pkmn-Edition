@@ -23,8 +23,6 @@ public class ResourceHandler {
             return ResourceHandler.sounds.get(key);
         }
 
-
-
         public static List<BufferedImage> getAnimation(String key) {
             return ResourceHandler.animations.get(key);
         }

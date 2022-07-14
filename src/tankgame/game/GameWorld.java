@@ -3,12 +3,7 @@ package tankgame.game;
 import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
-import tankgame.game.powerups.Barrage;
 import tankgame.game.powerups.PowerUp;
-import tankgame.game.powerups.SpeedBoost;
-import tankgame.game.powerups.Heal;
-import tankgame.game.walls.BreakableWall;
-import tankgame.game.walls.UnbreakableWall;
 import tankgame.game.walls.Wall;
 
 import javax.swing.*;
@@ -23,33 +18,12 @@ public class GameWorld extends JPanel implements Runnable {
     private Launcher lf;
     private long tick = 0;
 
-    /*
-        -------------------------------- TESTING OBJECTS --------------------------------
-     */
-    private UnbreakableWall unbreakableWall;
-
-    private UnbreakableWall unbreakableWall2;
-
-    private UnbreakableWall unbreakableWall3;
-    private BreakableWall breakableWall;
-
-    private BreakableWall breakableWall2;
-
-    private Heal heal;
-
-    private Barrage barrage;
-
-    private SpeedBoost speed;
-
     private GameCollections<Projectile> projectileGameCollections;
     private GameCollections<PowerUp> powerUpGameCollections;
     private GameCollections<Wall> wallGameCollections;
     private GameCollections<Tank> tankGameCollections;
 
 
-    /*
-        -------------------------------- TESTING OBJECTS --------------------------------
-     */
 
     /**
      *
@@ -107,8 +81,8 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
-        this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
-                GameConstants.GAME_SCREEN_HEIGHT,
+        this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
+                GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
         this.tankGameCollections = new GameCollections<>();
@@ -118,40 +92,12 @@ public class GameWorld extends JPanel implements Runnable {
 
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
+        GameMap.getInstance().initializeMap(this);
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), this.projectileGameCollections);
         t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), this.projectileGameCollections);
         this.tankGameCollections.add(t1);
         this.tankGameCollections.add(t2);
-
-        /*
-        -------------------------------- TESTING OBJECTS --------------------------------
-        */
-        unbreakableWall = new UnbreakableWall(500, 500, ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL));
-        unbreakableWall2 = new UnbreakableWall(500, 548, ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL));
-        unbreakableWall3 = new UnbreakableWall(548, 548, ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL));
-        breakableWall2 = new BreakableWall(596, 548, ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL));
-
-        breakableWall = new BreakableWall(400, 400, ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL));
-
-        heal = new Heal(700, 700, ResourceHandler.getImage(GameConstants.RESOURCE_HEAL));
-        barrage = new Barrage(800, 800, ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE));
-        speed = new SpeedBoost(900, 800, ResourceHandler.getImage(GameConstants.RESOURCE_SPEED));
-
-
-        this.powerUpGameCollections.add(heal);
-        this.powerUpGameCollections.add(barrage);
-        this.powerUpGameCollections.add(speed);
-
-        this.wallGameCollections.add(unbreakableWall);
-        this.wallGameCollections.add(unbreakableWall2);
-        this.wallGameCollections.add(unbreakableWall3);
-        this.wallGameCollections.add(breakableWall);
-        this.wallGameCollections.add(breakableWall2);
-
-        /*
-        -------------------------------- TESTING OBJECTS --------------------------------
-        */
 
         TankController tc1 = new TankController(
                 t1,
@@ -184,25 +130,34 @@ public class GameWorld extends JPanel implements Runnable {
         */
         // this is just so we can see things properly.
         buffer.setColor(Color.black);
-        buffer.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
+        buffer.fillRect(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         buffer.setColor(Color.white);
         /*
         -------------------------------- TEMPORARY CODE --------------------------------
         */
-        this.tankGameCollections.draw(buffer);
-        /*
-        -------------------------------- TESTING OBJECTS --------------------------------
-        */
 
+        this.tankGameCollections.draw(buffer);
         this.projectileGameCollections.draw(buffer);
         this.wallGameCollections.draw(buffer);
         this.powerUpGameCollections.draw(buffer);
 
-        /*
-        -------------------------------- TESTING OBJECTS --------------------------------
-        */
 
-        g2.drawImage(world, 0, 0, null);
+        g2.drawImage(world, 0, 0, null); // <-- remove this when we figure out the split screen functionality
+
+//        BufferedImage leftScreen = world.getSubimage((int) t1.getX(), (int) t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2 ,GameConstants.GAME_SCREEN_HEIGHT);
+//        g2.drawImage(leftScreen, 0, 0, null);
+
+        BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+        g2.scale(0.2, 0.2);
+        g2.drawImage(minimap, GameConstants.GAME_SCREEN_WIDTH * 2 - GameConstants.GAME_SCREEN_WIDTH / 8, GameConstants.GAME_SCREEN_HEIGHT * 3 + GameConstants.GAME_SCREEN_HEIGHT / 4, null);
+    }
+
+    public void addToWallCollection(Wall wall) {
+        this.wallGameCollections.add(wall);
+    }
+
+    public void addToPowerUpGameCollection(PowerUp powerUp) {
+        this.powerUpGameCollections.add(powerUp);
     }
 
     /*
