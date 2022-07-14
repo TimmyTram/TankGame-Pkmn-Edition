@@ -29,57 +29,21 @@ public class GameMap {
 
     public void initializeMap(GameWorld gw) {
         try(BufferedReader mapReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(GameWorld.class.getClassLoader().getResourceAsStream("maps/map2.txt"))))) {
-            String[] size = mapReader.readLine().split(",");
+            GameObjectFactory gameObjectFactory = new GameObjectFactory();
             for(int col = 0; mapReader.ready(); col++) {
                 String[] items = mapReader.readLine().split("");
                 for(int row = 0; row < items.length; row++) {
-                    switch(items[row]) {
-                        case "3", "9" -> {
-                            Wall wall = new UnbreakableWall(
-                                    row * ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getWidth(),
-                                    col * ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getHeight(),
-                                    ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL)
-                            );
-                            gw.addToWallCollection(wall);
-                        }
-                        case "2" -> {
-                            Wall wall = new BreakableWall(
-                                    row * ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL).getWidth(),
-                                    col * ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL).getHeight(),
-                                    ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL)
-                            );
-                            gw.addToWallCollection(wall);
-                        }
-
-                        case "4" -> {
-                            PowerUp powerUp = new Heal(
-                                    row * ResourceHandler.getImage(GameConstants.RESOURCE_HEAL).getWidth(),
-                                    col * ResourceHandler.getImage(GameConstants.RESOURCE_HEAL).getHeight(),
-                                    ResourceHandler.getImage(GameConstants.RESOURCE_HEAL)
-                            );
-                            gw.addToPowerUpGameCollection(powerUp);
-                        }
-
-                        case "5" -> {
-                            PowerUp powerUp = new Barrage(
-                                    row * ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE).getWidth(),
-                                    col * ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE).getHeight(),
-                                    ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE)
-                            );
-                            gw.addToPowerUpGameCollection(powerUp);
-                        }
-
-                        case "6" -> {
-                            PowerUp powerUp = new SpeedBoost(
-                                    row * ResourceHandler.getImage(GameConstants.RESOURCE_SPEED).getWidth(),
-                                    col * ResourceHandler.getImage(GameConstants.RESOURCE_SPEED).getHeight(),
-                                    ResourceHandler.getImage(GameConstants.RESOURCE_SPEED)
-                            );
-                            gw.addToPowerUpGameCollection(powerUp);
-                        }
+                    GameObject gameObject = gameObjectFactory.createGameObject(items[row], row, col);
 
 
-
+                    // not the best solution ; I could make one singular collection with my GameCollections class
+                    // e.g: GameCollection<GameObject> | <-- this would mean I have to change my collision detection which
+                    // I already plan on doing. should ultimately have the following code:
+                    // gw.addToGameCollection(gameObject);
+                    if(gameObject instanceof Wall) {
+                        gw.addToWallCollection((Wall) gameObject);
+                    } else if(gameObject instanceof PowerUp) {
+                        gw.addToPowerUpGameCollection((PowerUp) gameObject);
                     }
                 }
             }

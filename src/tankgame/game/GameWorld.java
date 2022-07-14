@@ -162,6 +162,8 @@ public class GameWorld extends JPanel implements Runnable {
 
     /*
             THIS IS JUST A PLACEHOLDER FOR COLLISION FUNCTIONS | FINAL PLAN IS TO ACTUALLY PUT THESE COLLISION METHODS SOMEWHERE ELSE
+            MAKE SURE TO CHANGE THE REMOVE TO NOT ACTUALLY REMOVE IN THE LOOP ; CURRENT SOLUTION DOESN'T SEEM THAT GOOD
+            SHOULD MARK OBJECTS FOR DEATH AND THEN REMOVE AFTER THE LOOP removeIf() <-- Look at this
      */
     private void checkCollisions() {
         collisionWallVsTank();
