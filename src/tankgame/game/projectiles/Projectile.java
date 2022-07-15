@@ -1,4 +1,7 @@
-package tankgame.game;
+package tankgame.game.projectiles;
+
+import tankgame.game.MovableObject;
+import tankgame.game.tanks.Tank;
 
 import java.awt.image.BufferedImage;
 

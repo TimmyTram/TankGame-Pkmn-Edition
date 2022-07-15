@@ -44,3 +44,14 @@ The jar folder is to be used to store the built jar of your term-project.
 |  Shoot        |        SPACEBAR  |    ENTER      |
 
 <!-- you may add more controls if you need to. -->
+
+## Map Building
+You can create a map by naming it map.csv and using the following IDs (Case-Insensitive) as blocks:
+#### Note: make sure save as CSV (Comma delimited) (*.csv) in MS Excel and NOT CSV UTF-8
+1. BORDER <-- Creates a rock that should be placed at the edge of the world
+2. EMPTY <-- No gameObject created
+3. UROCK <-- Creates an unbreakable rock
+4. BROCK <-- Createes a breakable rock
+5. HEAL <-- Creates a Blissey Power Up
+6. BARRAGE <-- Creates a Blastoise Power Up
+7. SPEED <-- Creates a Deoxys Speed Power Up

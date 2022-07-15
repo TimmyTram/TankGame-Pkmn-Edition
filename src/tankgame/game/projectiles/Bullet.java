@@ -1,4 +1,7 @@
-package tankgame.game;
+package tankgame.game.projectiles;
+
+import tankgame.game.projectiles.Projectile;
+import tankgame.game.tanks.Tank;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

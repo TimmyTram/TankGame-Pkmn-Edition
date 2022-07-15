@@ -1,7 +1,11 @@
-package tankgame.game;
+package tankgame.game.tanks;
 
 import tankgame.GameConstants;
 import tankgame.ResourceHandler;
+import tankgame.game.projectiles.Bullet;
+import tankgame.game.GameCollections;
+import tankgame.game.MovableObject;
+import tankgame.game.projectiles.Projectile;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -31,14 +35,14 @@ public class Tank extends MovableObject {
     private int lives = 3;
 
 
-    Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, GameCollections<Projectile> projectileGameCollections) {
+    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, GameCollections<Projectile> projectileGameCollections) {
         super(x, y, 2, vx, vy, angle, img);
         this.projectileGameCollections = projectileGameCollections;
     }
 
-    void setX(float x){ this.x = x; }
+    public void setX(float x){ this.x = x; }
 
-    void setY(float y) { this. y = y;}
+    public void setY(float y) { this. y = y;}
 
     void toggleUpPressed() {
         this.UpPressed = true;

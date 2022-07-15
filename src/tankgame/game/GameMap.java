@@ -27,8 +27,8 @@ public class GameMap {
             for(int col = 0; mapReader.ready(); col++) {
                 String[] items = mapReader.readLine().split(",");
                 for(int row = 0; row < items.length; row++) {
-                    // Get rid of that pesky invisible character within the CSV file.
-                    String gameObjectID = items[row].replaceAll("\\p{C}", "");
+                    String gameObjectID = items[row].replaceAll("\\s+", "");
+                    gameObjectID = gameObjectID.toUpperCase();
                     GameObject gameObject = gameObjectFactory.createGameObject(gameObjectID, row, col);
 
 

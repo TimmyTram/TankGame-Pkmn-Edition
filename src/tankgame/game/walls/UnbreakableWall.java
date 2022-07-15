@@ -1,7 +1,5 @@
 package tankgame.game.walls;
 
-import tankgame.game.Projectile;
-
 import java.awt.image.BufferedImage;
 
 public class UnbreakableWall extends Wall {

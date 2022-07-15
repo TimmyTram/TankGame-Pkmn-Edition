@@ -1,4 +1,6 @@
-package tankgame.game;
+package tankgame.game.tanks;
+
+import tankgame.game.tanks.Tank;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

@@ -3,7 +3,7 @@ package tankgame.game.powerups;
 import tankgame.GameConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
-import tankgame.game.Tank;
+import tankgame.game.tanks.Tank;
 
 import java.awt.image.BufferedImage;
 

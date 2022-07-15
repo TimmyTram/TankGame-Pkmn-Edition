@@ -5,6 +5,9 @@ import tankgame.Launcher;
 import tankgame.ResourceHandler;
 import tankgame.display.Camera;
 import tankgame.game.powerups.PowerUp;
+import tankgame.game.projectiles.Projectile;
+import tankgame.game.tanks.Tank;
+import tankgame.game.tanks.TankController;
 import tankgame.game.walls.Wall;
 
 import javax.swing.*;
