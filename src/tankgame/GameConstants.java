@@ -23,27 +23,27 @@ public class GameConstants {
      * -------------- RESOURCE CONSTANTS ----------------
      */
 
-    public static final String RESOURCE_MENU_TITLE = "title";
+    public static final String RESOURCE_FLOOR_TILE = "floorTile.png";
 
-    public static final String RESOURCE_TANK_1 = "tank1";
+    public static final String RESOURCE_MENU_TITLE = "title.png";
 
-    public static final String RESOURCE_TANK_2 = "dawn";
+    public static final String RESOURCE_TANK_1 = "tank1.png";
 
-    public static final String RESOURCE_BULLET_1 = "pokeball";
+    public static final String RESOURCE_TANK_2 = "dawn.png";
+
+    public static final String RESOURCE_BULLET_1 = "pokeball.png";
 
     //public static String RESOURCE_BULLET_2 = ""; <-- Will add pokemon attack
 
-    public static final String RESOURCE_BREAKABLE_WALL = "breakableRock";
+    public static final String RESOURCE_BREAKABLE_WALL = "breakableRock.png";
 
-    public static final String RESOURCE_UNBREAKABLE_WALL = "unbreakableRock";
+    public static final String RESOURCE_UNBREAKABLE_WALL = "unbreakableRock.png";
 
-    public static final String RESOURCE_FLOOR_TILE = "floorTile";
+    public static final String RESOURCE_HEAL = "heal.png";
 
-    public static final String RESOURCE_HEAL = "heal";
+    public static final String RESOURCE_BARRAGE = "barrage.png";
 
-    public static final String RESOURCE_BARRAGE = "barrage";
-
-    public static final String RESOURCE_SPEED = "speed";
+    public static final String RESOURCE_SPEED = "speed.png";
 
     public static final String RESOURCE_BULLET_SOUND_1 = "throw_pokeball.wav";
 

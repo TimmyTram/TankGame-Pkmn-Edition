@@ -29,16 +29,16 @@ public class ResourceHandler {
 
         public static void initImages() {
             try {
-                ResourceHandler.images.put(GameConstants.RESOURCE_TANK_1, readImg("tanks/" + GameConstants.RESOURCE_TANK_1 + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_TANK_2, readImg("tanks/" + GameConstants.RESOURCE_TANK_2 + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_BULLET_1, readImg("bullet/" + GameConstants.RESOURCE_BULLET_1 + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_FLOOR_TILE, readImg("floor/" + GameConstants.RESOURCE_FLOOR_TILE + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_UNBREAKABLE_WALL, readImg("walls/" + GameConstants.RESOURCE_UNBREAKABLE_WALL + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_BREAKABLE_WALL, readImg("walls/" + GameConstants.RESOURCE_BREAKABLE_WALL + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_BARRAGE, readImg("powerups/" + GameConstants.RESOURCE_BARRAGE + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_HEAL, readImg("powerups/" + GameConstants.RESOURCE_HEAL + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_SPEED, readImg("powerups/" + GameConstants.RESOURCE_SPEED + ".png"));
-                ResourceHandler.images.put(GameConstants.RESOURCE_MENU_TITLE, readImg("menu/" + GameConstants.RESOURCE_MENU_TITLE + ".png"));
+                ResourceHandler.images.put(GameConstants.RESOURCE_TANK_1, readImg("tanks/" + GameConstants.RESOURCE_TANK_1));
+                ResourceHandler.images.put(GameConstants.RESOURCE_TANK_2, readImg("tanks/" + GameConstants.RESOURCE_TANK_2));
+                ResourceHandler.images.put(GameConstants.RESOURCE_BULLET_1, readImg("bullet/" + GameConstants.RESOURCE_BULLET_1));
+                ResourceHandler.images.put(GameConstants.RESOURCE_FLOOR_TILE, readImg("floor/" + GameConstants.RESOURCE_FLOOR_TILE));
+                ResourceHandler.images.put(GameConstants.RESOURCE_UNBREAKABLE_WALL, readImg("walls/" + GameConstants.RESOURCE_UNBREAKABLE_WALL));
+                ResourceHandler.images.put(GameConstants.RESOURCE_BREAKABLE_WALL, readImg("walls/" + GameConstants.RESOURCE_BREAKABLE_WALL));
+                ResourceHandler.images.put(GameConstants.RESOURCE_BARRAGE, readImg("powerups/" + GameConstants.RESOURCE_BARRAGE));
+                ResourceHandler.images.put(GameConstants.RESOURCE_HEAL, readImg("powerups/" + GameConstants.RESOURCE_HEAL));
+                ResourceHandler.images.put(GameConstants.RESOURCE_SPEED, readImg("powerups/" + GameConstants.RESOURCE_SPEED));
+                ResourceHandler.images.put(GameConstants.RESOURCE_MENU_TITLE, readImg("menu/" + GameConstants.RESOURCE_MENU_TITLE));
             } catch (IOException e) {
                 System.out.println(e);
                 e.printStackTrace();

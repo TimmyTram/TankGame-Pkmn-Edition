@@ -93,6 +93,7 @@ public class GameWorld extends JPanel implements Runnable {
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
         GameMap.getInstance().initializeMap(this);
+        BackgroundLoader.getInstance().initializeBackground();
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), this.projectileGameCollections);
         t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), this.projectileGameCollections);
@@ -124,18 +125,7 @@ public class GameWorld extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics();
-
-        /*
-        -------------------------------- TEMPORARY CODE --------------------------------
-        */
-        // this is just so we can see things properly.
-        buffer.setColor(Color.black);
-        buffer.fillRect(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
-        buffer.setColor(Color.white);
-        /*
-        -------------------------------- TEMPORARY CODE --------------------------------
-        */
-
+        BackgroundLoader.getInstance().drawImage(buffer);
         this.tankGameCollections.draw(buffer);
         this.projectileGameCollections.draw(buffer);
         this.wallGameCollections.draw(buffer);

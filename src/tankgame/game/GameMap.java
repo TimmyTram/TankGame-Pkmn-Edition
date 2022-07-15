@@ -1,13 +1,6 @@
 package tankgame.game;
 
-import tankgame.GameConstants;
-import tankgame.ResourceHandler;
-import tankgame.game.powerups.Barrage;
-import tankgame.game.powerups.Heal;
 import tankgame.game.powerups.PowerUp;
-import tankgame.game.powerups.SpeedBoost;
-import tankgame.game.walls.BreakableWall;
-import tankgame.game.walls.UnbreakableWall;
 import tankgame.game.walls.Wall;
 
 import java.io.BufferedReader;
@@ -52,8 +45,5 @@ public class GameMap {
             System.out.println(e);
             System.exit(-2);
         }
-
-
     }
-
 }

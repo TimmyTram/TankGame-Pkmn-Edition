@@ -146,7 +146,7 @@ public class Tank extends MovableObject {
                 0,
                 this.angle,
                 GameConstants.BULLET_SPEED,
-                ResourceHandler.getImage("pokeball"),
+                ResourceHandler.getImage(GameConstants.RESOURCE_BULLET_1),
                 this
         );
         this.projectileGameCollections.add(bullet);
@@ -196,6 +196,6 @@ public class Tank extends MovableObject {
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-        g2d.drawRect((int)(x + vx) ,(int)(y + vy),this.img.getWidth(), this.img.getHeight());
+        //g2d.drawRect((int)(x + vx) ,(int)(y + vy),this.img.getWidth(), this.img.getHeight());
     }
 }

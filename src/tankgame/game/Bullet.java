@@ -1,8 +1,5 @@
 package tankgame.game;
 
-import tankgame.GameConstants;
-import tankgame.ResourceHandler;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;

@@ -22,7 +22,7 @@ public abstract class Wall extends GameObject implements Collidable {
     @Override
     public void drawImage(Graphics g) {
         g.drawImage(super.img, (int) x, (int) y, null);
-        g.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+        //g.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
     }
 
     @Override
