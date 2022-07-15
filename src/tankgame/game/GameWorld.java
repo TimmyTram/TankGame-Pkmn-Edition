@@ -3,6 +3,7 @@ package tankgame.game;
 import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
+import tankgame.display.Camera;
 import tankgame.game.powerups.PowerUp;
 import tankgame.game.walls.Wall;
 
@@ -13,6 +14,8 @@ import java.awt.image.BufferedImage;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
+    private Camera camera1;
+    private Camera camera2;
     private Tank t1;
     private Tank t2;
     private Launcher lf;
@@ -22,8 +25,6 @@ public class GameWorld extends JPanel implements Runnable {
     private GameCollections<PowerUp> powerUpGameCollections;
     private GameCollections<Wall> wallGameCollections;
     private GameCollections<Tank> tankGameCollections;
-
-
 
     /**
      *
@@ -99,6 +100,8 @@ public class GameWorld extends JPanel implements Runnable {
         t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), this.projectileGameCollections);
         this.tankGameCollections.add(t1);
         this.tankGameCollections.add(t2);
+        camera1 = new Camera(t1);
+        camera2 = new Camera(t2);
 
         TankController tc1 = new TankController(
                 t1,
@@ -126,17 +129,30 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics();
         BackgroundLoader.getInstance().drawImage(buffer);
+
+        /*
+            -------------- Draw gameObjects ----------------
+         */
+
         this.tankGameCollections.draw(buffer);
         this.projectileGameCollections.draw(buffer);
         this.wallGameCollections.draw(buffer);
         this.powerUpGameCollections.draw(buffer);
 
+        /*
+            -------------- Draw Split Screen ----------------
+         */
+        camera1.drawSplitScreen(world);
+        camera2.drawSplitScreen(world);
+        BufferedImage leftScreen = camera1.getSplitScreen();
+        BufferedImage rightScreen = camera2.getSplitScreen();
+        g2.drawImage(leftScreen, 0, 0, null);
+        g2.drawImage(rightScreen, (GameConstants.GAME_SCREEN_WIDTH / 2) + 1, 0, null);
 
-        g2.drawImage(world, 0, 0, null); // <-- remove this when we figure out the split screen functionality
 
-//        BufferedImage leftScreen = world.getSubimage((int) t1.getX(), (int) t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2 ,GameConstants.GAME_SCREEN_HEIGHT);
-//        g2.drawImage(leftScreen, 0, 0, null);
-
+        /*
+            -------------- Draw Minimap ----------------
+         */
         BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         g2.scale(0.2, 0.2);
         g2.drawImage(minimap, GameConstants.GAME_SCREEN_WIDTH * 2 - GameConstants.GAME_SCREEN_WIDTH / 8, GameConstants.GAME_SCREEN_HEIGHT * 3 + GameConstants.GAME_SCREEN_HEIGHT / 4, null);
