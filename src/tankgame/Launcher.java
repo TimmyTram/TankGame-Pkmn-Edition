@@ -48,7 +48,7 @@ public class Launcher {
 
     public Launcher(){
         this.jf = new JFrame();             // creating a new JFrame object
-        this.jf.setTitle("Tank Wars Game"); // setting the title of the JFrame window.
+        this.jf.setTitle("Pokemon Safari Zone by Timmy Tram"); // setting the title of the JFrame window.
         this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // when the GUI is closed, this will also shutdown the VM
     }
 

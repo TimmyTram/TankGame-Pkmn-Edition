@@ -10,12 +10,13 @@ import tankgame.game.walls.UnbreakableWall;
 
 public class GameObjectFactory {
     public GameObject createGameObject(String id, int row, int col) {
-        if(id == null || id.isEmpty() || "0".equals(id)) {
+        if(id == null || id.isEmpty() || GameObjectID.EMPTY.equals(id)) {
             return null;
         }
 
         switch(id) {
-            case "3", "9" -> {
+
+            case GameObjectID.BORDER -> { // should add another flag to unbreakable rock to tell if it should have collision or not
                 return new UnbreakableWall(
                         row * ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getWidth(),
                         col * ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getHeight(),
@@ -23,7 +24,15 @@ public class GameObjectFactory {
                 );
             }
 
-            case "2" -> {
+            case GameObjectID.UNBREAKABLE_ROCK -> {
+                return new UnbreakableWall(
+                        row * ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getWidth(),
+                        col * ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getHeight(),
+                        ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL)
+                );
+            }
+
+            case GameObjectID.BREAKABLE_ROCK -> {
                 return new BreakableWall(
                         row * ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL).getWidth(),
                         col * ResourceHandler.getImage(GameConstants.RESOURCE_BREAKABLE_WALL).getHeight(),
@@ -31,7 +40,7 @@ public class GameObjectFactory {
                 );
             }
 
-            case "4" -> {
+            case GameObjectID.HEAL -> {
                 return new Heal(
                         row * ResourceHandler.getImage(GameConstants.RESOURCE_HEAL).getWidth(),
                         col * ResourceHandler.getImage(GameConstants.RESOURCE_HEAL).getHeight(),
@@ -39,7 +48,7 @@ public class GameObjectFactory {
                 );
             }
 
-            case "5" -> {
+            case GameObjectID.BARRAGE -> {
                 return new Barrage(
                         row * ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE).getWidth(),
                         col * ResourceHandler.getImage(GameConstants.RESOURCE_BARRAGE).getHeight(),
@@ -47,7 +56,7 @@ public class GameObjectFactory {
                 );
             }
 
-            case "6" -> {
+            case GameObjectID.SPEED_BOOST -> {
                 return new SpeedBoost(
                         row * ResourceHandler.getImage(GameConstants.RESOURCE_SPEED).getWidth(),
                         col * ResourceHandler.getImage(GameConstants.RESOURCE_SPEED).getHeight(),
