@@ -110,8 +110,8 @@ public class Tank extends MovableObject {
         if(lives <= 0) {
             System.out.println("game over");
         }
-
         tick++;
+        checkBorder();
     }
 
     private void rotateLeft() {
@@ -171,17 +171,19 @@ public class Tank extends MovableObject {
     }
 
     private void checkBorder() {
-        if (x < 30) {
-            x = 30;
+        int limitX = ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getHeight();
+        if (x < limitX) {
+            x = limitX;
         }
-        if (x >= GameConstants.WORLD_WIDTH - 88) {
-            x = GameConstants.WORLD_WIDTH - 88;
+        if (x >= GameConstants.WORLD_WIDTH - limitX * 2) {
+            x = GameConstants.WORLD_WIDTH - limitX * 2;
         }
-        if (y < 40) {
-            y = 40;
+        if (y < limitY) {
+            y = limitY;
         }
-        if (y >= GameConstants.WORLD_HEIGHT - 80) {
-            y = GameConstants.WORLD_HEIGHT - 80;
+        if (y >= GameConstants.WORLD_HEIGHT - limitY * 2) {
+            y = GameConstants.WORLD_HEIGHT - limitY * 2;
         }
     }
 
