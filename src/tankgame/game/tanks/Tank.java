@@ -2,6 +2,7 @@ package tankgame.game.tanks;
 
 import tankgame.GameConstants;
 import tankgame.ResourceHandler;
+import tankgame.game.GameWorld;
 import tankgame.game.projectiles.Bullet;
 import tankgame.game.GameObjectCollections;
 import tankgame.game.MovableObject;
@@ -22,19 +23,26 @@ public class Tank extends MovableObject {
     private boolean shootPressed;
     private int tick = 100;
     private int ticksTillNextShot = 100;
-    private final GameObjectCollections<Projectile> projectileGameCollections;
+    //private final GameObjectCollections<Projectile> projectileGameCollections;
     private final int maxHealthPoints = 100;
     private int currentHealthPoints = 100;
     private final int damage = 10;
     private int lives = 3;
     private boolean isLoser = false;
     private String name;
+    private GameWorld gw;
 
 
-    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameObjectCollections<Projectile> projectileGameCollections) {
+//    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameObjectCollections<Projectile> projectileGameCollections) {
+//        super(x, y, 2, vx, vy, angle, img);
+//        this.name = name;
+//        this.projectileGameCollections = projectileGameCollections;
+//    }
+
+    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
         this.name = name;
-        this.projectileGameCollections = projectileGameCollections;
+        this.gw = gw;
     }
 
     public void setX(float x){ this.x = x; }
@@ -144,7 +152,8 @@ public class Tank extends MovableObject {
                 ResourceHandler.getImage(GameConstants.RESOURCE_BULLET_1),
                 this
         );
-        this.projectileGameCollections.add(bullet);
+        //this.projectileGameCollections.add(bullet);
+        gw.addToProjectileGameObjectCollection(bullet);
         ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1).play();
     }
 

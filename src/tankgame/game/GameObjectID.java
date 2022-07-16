@@ -2,6 +2,8 @@ package tankgame.game;
 
 public class GameObjectID {
 
+    public static final String PLAYER_1 = "PLAYER1";
+    public static final String PLAYER_2 = "PLAYER2";
     public static final String BORDER = "BORDER";
     public static final String EMPTY = "EMPTY";
     public static final String UNBREAKABLE_ROCK = "UROCK";

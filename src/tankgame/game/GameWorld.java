@@ -47,8 +47,7 @@ public class GameWorld extends JPanel implements Runnable {
             this.resetGame();
             while (true) {
                 this.tick++;
-                this.t1.update();
-                this.t2.update();
+                this.tankGameObjectCollections.update();
                 this.projectileGameObjectCollections.update();
                 checkCollisions();
                 this.repaint();   // redraw game
@@ -70,11 +69,11 @@ public class GameWorld extends JPanel implements Runnable {
 //                }
 
 
-                if(t2.getIsLoser()) {
+                if(tankGameObjectCollections.get(1).getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
                     return;
-                } else if(t1.getIsLoser()) {
+                } else if(tankGameObjectCollections.get(0).getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
                     return;
@@ -91,8 +90,8 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public void resetGame() {
         this.tick = 0;
-        this.t1.setX(300);
-        this.t1.setY(300);
+//        this.t1.setX(300);
+//        this.t1.setY(300);
     }
 
     /**
@@ -114,28 +113,23 @@ public class GameWorld extends JPanel implements Runnable {
         GameMap.getInstance().initializeMap(this);
         BackgroundLoader.getInstance().initializeBackground();
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), "Lucas", this.projectileGameObjectCollections);
-        t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), "Dawn",this.projectileGameObjectCollections);
-
-        this.tankGameObjectCollections.add(t1);
-        this.tankGameObjectCollections.add(t2);
         minimap = new Minimap();
         minimap.initializeMiniMapDimensions();
-        camera1 = new Camera(t1, minimap.getScaledHeight());
-        camera2 = new Camera(t2, minimap.getScaledHeight());
+        camera1 = new Camera(tankGameObjectCollections.get(0), minimap.getScaledHeight());
+        camera2 = new Camera(tankGameObjectCollections.get(1), minimap.getScaledHeight());
 
         double correctionOffset = 1.13;
         double leftRightOffset = 0.07;
 
         gameHUD1 = new GameHUD(
-                t1,
+                tankGameObjectCollections.get(0),
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset)),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset)
         );
         gameHUD2 = new GameHUD(
-                t2,
+                tankGameObjectCollections.get(1),
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20)),
@@ -143,7 +137,7 @@ public class GameWorld extends JPanel implements Runnable {
         );
 
         TankController tc1 = new TankController(
-                t1,
+                tankGameObjectCollections.get(0),
                 KeyEvent.VK_W,
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
@@ -151,7 +145,7 @@ public class GameWorld extends JPanel implements Runnable {
                 KeyEvent.VK_SPACE
         );
         TankController tc2 = new TankController(
-                t2,
+                tankGameObjectCollections.get(1),
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
@@ -192,42 +186,29 @@ public class GameWorld extends JPanel implements Runnable {
         g2.drawImage(leftScreen, 0, 0, null);
         g2.drawImage(rightScreen, (GameConstants.GAME_SCREEN_WIDTH / 2) + 4, 0, null);
 
-
         /*
-            -------------- TESTING WIP ----------------
+            -------------- Draw HUD ----------------
          */
-//        g2.setColor(Color.red);
-//
-//        g2.fillRect( // player 1 area
-//                0,
-//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13),
-//                (int)(minimap.getScaledWidth() * 1.33),
-//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13)
-//        );
-//
-//        g2.fillRect( // player area 2
-//                (int)(minimap.getScaledWidth() * 1.33),
-//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13),
-//                GameConstants.GAME_SCREEN_WIDTH,
-//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13)
-//        );
 
         gameHUD1.drawHUD(g2);
         gameHUD2.drawHUD(g2);
-
-        /*
-            -------------- TESTING WIP ----------------
-         */
-
         minimap.drawMinimap(world, g2);
     }
 
-    public void addToWallCollection(Wall wall) {
+    public void addToWallObjectCollection(Wall wall) {
         this.wallGameObjectCollections.add(wall);
     }
 
-    public void addToPowerUpGameCollection(PowerUp powerUp) {
+    public void addToPowerUpGameObjectCollection(PowerUp powerUp) {
         this.powerUpGameObjectCollections.add(powerUp);
+    }
+
+    public void addToTankGameObjectCollection(Tank tank) {
+        this.tankGameObjectCollections.add(tank);
+    }
+
+    public void addToProjectileGameObjectCollection(Projectile projectile) {
+        this.projectileGameObjectCollections.add(projectile);
     }
 
     /*

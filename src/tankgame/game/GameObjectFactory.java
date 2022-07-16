@@ -5,16 +5,43 @@ import tankgame.ResourceHandler;
 import tankgame.game.powerups.Barrage;
 import tankgame.game.powerups.Heal;
 import tankgame.game.powerups.SpeedBoost;
+import tankgame.game.tanks.Tank;
 import tankgame.game.walls.BreakableWall;
 import tankgame.game.walls.UnbreakableWall;
 
 public class GameObjectFactory {
-    public GameObject createGameObject(String id, int row, int col) {
+    public GameObject createGameObject(String id, int row, int col, GameWorld gw) {
         if(id == null || id.isEmpty() || GameObjectID.EMPTY.equals(id)) {
             return null;
         }
 
         switch(id) {
+
+            case GameObjectID.PLAYER_1 -> {
+                return new Tank(
+                        row * ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1).getWidth(),
+                        col * ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1).getHeight(),
+                        0,
+                        0,
+                        0,
+                        ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1),
+                        "Lucas",
+                        gw
+                );
+            }
+
+            case GameObjectID.PLAYER_2 -> {
+                return new Tank(
+                        row * ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2).getWidth(),
+                        col * ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2).getHeight(),
+                        0,
+                        0,
+                        0,
+                        ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2),
+                        "Dawn",
+                        gw
+                );
+            }
 
             case GameObjectID.BORDER -> { // should add another flag to unbreakable rock to tell if it should have collision or not
                 return new UnbreakableWall(
