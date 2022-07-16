@@ -3,11 +3,23 @@ package tankgame.game;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GameCollections<T extends GameObject> {
+public class GameObjectCollections<T extends GameObject> {
 
     private final ArrayList<T> gameObjects = new ArrayList<>();
 
-    public GameCollections() {}
+    public GameObjectCollections() {}
+
+    public void update() {
+        for(T gameObject : gameObjects) {
+            gameObject.update();
+        }
+    }
+
+    public void draw(Graphics g) {
+        for(T gameObject : gameObjects) {
+            gameObject.drawImage(g);
+        }
+    }
 
     public boolean add(T gameObject) {
         if(gameObject == null) {
@@ -23,17 +35,6 @@ public class GameCollections<T extends GameObject> {
         return gameObjects.remove(gameObject);
     }
 
-    public void update() {
-        for(T gameObject : gameObjects) {
-            gameObject.update();
-        }
-    }
-
-    public void draw(Graphics g) {
-        for(T gameObject : gameObjects) {
-            gameObject.drawImage(g);
-        }
-    }
 
     public int size() {
         return this.gameObjects.size();
@@ -52,4 +53,9 @@ public class GameCollections<T extends GameObject> {
         }
         return this.gameObjects.indexOf(gameObject);
     }
+
+    public void clear() {
+        this.gameObjects.clear();
+    }
+
 }

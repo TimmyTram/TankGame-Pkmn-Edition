@@ -9,20 +9,46 @@ public class Minimap {
 
     private static final double SCALE = 0.2;
 
+    private BufferedImage minimap;
+    private double scaledWidth;
+    private double scaledHeight;
+
+    private double truePositionX;
+    private double truePositionY;
+
     public Minimap() {}
 
-    /**
-     * Function performs math calculations to place the minimap at the center of the screen.
-     * @param world an image of the game world
-     * @param g2 used to make a sub-image which represents the minimap of the world
-     */
+    public void initializeMiniMapDimensions() {
+        scaledWidth = GameConstants.WORLD_WIDTH * SCALE;
+        scaledHeight = GameConstants.WORLD_HEIGHT * SCALE;
+        truePositionX = GameConstants.WORLD_WIDTH + scaledWidth - 10;
+        truePositionY = 2 * GameConstants.WORLD_HEIGHT + scaledHeight;
+    }
+
+
+//    public void drawMinimap(BufferedImage world, Graphics2D g2) {
+//        BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+//        g2.scale(SCALE, SCALE);
+//        scaledWidth = GameConstants.WORLD_WIDTH * SCALE;
+//        scaledHeight = GameConstants.WORLD_HEIGHT * SCALE;
+//        double truePositionX = GameConstants.WORLD_WIDTH + scaledWidth - 10;
+//        double truePositionY = 2 * GameConstants.WORLD_HEIGHT + scaledHeight;
+//        g2.drawImage(minimap, (int)(truePositionX), (int)(truePositionY), null);
+//        System.out.println(scaledHeight);
+//    }
+
     public void drawMinimap(BufferedImage world, Graphics2D g2) {
         BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         g2.scale(SCALE, SCALE);
-        double scaledWidth = GameConstants.WORLD_WIDTH * SCALE;
-        double scaledHeight = GameConstants.WORLD_HEIGHT * SCALE;
-        double truePositionX = GameConstants.WORLD_WIDTH + scaledWidth - 10;
-        double truePositionY = 2 * GameConstants.WORLD_HEIGHT + scaledHeight;
         g2.drawImage(minimap, (int)(truePositionX), (int)(truePositionY), null);
     }
+
+    public int getScaledWidth() {
+        return (int) this.scaledWidth;
+    }
+
+    public int getScaledHeight() {
+        return (int) this.scaledHeight;
+    }
+
 }

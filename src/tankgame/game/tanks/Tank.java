@@ -3,7 +3,7 @@ package tankgame.game.tanks;
 import tankgame.GameConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.projectiles.Bullet;
-import tankgame.game.GameCollections;
+import tankgame.game.GameObjectCollections;
 import tankgame.game.MovableObject;
 import tankgame.game.projectiles.Projectile;
 
@@ -25,7 +25,7 @@ public class Tank extends MovableObject {
     private int tick = 100;
     private int ticksTillNextShot = 100;
 
-    private final GameCollections<Projectile> projectileGameCollections;
+    private final GameObjectCollections<Projectile> projectileGameCollections;
 
     private final int maxHealthPoints = 100;
 
@@ -34,8 +34,10 @@ public class Tank extends MovableObject {
 
     private int lives = 3;
 
+    private boolean isLoser = false;
 
-    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, GameCollections<Projectile> projectileGameCollections) {
+
+    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, GameObjectCollections<Projectile> projectileGameCollections) {
         super(x, y, 2, vx, vy, angle, img);
         this.projectileGameCollections = projectileGameCollections;
     }
@@ -107,14 +109,8 @@ public class Tank extends MovableObject {
             tick = 0;
         }
 
-        if(currentHealthPoints <= 0) {
-            this.lives -= 1;
-        }
-
-        if(lives <= 0) {
-            System.out.println("game over");
-        }
         tick++;
+        checkAlive();
         checkBorder();
     }
 
@@ -157,6 +153,20 @@ public class Tank extends MovableObject {
         ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1).play();
     }
 
+    private void checkAlive() {
+        if(this.currentHealthPoints <= 0 && this.lives > 0) {
+            this.lives -= 1;
+            this.currentHealthPoints = this.maxHealthPoints;
+            System.out.println(this + " LOST A LIFE. LIVES REMAINING: " + this.lives);
+        } else if(this.currentHealthPoints <= 0) {
+            this.isLoser = true;
+        }
+    }
+
+    public boolean getIsLoser() {
+        return this.isLoser;
+    }
+
     public void takeDamage() {
         this.currentHealthPoints -= this.damage;
     }
@@ -189,6 +199,14 @@ public class Tank extends MovableObject {
         if (y >= GameConstants.WORLD_HEIGHT - limitY * 2) {
             y = GameConstants.WORLD_HEIGHT - limitY * 2;
         }
+    }
+
+    public int getCurrentHealthPoints() {
+        return this.currentHealthPoints;
+    }
+
+    public int getLives() {
+        return this.lives;
     }
 
     @Override
