@@ -4,6 +4,7 @@ import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
 import tankgame.display.Camera;
+import tankgame.display.GameHUD;
 import tankgame.display.Minimap;
 import tankgame.game.powerups.PowerUp;
 import tankgame.game.projectiles.Projectile;
@@ -18,15 +19,15 @@ import java.awt.image.BufferedImage;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
-
     private Minimap minimap;
     private Camera camera1;
     private Camera camera2;
+    private GameHUD gameHUD1;
+    private GameHUD gameHUD2;
     private Tank t1;
     private Tank t2;
     private Launcher lf;
     private long tick = 0;
-
     private GameObjectCollections<Projectile> projectileGameObjectCollections;
     private GameObjectCollections<PowerUp> powerUpGameObjectCollections;
     private GameObjectCollections<Wall> wallGameObjectCollections;
@@ -113,14 +114,33 @@ public class GameWorld extends JPanel implements Runnable {
         GameMap.getInstance().initializeMap(this);
         BackgroundLoader.getInstance().initializeBackground();
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), this.projectileGameObjectCollections);
-        t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), this.projectileGameObjectCollections);
+        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_1), "Lucas", this.projectileGameObjectCollections);
+        t2 = new Tank(600, 600, 0, 0, (short) 0, ResourceHandler.getImage(GameConstants.RESOURCE_TANK_2), "Dawn",this.projectileGameObjectCollections);
+
         this.tankGameObjectCollections.add(t1);
         this.tankGameObjectCollections.add(t2);
         minimap = new Minimap();
         minimap.initializeMiniMapDimensions();
         camera1 = new Camera(t1, minimap.getScaledHeight());
         camera2 = new Camera(t2, minimap.getScaledHeight());
+
+        double correctionOffset = 1.13;
+        double leftRightOffset = 0.07;
+
+        gameHUD1 = new GameHUD(
+                t1,
+                0,
+                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
+                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset)),
+                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset)
+        );
+        gameHUD2 = new GameHUD(
+                t2,
+                GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
+                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
+                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20)),
+                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset)
+        );
 
         TankController tc1 = new TankController(
                 t1,
@@ -171,6 +191,33 @@ public class GameWorld extends JPanel implements Runnable {
         BufferedImage rightScreen = camera2.getSplitScreen();
         g2.drawImage(leftScreen, 0, 0, null);
         g2.drawImage(rightScreen, (GameConstants.GAME_SCREEN_WIDTH / 2) + 4, 0, null);
+
+
+        /*
+            -------------- TESTING WIP ----------------
+         */
+//        g2.setColor(Color.red);
+//
+//        g2.fillRect( // player 1 area
+//                0,
+//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13),
+//                (int)(minimap.getScaledWidth() * 1.33),
+//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13)
+//        );
+//
+//        g2.fillRect( // player area 2
+//                (int)(minimap.getScaledWidth() * 1.33),
+//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13),
+//                GameConstants.GAME_SCREEN_WIDTH,
+//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * 1.13)
+//        );
+
+        gameHUD1.drawHUD(g2);
+        gameHUD2.drawHUD(g2);
+
+        /*
+            -------------- TESTING WIP ----------------
+         */
 
         minimap.drawMinimap(world, g2);
     }

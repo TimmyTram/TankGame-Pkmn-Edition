@@ -15,30 +15,25 @@ public class Tank extends MovableObject {
 
     private float R = 2;
     private float ROTATIONSPEED = 2.25f;
-
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
     private boolean LeftPressed;
-
     private boolean shootPressed;
     private int tick = 100;
     private int ticksTillNextShot = 100;
-
     private final GameObjectCollections<Projectile> projectileGameCollections;
-
     private final int maxHealthPoints = 100;
-
     private int currentHealthPoints = 100;
     private final int damage = 10;
-
     private int lives = 3;
-
     private boolean isLoser = false;
+    private String name;
 
 
-    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, GameObjectCollections<Projectile> projectileGameCollections) {
+    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameObjectCollections<Projectile> projectileGameCollections) {
         super(x, y, 2, vx, vy, angle, img);
+        this.name = name;
         this.projectileGameCollections = projectileGameCollections;
     }
 
@@ -205,8 +200,16 @@ public class Tank extends MovableObject {
         return this.currentHealthPoints;
     }
 
+    public int getMaxHealthPoints() {
+        return this.maxHealthPoints;
+    }
+
     public int getLives() {
         return this.lives;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     @Override

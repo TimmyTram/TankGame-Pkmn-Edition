@@ -10,7 +10,6 @@ public class Camera {
     private static final int SPLIT_SCREEN_WIDTH = (GameConstants.GAME_SCREEN_WIDTH / 2);
     private BufferedImage splitScreen;
     private final Tank tank;
-
     private final int HUD_LIMIT;
 
     public Camera(Tank tank, int HUD_LIMIT) {

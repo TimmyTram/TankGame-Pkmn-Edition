@@ -25,18 +25,6 @@ public class Minimap {
         truePositionY = 2 * GameConstants.WORLD_HEIGHT + scaledHeight;
     }
 
-
-//    public void drawMinimap(BufferedImage world, Graphics2D g2) {
-//        BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
-//        g2.scale(SCALE, SCALE);
-//        scaledWidth = GameConstants.WORLD_WIDTH * SCALE;
-//        scaledHeight = GameConstants.WORLD_HEIGHT * SCALE;
-//        double truePositionX = GameConstants.WORLD_WIDTH + scaledWidth - 10;
-//        double truePositionY = 2 * GameConstants.WORLD_HEIGHT + scaledHeight;
-//        g2.drawImage(minimap, (int)(truePositionX), (int)(truePositionY), null);
-//        System.out.println(scaledHeight);
-//    }
-
     public void drawMinimap(BufferedImage world, Graphics2D g2) {
         BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         g2.scale(SCALE, SCALE);
