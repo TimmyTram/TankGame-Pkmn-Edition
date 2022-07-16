@@ -24,14 +24,13 @@ public class GameWorld extends JPanel implements Runnable {
     private Camera camera2;
     private GameHUD gameHUD1;
     private GameHUD gameHUD2;
-    private Tank t1;
-    private Tank t2;
     private Launcher lf;
     private long tick = 0;
     private GameObjectCollections<Projectile> projectileGameObjectCollections;
     private GameObjectCollections<PowerUp> powerUpGameObjectCollections;
     private GameObjectCollections<Wall> wallGameObjectCollections;
     private GameObjectCollections<Tank> tankGameObjectCollections;
+    private boolean gameOver = false;
 
     /**
      *
@@ -44,7 +43,10 @@ public class GameWorld extends JPanel implements Runnable {
     @Override
     public void run() {
         try {
-            this.resetGame();
+            if(gameOver) {
+                System.out.println("resetting?");
+                this.resetGame();
+            }
             while (true) {
                 this.tick++;
                 this.tankGameObjectCollections.update();
@@ -72,10 +74,13 @@ public class GameWorld extends JPanel implements Runnable {
                 if(tankGameObjectCollections.get(1).getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
+                    gameOver = true;
                     return;
                 } else if(tankGameObjectCollections.get(0).getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
+
+                    gameOver = true;
                     return;
                 }
 
@@ -90,8 +95,8 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public void resetGame() {
         this.tick = 0;
-//        this.t1.setX(300);
-//        this.t1.setY(300);
+        this.InitializeGame();
+        this.gameOver = false;
     }
 
     /**
