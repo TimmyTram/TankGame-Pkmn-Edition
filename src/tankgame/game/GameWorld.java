@@ -4,6 +4,7 @@ import tankgame.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
 import tankgame.display.Camera;
+import tankgame.display.Minimap;
 import tankgame.game.powerups.PowerUp;
 import tankgame.game.projectiles.Projectile;
 import tankgame.game.tanks.Tank;
@@ -17,6 +18,8 @@ import java.awt.image.BufferedImage;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
+
+    private Minimap minimap;
     private Camera camera1;
     private Camera camera2;
     private Tank t1;
@@ -105,6 +108,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.tankGameCollections.add(t2);
         camera1 = new Camera(t1);
         camera2 = new Camera(t2);
+        minimap = new Minimap();
 
         TankController tc1 = new TankController(
                 t1,
@@ -152,13 +156,7 @@ public class GameWorld extends JPanel implements Runnable {
         g2.drawImage(leftScreen, 0, 0, null);
         g2.drawImage(rightScreen, (GameConstants.GAME_SCREEN_WIDTH / 2) + 1, 0, null);
 
-
-        /*
-            -------------- Draw Minimap ----------------
-         */
-        BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
-        g2.scale(0.2, 0.2);
-        g2.drawImage(minimap, GameConstants.GAME_SCREEN_WIDTH * 2 - GameConstants.GAME_SCREEN_WIDTH / 8, GameConstants.GAME_SCREEN_HEIGHT * 3 + GameConstants.GAME_SCREEN_HEIGHT / 4, null);
+        minimap.drawMinimap(world, g2);
     }
 
     public void addToWallCollection(Wall wall) {
