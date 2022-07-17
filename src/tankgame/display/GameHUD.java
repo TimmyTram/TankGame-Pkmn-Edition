@@ -1,5 +1,7 @@
 package tankgame.display;
 
+import tankgame.ResourceConstants;
+import tankgame.ResourceHandler;
 import tankgame.game.tanks.Tank;
 
 import java.awt.*;
@@ -12,14 +14,12 @@ public class GameHUD {
     private int x;
     private int y;
     private int width;
-    private int height;
 
-    public GameHUD(Tank tank, int x, int y, int width, int height) {
+    public GameHUD(Tank tank, int x, int y, int width) {
         this.tank = tank;
         this.x = x;
         this.y = y;
         this.width = width;
-        this.height = height;
     }
 
     public void drawHUD(Graphics2D g2) {
@@ -29,6 +29,14 @@ public class GameHUD {
 
     private void drawLives(Graphics2D g2) {
         int lives = this.tank.getLives();
+        int livesXPosition = x + offset;
+        int livesYPosition = y + (2 * offset);
+        int livesXOffset = ResourceHandler.getImage(ResourceConstants.RESOURCE_LIVES).getWidth();
+        for(int i = 0; i < lives; i++) {
+            livesXPosition += livesXOffset * i;
+            g2.drawImage(ResourceHandler.getImage(ResourceConstants.RESOURCE_LIVES), livesXPosition, livesYPosition, null);
+            livesXPosition = x + offset;
+        }
     }
 
     private void drawHealthBar(Graphics2D g2) {

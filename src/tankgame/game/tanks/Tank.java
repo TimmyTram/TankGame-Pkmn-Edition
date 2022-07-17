@@ -25,7 +25,7 @@ public class Tank extends MovableObject {
     private final int maxHealthPoints = 100;
     private int currentHealthPoints = 100;
     private final int damage = 10;
-    private int lives = 3;
+    private int lives = 4;
     private boolean isLoser = false;
     private String name;
     private GameWorld gw;

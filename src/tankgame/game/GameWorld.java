@@ -117,15 +117,13 @@ public class GameWorld extends JPanel implements Runnable {
                 tankGameObjectCollections.get(0),
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset)),
-                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset)
+                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset))
         );
         gameHUD2 = new GameHUD(
                 tankGameObjectCollections.get(1),
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20)),
-                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset)
+                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20))
         );
 
         TankController tc1 = new TankController(

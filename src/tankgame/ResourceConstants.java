@@ -2,6 +2,8 @@ package tankgame;
 
 public class ResourceConstants {
 
+    public static final String RESOURCE_LIVES = "lives.png";
+
     public static final String RESOURCE_FLOOR_TILE = "floorTile.png";
 
     public static final String RESOURCE_MENU_TITLE = "title.png";

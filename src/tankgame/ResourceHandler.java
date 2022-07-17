@@ -39,6 +39,7 @@ public class ResourceHandler {
                 ResourceHandler.images.put(ResourceConstants.RESOURCE_HEAL, readImg("powerups/" + ResourceConstants.RESOURCE_HEAL));
                 ResourceHandler.images.put(ResourceConstants.RESOURCE_SPEED, readImg("powerups/" + ResourceConstants.RESOURCE_SPEED));
                 ResourceHandler.images.put(ResourceConstants.RESOURCE_MENU_TITLE, readImg("menu/" + ResourceConstants.RESOURCE_MENU_TITLE));
+                ResourceHandler.images.put(ResourceConstants.RESOURCE_LIVES, readImg("lives/" + ResourceConstants.RESOURCE_LIVES));
             } catch (IOException e) {
                 System.out.println(e);
                 e.printStackTrace();
