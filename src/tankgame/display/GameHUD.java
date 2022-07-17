@@ -23,10 +23,8 @@ public class GameHUD {
     }
 
     public void drawHUD(Graphics2D g2) {
-        //g2.setColor(Color.red);
-        //g2.fillRect(x, y, width, height);
-        this.drawLives(g2);
         this.drawHealthBar(g2);
+        this.drawLives(g2);
     }
 
     private void drawLives(Graphics2D g2) {

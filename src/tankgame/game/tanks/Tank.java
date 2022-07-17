@@ -1,6 +1,7 @@
 package tankgame.game.tanks;
 
 import tankgame.GameConstants;
+import tankgame.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.GameWorld;
 import tankgame.game.projectiles.Bullet;
@@ -138,11 +139,11 @@ public class Tank extends MovableObject {
                 0,
                 this.angle,
                 GameConstants.BULLET_SPEED,
-                ResourceHandler.getImage(GameConstants.RESOURCE_BULLET_1),
+                ResourceHandler.getImage(ResourceConstants.RESOURCE_BULLET_1),
                 this
         );
         gw.addToProjectileGameObjectCollection(bullet);
-        ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1).play();
+        ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1).play();
     }
 
     private void checkAlive() {
@@ -177,8 +178,8 @@ public class Tank extends MovableObject {
     }
 
     private void checkBorder() {
-        int limitX = ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getWidth();
-        int limitY = ResourceHandler.getImage(GameConstants.RESOURCE_UNBREAKABLE_WALL).getHeight();
+        int limitX = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getHeight();
         if (x < limitX) {
             x = limitX;
         }

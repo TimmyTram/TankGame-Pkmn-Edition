@@ -2,6 +2,7 @@ package tankgame.game;
 
 import tankgame.GameConstants;
 import tankgame.Launcher;
+import tankgame.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.display.Camera;
 import tankgame.display.GameHUD;
@@ -44,7 +45,6 @@ public class GameWorld extends JPanel implements Runnable {
     public void run() {
         try {
             if(gameOver) {
-                System.out.println("resetting?");
                 this.resetGame();
             }
             while (true) {
@@ -60,17 +60,6 @@ public class GameWorld extends JPanel implements Runnable {
                  */
                 Thread.sleep(1000 / 144);
 
-                /*
-                 * simulate an end game event
-                 * we will do this with by ending the game when ~8 seconds has passed.
-                 * This will need to be changed since the will always close after 8 seconds
-                 */
-//                if (this.tick >= 144 * 60) {
-//                    this.lf.setFrame("end");
-//                    return;
-//                }
-
-
                 if(tankGameObjectCollections.get(1).getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
@@ -79,11 +68,9 @@ public class GameWorld extends JPanel implements Runnable {
                 } else if(tankGameObjectCollections.get(0).getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
-
                     gameOver = true;
                     return;
                 }
-
             }
         } catch (InterruptedException ignored) {
             System.out.println(ignored);
@@ -268,7 +255,7 @@ public class GameWorld extends JPanel implements Runnable {
                 if(projectileRectangle.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
                     System.out.println("Hit tank " + (this.tankGameObjectCollections.indexOf(tank) + 1) + "!");
                     if(this.projectileGameObjectCollections.remove(projectile)) {
-                        ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
+                        ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
                         tank.takeDamage();
                         return;
                     }
@@ -281,9 +268,9 @@ public class GameWorld extends JPanel implements Runnable {
                 if(projectileRectangle.intersects(wallRectangle)) {
                     wall.setDestroyed(true);
                     this.projectileGameObjectCollections.remove(projectile);
-                    ResourceHandler.getSound(GameConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
+                    ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
                     if(wall.getDestroyed()) {
-                        ResourceHandler.getSound(GameConstants.RESOURCE_ROCK_SMASH_SOUND).play();
+                        ResourceHandler.getSound(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND).play();
                         this.wallGameObjectCollections.remove(wall);
                     }
                     return;
