@@ -6,17 +6,14 @@ import tankgame.ResourceHandler;
 import tankgame.display.Camera;
 import tankgame.display.GameHUD;
 import tankgame.display.Minimap;
-import tankgame.game.powerups.PowerUp;
 import tankgame.game.projectiles.Projectile;
 import tankgame.game.tanks.Tank;
 import tankgame.game.tanks.TankController;
-import tankgame.game.walls.Wall;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ListIterator;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
@@ -27,11 +24,6 @@ public class GameWorld extends JPanel implements Runnable {
     private GameHUD gameHUD2;
     private Launcher lf;
     private long tick = 0;
-    private GameObjectCollections<Projectile> projectileGameObjectCollections;
-    private GameObjectCollections<PowerUp> powerUpGameObjectCollections;
-    private GameObjectCollections<Wall> wallGameObjectCollections;
-    private GameObjectCollections<Tank> tankGameObjectCollections;
-
     private GameObjectCollections<MovableObject> movableObjectGameObjectCollections;
     private GameObjectCollections<StationaryObject> stationaryObjectGameObjectCollections;
 
@@ -53,10 +45,9 @@ public class GameWorld extends JPanel implements Runnable {
             }
             while (true) {
                 this.tick++;
-                //this.tankGameObjectCollections.update();
-                //this.projectileGameObjectCollections.update();
                 this.movableObjectGameObjectCollections.update();
                 checkCollisions();
+                deleteGarbage();
                 this.repaint();   // redraw game
 
                 /*
@@ -65,12 +56,12 @@ public class GameWorld extends JPanel implements Runnable {
                  */
                 Thread.sleep(1000 / 144);
 
-                if(tankGameObjectCollections.get(1).getIsLoser()) {
+                if( ((Tank)(this.movableObjectGameObjectCollections.get(1))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
                     gameOver = true;
                     return;
-                } else if(tankGameObjectCollections.get(0).getIsLoser()) {
+                } else if( ((Tank)(this.movableObjectGameObjectCollections.get(0))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
                     gameOver = true;
@@ -100,11 +91,6 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        this.tankGameObjectCollections = new GameObjectCollections<>();
-        this.projectileGameObjectCollections = new GameObjectCollections<>();
-        this.powerUpGameObjectCollections = new GameObjectCollections<>();
-        this.wallGameObjectCollections = new GameObjectCollections<>();
-
         this.movableObjectGameObjectCollections = new GameObjectCollections<>();
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
 
@@ -120,19 +106,6 @@ public class GameWorld extends JPanel implements Runnable {
 
         double correctionOffset = 1.13;
         double leftRightOffset = 0.07;
-
-//        gameHUD1 = new GameHUD(
-//                tankGameObjectCollections.get(0),
-//                0,
-//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-//                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset))
-//        );
-//        gameHUD2 = new GameHUD(
-//                tankGameObjectCollections.get(1),
-//                GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
-//                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-//                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20))
-//        );
 
         gameHUD1 = new GameHUD(
                 (Tank) movableObjectGameObjectCollections.get(0),
@@ -177,19 +150,8 @@ public class GameWorld extends JPanel implements Runnable {
         g2.setColor(Color.black);
         g2.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
 
-        /*
-            -------------- Draw gameObjects ----------------
-         */
-
-        //this.tankGameObjectCollections.draw(buffer);
-        //this.projectileGameObjectCollections.draw(buffer);
         this.movableObjectGameObjectCollections.draw(buffer);
-        this.wallGameObjectCollections.draw(buffer);
-        this.powerUpGameObjectCollections.draw(buffer);
-
-        /*
-            -------------- Draw Split Screen ----------------
-         */
+        this.stationaryObjectGameObjectCollections.draw(buffer);
 
         camera1.drawSplitScreen(world);
         camera2.drawSplitScreen(world);
@@ -198,29 +160,9 @@ public class GameWorld extends JPanel implements Runnable {
         g2.drawImage(leftScreen, 0, 0, null);
         g2.drawImage(rightScreen, (GameConstants.GAME_SCREEN_WIDTH / 2) + 4, 0, null);
 
-        /*
-            -------------- Draw HUD ----------------
-         */
-
         gameHUD1.drawHUD(g2);
         gameHUD2.drawHUD(g2);
         minimap.drawMinimap(world, g2);
-    }
-
-    public void addToWallObjectCollection(Wall wall) {
-        this.wallGameObjectCollections.add(wall);
-    }
-
-    public void addToPowerUpGameObjectCollection(PowerUp powerUp) {
-        this.powerUpGameObjectCollections.add(powerUp);
-    }
-
-    public void addToTankGameObjectCollection(Tank tank) {
-        this.tankGameObjectCollections.add(tank);
-    }
-
-    public void addToProjectileGameObjectCollection(Projectile projectile) {
-        this.projectileGameObjectCollections.add(projectile);
     }
 
     public void addToMovableGameObjectCollections(MovableObject movableObject) {
@@ -230,7 +172,6 @@ public class GameWorld extends JPanel implements Runnable {
     public void addToStationaryGameObjectCollections(StationaryObject stationaryObject) {
         this.stationaryObjectGameObjectCollections.add(stationaryObject);
     }
-
 
     private void checkCollisions() {
         for(int i = 0; i < this.movableObjectGameObjectCollections.size(); i++) {
@@ -245,93 +186,19 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     private void deleteGarbage() {
+        for(int i = 0; i < this.movableObjectGameObjectCollections.size(); i++) {
+            MovableObject movableObject = this.movableObjectGameObjectCollections.get(i);
+            if(movableObject instanceof Projectile && ((Projectile) movableObject).getIsDestroyed()) {
+                this.movableObjectGameObjectCollections.remove(movableObject);
+            }
+        }
 
+        for(int i = 0; i < this.stationaryObjectGameObjectCollections.size(); i++) {
+            StationaryObject stationaryObject = this.stationaryObjectGameObjectCollections.get(i);
+            if(stationaryObject.getIsDestroyed()) {
+                this.stationaryObjectGameObjectCollections.remove(stationaryObject);
+            }
+        }
     }
 
-
-//    private void checkCollisions() {
-//        collisionWallVsTank();
-//        collisionProjectile();
-//        collisionTankVsPowerUp();
-//    }
-//
-//    private void collisionWallVsTank() {
-//        float offset = 1.09f;
-//
-//        for (int i = 0; i < this.tankGameObjectCollections.size(); i++) {
-//            Tank tank = this.tankGameObjectCollections.get(i);
-//            for (int j = 0; j < this.wallGameObjectCollections.size(); j++) {
-//                Wall wall = this.wallGameObjectCollections.get(j);
-//                Rectangle wallRectangle = wall.getBounds();
-//                if (tank.getBoundsHorizontal().intersects(wallRectangle)) {
-//                    if (tank.getVx() > 0) { // collision for left side of object
-//                        tank.setVx(0);
-//                        tank.setX(wall.getX() - (wall.getWidth() * offset));
-//                    }
-//                    if (tank.getVx() < 0) { // collision for right side of object
-//                        tank.setVx(0);
-//                        tank.setX(wall.getX() + (wall.getWidth() * offset));
-//                    }
-//                    // if diagonal based collision we want to prioritize the horizontal one for now.
-//                } else if (tank.getBoundsVertical().intersects(wallRectangle) && !tank.getBoundsHorizontal().intersects(wallRectangle)) {
-//                    if (tank.getVy() > 0) { // collision for top side of object
-//                        tank.setVy(0);
-//                        tank.setY(wall.getY() - (wall.getHeight() * offset));
-//                    }
-//                    if (tank.getVy() < 0) { // collision for bottom side of object
-//                        tank.setVy(0);
-//                        tank.setY(wall.getY() + wall.getHeight() * offset);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private void collisionProjectile() {
-//        for(int i = 0; i < this.projectileGameObjectCollections.size(); i++) {
-//            Projectile projectile = this.projectileGameObjectCollections.get(i);
-//            Rectangle projectileRectangle = projectile.getBounds();
-//            for(int j = 0; j < this.tankGameObjectCollections.size(); j++) {
-//                Tank tank = this.tankGameObjectCollections.get(j);
-//                if(projectileRectangle.intersects(tank.getBounds()) && projectile.getOwnership() != tank) {
-//                    System.out.println("Hit tank " + (this.tankGameObjectCollections.indexOf(tank) + 1) + "!");
-//                    if(this.projectileGameObjectCollections.remove(projectile)) {
-//                        ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
-//                        tank.takeDamage();
-//                        return;
-//                    }
-//                }
-//            }
-//
-//            for(int j = 0; j < this.wallGameObjectCollections.size(); j++) {
-//                Wall wall = this.wallGameObjectCollections.get(j);
-//                Rectangle wallRectangle = wall.getBounds();
-//                if(projectileRectangle.intersects(wallRectangle)) {
-//                    wall.setDestroyed(true);
-//                    this.projectileGameObjectCollections.remove(projectile);
-//                    ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
-//                    if(wall.getDestroyed()) {
-//                        ResourceHandler.getSound(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND).play();
-//                        this.wallGameObjectCollections.remove(wall);
-//                    }
-//                    return;
-//                }
-//            }
-//        }
-//    }
-//    private void collisionTankVsPowerUp() {
-//        for(int i = 0; i < this.tankGameObjectCollections.size(); i++) {
-//            Tank tank = this.tankGameObjectCollections.get(i);
-//            for(int j = 0; j < this.powerUpGameObjectCollections.size(); j++) {
-//                PowerUp powerUp = this.powerUpGameObjectCollections.get(j);
-//                Rectangle powerUpRectangle = powerUp.getBounds();
-//                if(tank.getBounds().intersects(powerUpRectangle)) {
-//                    powerUp.empower(tank);
-//                    powerUp.playSound();
-//                    this.powerUpGameObjectCollections.remove(powerUp);
-//                    return;
-//                }
-//            }
-//        }
-//    }
 }

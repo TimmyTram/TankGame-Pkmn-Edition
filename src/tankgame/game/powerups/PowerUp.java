@@ -9,9 +9,6 @@ import java.awt.image.BufferedImage;
 
 public abstract class PowerUp extends StationaryObject implements Collidable {
 
-    protected int width;
-    protected int height;
-
     public PowerUp(float x, float y, BufferedImage img) {
         super(x, y, img);
     }

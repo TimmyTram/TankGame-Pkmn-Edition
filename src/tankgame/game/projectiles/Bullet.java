@@ -1,5 +1,7 @@
 package tankgame.game.projectiles;
 
+import tankgame.ResourceConstants;
+import tankgame.ResourceHandler;
 import tankgame.game.tanks.Tank;
 
 import java.awt.*;
@@ -10,6 +12,11 @@ public class Bullet extends Projectile {
 
     public Bullet(float x, float y, float vx, float vy, float angle, float R, BufferedImage img, Tank ownership) {
         super(x, y, vx, vy, angle, R, img, ownership);
+    }
+
+    @Override
+    public void playSound() {
+        ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
     }
 
     @Override

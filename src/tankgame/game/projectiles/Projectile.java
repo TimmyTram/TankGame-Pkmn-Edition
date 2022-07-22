@@ -1,6 +1,8 @@
 package tankgame.game.projectiles;
 
 import tankgame.GameConstants;
+import tankgame.ResourceConstants;
+import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
 import tankgame.game.MovableObject;
 import tankgame.game.tanks.Tank;
@@ -11,7 +13,7 @@ import java.awt.image.BufferedImage;
 public abstract class Projectile extends MovableObject {
 
     private final Tank ownership;
-    private boolean toBeDestroyed = false;
+    private boolean isDestroyed = false;
 
     public Projectile(float x, float y, float vx, float vy, float angle, float R, BufferedImage img, Tank ownership) {
         super(x, y, vx, vy, angle, R, img);
@@ -28,8 +30,11 @@ public abstract class Projectile extends MovableObject {
     }
 
     private void checkBorder() {
-        if(x >= GameConstants.WORLD_WIDTH || x < 0 || y < 0 || y >= GameConstants.WORLD_HEIGHT) {
-            this.toBeDestroyed = true;
+        int limitX = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getHeight();
+        if(x >= GameConstants.WORLD_WIDTH - limitX || x < limitX || y < limitY || y >= GameConstants.WORLD_HEIGHT - limitY) {
+            this.isDestroyed = true;
+            this.playSound();
         }
     }
 
@@ -37,12 +42,14 @@ public abstract class Projectile extends MovableObject {
         return this.ownership;
     }
 
-    public void setToBeDestroyed(boolean status) {
-        this.toBeDestroyed = status;
+    public void setDestroyed(boolean status) {
+        this.isDestroyed = status;
     }
 
-    public boolean getToBeDestroyed() {
-        return this.toBeDestroyed;
+    public abstract void playSound();
+
+    public boolean getIsDestroyed() {
+        return this.isDestroyed;
     }
 
     @Override

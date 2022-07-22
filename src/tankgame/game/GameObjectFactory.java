@@ -1,6 +1,5 @@
 package tankgame.game;
 
-import tankgame.GameConstants;
 import tankgame.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.powerups.Barrage;
@@ -44,15 +43,7 @@ public class GameObjectFactory {
                 );
             }
 
-            case GameObjectID.BORDER -> { // should add another flag to unbreakable rock to tell if it should have collision or not
-                return new UnbreakableWall(
-                        row * ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getHeight(),
-                        ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL)
-                );
-            }
-
-            case GameObjectID.UNBREAKABLE_ROCK -> {
+            case GameObjectID.BORDER, GameObjectID.UNBREAKABLE_ROCK -> {
                 return new UnbreakableWall(
                         row * ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getWidth(),
                         col * ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getHeight(),

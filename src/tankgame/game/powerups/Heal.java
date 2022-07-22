@@ -1,12 +1,9 @@
 package tankgame.game.powerups;
 
-import tankgame.GameConstants;
 import tankgame.ResourceConstants;
 import tankgame.ResourceHandler;
-import tankgame.game.Collidable;
 import tankgame.game.tanks.Tank;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Heal extends PowerUp {

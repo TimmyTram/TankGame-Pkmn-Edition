@@ -5,8 +5,11 @@ import tankgame.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
 import tankgame.game.GameWorld;
+import tankgame.game.powerups.PowerUp;
 import tankgame.game.projectiles.Bullet;
 import tankgame.game.MovableObject;
+import tankgame.game.projectiles.Projectile;
+import tankgame.game.walls.Wall;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -232,7 +235,29 @@ public class Tank extends MovableObject {
 
     @Override
     public void handleCollision(Collidable obj) {
+        if(obj instanceof PowerUp) {
+            ((PowerUp) obj).empower(this);
+            ((PowerUp) obj).setDestroyed(true);
+            ((PowerUp) obj).playSound();
+        } else if(obj instanceof Projectile) {
+            ((Projectile) obj).setDestroyed(true);
+            ((Projectile) obj).playSound();
+            this.takeDamage();
+        } else if(obj instanceof Wall) {
+            Rectangle intersection = this.hitBox.intersection(obj.getHitBox());
+            float wallC1 = ((Wall) obj).getX();
+            float wallC3 = ((Wall) obj).getY();
 
+            if(intersection.height > intersection.width && this.x < intersection.x) { // left detection
+                this.setPosition(this.x - (intersection.width / 2f), this.y);
+            } else if(intersection.height > intersection.width && this.x > wallC1) { // right detection
+                this.setPosition(this.x + (intersection.width / 2f), this.y);
+            } else if(intersection.height < intersection.width && this.y < intersection.y) { // top detection
+                this.setPosition(this.x, this.y - (intersection.height / 2f));
+            } else if(intersection.height < intersection.width && this.y > wallC3) { // bottom detection
+                this.setPosition(this.x, this.y + (intersection.height / 2f));
+            }
+        }
     }
 
     @Override

@@ -9,19 +9,19 @@ public class GameObjectCollections<T extends GameObject> {
 
     public GameObjectCollections() {}
 
+    /**
+     * DO NOT REPLACE WITH FOR EACH LOOP. YOU WILL GET A ConcurrentModificationException BECAUSE PROJECTILES ARE BEING ADDED!
+     */
     public void update() {
-//        for(T gameObject : gameObjects) {
-//            gameObject.update();
-//        }
         for(int i = 0; i < this.gameObjects.size(); i++) {
             this.gameObjects.get(i).update();
         }
     }
 
+    /**
+     * DO NOT REPLACE WITH FOR EACH LOOP. YOU WILL GET A ConcurrentModificationException BECAUSE PROJECTILES ARE BEING ADDED!
+     */
     public void draw(Graphics g) {
-//        for(T gameObject : gameObjects) {
-//            gameObject.drawImage(g);
-//        }
         for(int i = 0; i < this.gameObjects.size(); i++) {
             this.gameObjects.get(i).drawImage(g);
         }

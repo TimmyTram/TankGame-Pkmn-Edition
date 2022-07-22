@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class StationaryObject extends GameObject implements Collidable {
 
+    protected boolean isDestroyed = false;
+
     public StationaryObject(float x, float y, BufferedImage img) {
         super(x, y, img);
     }
@@ -21,16 +23,21 @@ public class StationaryObject extends GameObject implements Collidable {
 
     @Override
     public boolean isCollidable() {
-        return false;
+        return true;
     }
 
     @Override
-    public void drawImage(Graphics g) {
-
-    }
+    public void drawImage(Graphics g) {}
 
     @Override
-    public void update() {
+    public void update() {}
 
+    public boolean getIsDestroyed() {
+        return this.isDestroyed;
     }
+
+    public void setDestroyed(boolean status) {
+        this.isDestroyed = status;
+    }
+
 }
