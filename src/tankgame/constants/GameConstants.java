@@ -1,4 +1,4 @@
-package tankgame;
+package tankgame.constants;
 
 public class GameConstants {
 

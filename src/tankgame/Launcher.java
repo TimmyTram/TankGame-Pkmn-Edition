@@ -1,5 +1,6 @@
 package tankgame;
 
+import tankgame.constants.GameConstants;
 import tankgame.game.GameWorld;
 import tankgame.menus.EndGamePanel;
 import tankgame.menus.StartMenuPanel;

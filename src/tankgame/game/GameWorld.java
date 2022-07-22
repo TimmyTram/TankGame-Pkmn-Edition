@@ -1,14 +1,16 @@
 package tankgame.game;
 
-import tankgame.GameConstants;
+import tankgame.constants.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
 import tankgame.display.Camera;
 import tankgame.display.GameHUD;
 import tankgame.display.Minimap;
-import tankgame.game.projectiles.Projectile;
-import tankgame.game.tanks.Tank;
-import tankgame.game.tanks.TankController;
+import tankgame.game.moveableObjects.MoveableObject;
+import tankgame.game.moveableObjects.projectiles.Projectile;
+import tankgame.game.stationaryObjects.StationaryObject;
+import tankgame.game.moveableObjects.tanks.Tank;
+import tankgame.game.moveableObjects.tanks.TankController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +26,7 @@ public class GameWorld extends JPanel implements Runnable {
     private GameHUD gameHUD2;
     private Launcher lf;
     private long tick = 0;
-    private GameObjectCollections<MovableObject> movableObjectGameObjectCollections;
+    private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
     private GameObjectCollections<StationaryObject> stationaryObjectGameObjectCollections;
 
     private boolean gameOver = false;
@@ -45,7 +47,7 @@ public class GameWorld extends JPanel implements Runnable {
             }
             while (true) {
                 this.tick++;
-                this.movableObjectGameObjectCollections.update();
+                this.moveableObjectGameObjectCollections.update();
                 checkCollisions();
                 deleteGarbage();
                 this.repaint();   // redraw game
@@ -56,12 +58,12 @@ public class GameWorld extends JPanel implements Runnable {
                  */
                 Thread.sleep(1000 / 144);
 
-                if( ((Tank)(this.movableObjectGameObjectCollections.get(1))).getIsLoser() ) {
+                if( ((Tank)(this.moveableObjectGameObjectCollections.get(1))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
                     gameOver = true;
                     return;
-                } else if( ((Tank)(this.movableObjectGameObjectCollections.get(0))).getIsLoser() ) {
+                } else if( ((Tank)(this.moveableObjectGameObjectCollections.get(0))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
                     gameOver = true;
@@ -91,7 +93,7 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        this.movableObjectGameObjectCollections = new GameObjectCollections<>();
+        this.moveableObjectGameObjectCollections = new GameObjectCollections<>();
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
 
         ResourceHandler.initImages();
@@ -101,27 +103,27 @@ public class GameWorld extends JPanel implements Runnable {
 
         minimap = new Minimap();
         minimap.initializeMiniMapDimensions();
-        camera1 = new Camera((Tank) movableObjectGameObjectCollections.get(0), minimap.getScaledHeight());
-        camera2 = new Camera((Tank) movableObjectGameObjectCollections.get(1), minimap.getScaledHeight());
+        camera1 = new Camera((Tank) moveableObjectGameObjectCollections.get(0), minimap.getScaledHeight());
+        camera2 = new Camera((Tank) moveableObjectGameObjectCollections.get(1), minimap.getScaledHeight());
 
         double correctionOffset = 1.13;
         double leftRightOffset = 0.07;
 
         gameHUD1 = new GameHUD(
-                (Tank) movableObjectGameObjectCollections.get(0),
+                (Tank) moveableObjectGameObjectCollections.get(0),
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset))
         );
         gameHUD2 = new GameHUD(
-                (Tank) movableObjectGameObjectCollections.get(1),
+                (Tank) moveableObjectGameObjectCollections.get(1),
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20))
         );
 
         TankController tc1 = new TankController(
-                (Tank) movableObjectGameObjectCollections.get(0),
+                (Tank) moveableObjectGameObjectCollections.get(0),
                 KeyEvent.VK_W,
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
@@ -129,7 +131,7 @@ public class GameWorld extends JPanel implements Runnable {
                 KeyEvent.VK_SPACE
         );
         TankController tc2 = new TankController(
-                (Tank) movableObjectGameObjectCollections.get(1),
+                (Tank) moveableObjectGameObjectCollections.get(1),
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
@@ -150,7 +152,7 @@ public class GameWorld extends JPanel implements Runnable {
         g2.setColor(Color.black);
         g2.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
 
-        this.movableObjectGameObjectCollections.draw(buffer);
+        this.moveableObjectGameObjectCollections.draw(buffer);
         this.stationaryObjectGameObjectCollections.draw(buffer);
 
         camera1.drawSplitScreen(world);
@@ -165,8 +167,8 @@ public class GameWorld extends JPanel implements Runnable {
         minimap.drawMinimap(world, g2);
     }
 
-    public void addToMovableGameObjectCollections(MovableObject movableObject) {
-        this.movableObjectGameObjectCollections.add(movableObject);
+    public void addToMovableGameObjectCollections(MoveableObject moveableObject) {
+        this.moveableObjectGameObjectCollections.add(moveableObject);
     }
 
     public void addToStationaryGameObjectCollections(StationaryObject stationaryObject) {
@@ -174,18 +176,18 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     private void checkCollisions() {
-        for(int i = 0; i < this.movableObjectGameObjectCollections.size(); i++) {
-            MovableObject movableObject = this.movableObjectGameObjectCollections.get(i);
+        for(int i = 0; i < this.moveableObjectGameObjectCollections.size(); i++) {
+            MoveableObject moveableObject = this.moveableObjectGameObjectCollections.get(i);
             for(int j = 0; j < this.stationaryObjectGameObjectCollections.size(); j++) {
                 StationaryObject stationaryObject = this.stationaryObjectGameObjectCollections.get(j);
-                if(movableObject.getHitBox().intersects(stationaryObject.getHitBox())) {
-                    movableObject.handleCollision(stationaryObject);
+                if(moveableObject.getHitBox().intersects(stationaryObject.getHitBox())) {
+                    moveableObject.handleCollision(stationaryObject);
                 }
             }
-            for(int k = 0; k < this.movableObjectGameObjectCollections.size(); k++) {
-                MovableObject otherMovableObject = this.movableObjectGameObjectCollections.get(k);
-                if(movableObject.getHitBox().intersects(otherMovableObject.getHitBox())) {
-                    movableObject.handleCollision(otherMovableObject);
+            for(int k = 0; k < this.moveableObjectGameObjectCollections.size(); k++) {
+                MoveableObject otherMoveableObject = this.moveableObjectGameObjectCollections.get(k);
+                if(moveableObject.getHitBox().intersects(otherMoveableObject.getHitBox())) {
+                    moveableObject.handleCollision(otherMoveableObject);
                 }
             }
         }
@@ -193,10 +195,10 @@ public class GameWorld extends JPanel implements Runnable {
 
 
     private void deleteGarbage() {
-        for(int i = 0; i < this.movableObjectGameObjectCollections.size(); i++) {
-            MovableObject movableObject = this.movableObjectGameObjectCollections.get(i);
-            if(movableObject instanceof Projectile && ((Projectile) movableObject).getIsDestroyed()) {
-                this.movableObjectGameObjectCollections.remove(movableObject);
+        for(int i = 0; i < this.moveableObjectGameObjectCollections.size(); i++) {
+            MoveableObject moveableObject = this.moveableObjectGameObjectCollections.get(i);
+            if(moveableObject instanceof Projectile && ((Projectile) moveableObject).getIsDestroyed()) {
+                this.moveableObjectGameObjectCollections.remove(moveableObject);
             }
         }
 

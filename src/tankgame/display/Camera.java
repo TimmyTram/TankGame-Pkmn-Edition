@@ -1,7 +1,7 @@
 package tankgame.display;
 
-import tankgame.GameConstants;
-import tankgame.game.tanks.Tank;
+import tankgame.constants.GameConstants;
+import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.image.BufferedImage;
 

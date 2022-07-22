@@ -1,21 +1,22 @@
-package tankgame.game.tanks;
+package tankgame.game.moveableObjects.tanks;
 
-import tankgame.GameConstants;
-import tankgame.ResourceConstants;
+import tankgame.constants.GameConstants;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
+import tankgame.game.GameObject;
 import tankgame.game.GameWorld;
-import tankgame.game.powerups.PowerUp;
-import tankgame.game.projectiles.Bullet;
-import tankgame.game.MovableObject;
-import tankgame.game.projectiles.Projectile;
-import tankgame.game.walls.Wall;
+import tankgame.game.stationaryObjects.powerups.PowerUp;
+import tankgame.game.moveableObjects.projectiles.Bullet;
+import tankgame.game.moveableObjects.MoveableObject;
+import tankgame.game.moveableObjects.projectiles.Projectile;
+import tankgame.game.stationaryObjects.walls.Wall;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Tank extends MovableObject {
+public class Tank extends MoveableObject {
 
     private float R = 2;
     private final float ROTATIONSPEED = 2.25f;
@@ -244,18 +245,15 @@ public class Tank extends MovableObject {
                 ((Projectile) obj).playSound();
                 this.takeDamage();
             }
-        } else if(obj instanceof Wall) {
+        } else if(obj instanceof Wall || obj instanceof Tank) {
             Rectangle intersection = this.hitBox.intersection(obj.getHitBox());
-            float wallC1 = ((Wall) obj).getX();
-            float wallC3 = ((Wall) obj).getY();
-
             if(intersection.height > intersection.width && this.x < intersection.x) { // left detection
                 this.setPosition(this.x - (intersection.width / 2f), this.y);
-            } else if(intersection.height > intersection.width && this.x > wallC1) { // right detection
+            } else if(intersection.height > intersection.width && this.x > ((GameObject) obj).getX()) { // right detection
                 this.setPosition(this.x + (intersection.width / 2f), this.y);
             } else if(intersection.height < intersection.width && this.y < intersection.y) { // top detection
                 this.setPosition(this.x, this.y - (intersection.height / 2f));
-            } else if(intersection.height < intersection.width && this.y > wallC3) { // bottom detection
+            } else if(intersection.height < intersection.width && this.y > ((GameObject) obj).getY()) { // bottom detection
                 this.setPosition(this.x, this.y + (intersection.height / 2f));
             }
         }
@@ -265,7 +263,6 @@ public class Tank extends MovableObject {
     public boolean isCollidable() {
         return true;
     }
-
 
     @Override
     public void drawImage(Graphics g) {

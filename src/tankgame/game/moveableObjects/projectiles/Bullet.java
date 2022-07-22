@@ -1,8 +1,8 @@
-package tankgame.game.projectiles;
+package tankgame.game.moveableObjects.projectiles;
 
-import tankgame.ResourceConstants;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
-import tankgame.game.tanks.Tank;
+import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

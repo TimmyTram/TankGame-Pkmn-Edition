@@ -1,8 +1,8 @@
 package tankgame.display;
 
-import tankgame.ResourceConstants;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
-import tankgame.game.tanks.Tank;
+import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.*;
 

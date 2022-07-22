@@ -1,5 +1,6 @@
 package tankgame;
 
+import tankgame.constants.ResourceConstants;
 import tankgame.game.GameWorld;
 
 import javax.imageio.ImageIO;

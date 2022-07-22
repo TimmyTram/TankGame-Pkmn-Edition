@@ -1,7 +1,7 @@
 package tankgame.game;
 
-import tankgame.GameConstants;
-import tankgame.ResourceConstants;
+import tankgame.constants.GameConstants;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 
 import java.awt.*;

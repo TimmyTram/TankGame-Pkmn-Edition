@@ -1,7 +1,7 @@
-package tankgame.game.walls;
+package tankgame.game.stationaryObjects.walls;
 
 import tankgame.game.Collidable;
-import tankgame.game.StationaryObject;
+import tankgame.game.stationaryObjects.StationaryObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

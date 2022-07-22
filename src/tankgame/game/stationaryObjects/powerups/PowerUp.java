@@ -1,8 +1,8 @@
-package tankgame.game.powerups;
+package tankgame.game.stationaryObjects.powerups;
 
 import tankgame.game.Collidable;
-import tankgame.game.StationaryObject;
-import tankgame.game.tanks.Tank;
+import tankgame.game.stationaryObjects.StationaryObject;
+import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

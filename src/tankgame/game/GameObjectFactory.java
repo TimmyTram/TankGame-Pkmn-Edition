@@ -1,13 +1,14 @@
 package tankgame.game;
 
-import tankgame.ResourceConstants;
+import tankgame.constants.GameObjectID;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
-import tankgame.game.powerups.Barrage;
-import tankgame.game.powerups.Heal;
-import tankgame.game.powerups.SpeedBoost;
-import tankgame.game.tanks.Tank;
-import tankgame.game.walls.BreakableWall;
-import tankgame.game.walls.UnbreakableWall;
+import tankgame.game.stationaryObjects.powerups.Barrage;
+import tankgame.game.stationaryObjects.powerups.Heal;
+import tankgame.game.stationaryObjects.powerups.SpeedBoost;
+import tankgame.game.moveableObjects.tanks.Tank;
+import tankgame.game.stationaryObjects.walls.BreakableWall;
+import tankgame.game.stationaryObjects.walls.UnbreakableWall;
 
 public class GameObjectFactory {
     public GameObject createGameObject(String id, int row, int col, GameWorld gw) {

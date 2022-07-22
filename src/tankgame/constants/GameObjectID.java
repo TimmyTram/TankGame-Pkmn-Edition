@@ -1,4 +1,4 @@
-package tankgame.game;
+package tankgame.constants;
 
 public class GameObjectID {
 

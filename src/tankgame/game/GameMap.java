@@ -1,5 +1,8 @@
 package tankgame.game;
 
+import tankgame.game.moveableObjects.MoveableObject;
+import tankgame.game.stationaryObjects.StationaryObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,8 +32,8 @@ public class GameMap {
 
                     if(gameObject instanceof StationaryObject)
                         gw.addToStationaryGameObjectCollections((StationaryObject) gameObject);
-                    else if(gameObject instanceof MovableObject)
-                        gw.addToMovableGameObjectCollections((MovableObject) gameObject);
+                    else if(gameObject instanceof MoveableObject)
+                        gw.addToMovableGameObjectCollections((MoveableObject) gameObject);
 
                 }
             }

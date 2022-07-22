@@ -1,4 +1,4 @@
-package tankgame.game.walls;
+package tankgame.game.stationaryObjects.walls;
 
 import java.awt.image.BufferedImage;
 

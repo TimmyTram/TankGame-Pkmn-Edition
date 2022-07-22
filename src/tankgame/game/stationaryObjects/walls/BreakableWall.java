@@ -1,6 +1,6 @@
-package tankgame.game.walls;
+package tankgame.game.stationaryObjects.walls;
 
-import tankgame.ResourceConstants;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 
 import java.awt.image.BufferedImage;

@@ -1,18 +1,18 @@
-package tankgame.game.projectiles;
+package tankgame.game.moveableObjects.projectiles;
 
-import tankgame.GameConstants;
-import tankgame.ResourceConstants;
+import tankgame.constants.GameConstants;
+import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.Collidable;
-import tankgame.game.MovableObject;
-import tankgame.game.tanks.Tank;
-import tankgame.game.walls.BreakableWall;
-import tankgame.game.walls.Wall;
+import tankgame.game.moveableObjects.MoveableObject;
+import tankgame.game.moveableObjects.tanks.Tank;
+import tankgame.game.stationaryObjects.walls.BreakableWall;
+import tankgame.game.stationaryObjects.walls.Wall;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class Projectile extends MovableObject {
+public abstract class Projectile extends MoveableObject {
 
     private final Tank ownership;
     private boolean isDestroyed = false;
