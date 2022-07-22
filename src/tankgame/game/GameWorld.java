@@ -182,8 +182,15 @@ public class GameWorld extends JPanel implements Runnable {
                     movableObject.handleCollision(stationaryObject);
                 }
             }
+            for(int k = 0; k < this.movableObjectGameObjectCollections.size(); k++) {
+                MovableObject otherMovableObject = this.movableObjectGameObjectCollections.get(k);
+                if(movableObject.getHitBox().intersects(otherMovableObject.getHitBox())) {
+                    movableObject.handleCollision(otherMovableObject);
+                }
+            }
         }
     }
+
 
     private void deleteGarbage() {
         for(int i = 0; i < this.movableObjectGameObjectCollections.size(); i++) {

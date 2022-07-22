@@ -154,7 +154,6 @@ public class Tank extends MovableObject {
                 ResourceHandler.getImage(ResourceConstants.RESOURCE_BULLET_1),
                 this
         );
-        //gw.addToProjectileGameObjectCollection(bullet);
         gw.addToMovableGameObjectCollections(bullet);
         ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1).play();
     }
@@ -240,9 +239,11 @@ public class Tank extends MovableObject {
             ((PowerUp) obj).setDestroyed(true);
             ((PowerUp) obj).playSound();
         } else if(obj instanceof Projectile) {
-            ((Projectile) obj).setDestroyed(true);
-            ((Projectile) obj).playSound();
-            this.takeDamage();
+            if(((Projectile) obj).getOwnership() != this) {
+                ((Projectile) obj).setDestroyed(true);
+                ((Projectile) obj).playSound();
+                this.takeDamage();
+            }
         } else if(obj instanceof Wall) {
             Rectangle intersection = this.hitBox.intersection(obj.getHitBox());
             float wallC1 = ((Wall) obj).getX();

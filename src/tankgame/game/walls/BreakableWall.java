@@ -1,5 +1,8 @@
 package tankgame.game.walls;
 
+import tankgame.ResourceConstants;
+import tankgame.ResourceHandler;
+
 import java.awt.image.BufferedImage;
 
 public class BreakableWall extends Wall {
@@ -9,7 +12,12 @@ public class BreakableWall extends Wall {
     }
 
     @Override
-    public void setDestroyed(boolean destroyed) {
-        super.destroyed = destroyed;
+    public void setDestroyed(boolean status) {
+        super.isDestroyed = status;
     }
+
+    public void playSound() {
+        ResourceHandler.getSound(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND).play();
+    }
+
 }

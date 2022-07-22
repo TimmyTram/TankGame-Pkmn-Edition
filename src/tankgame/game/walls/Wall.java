@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Wall extends StationaryObject implements Collidable {
-    protected boolean destroyed = false;
+    protected boolean isDestroyed = false;
 
     public Wall(float x, float y, BufferedImage img) {
         super(x, y, img);
@@ -31,9 +31,7 @@ public abstract class Wall extends StationaryObject implements Collidable {
     }
 
     @Override
-    public void handleCollision(Collidable obj) {
-
-    }
+    public void handleCollision(Collidable obj) {}
 
     @Override
     public boolean isCollidable() {
@@ -42,8 +40,8 @@ public abstract class Wall extends StationaryObject implements Collidable {
 
     public abstract void setDestroyed(boolean destroyed);
 
-    public boolean getDestroyed() {
-        return this.destroyed;
+    public boolean getIsDestroyed() {
+        return this.isDestroyed;
     }
 
 }
