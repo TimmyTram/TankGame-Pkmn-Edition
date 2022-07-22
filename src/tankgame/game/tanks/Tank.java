@@ -3,6 +3,7 @@ package tankgame.game.tanks;
 import tankgame.GameConstants;
 import tankgame.ResourceConstants;
 import tankgame.ResourceHandler;
+import tankgame.game.Collidable;
 import tankgame.game.GameWorld;
 import tankgame.game.projectiles.Bullet;
 import tankgame.game.MovableObject;
@@ -14,7 +15,7 @@ import java.awt.image.BufferedImage;
 public class Tank extends MovableObject {
 
     private float R = 2;
-    private float ROTATIONSPEED = 2.25f;
+    private final float ROTATIONSPEED = 2.25f;
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
@@ -27,8 +28,8 @@ public class Tank extends MovableObject {
     private final int damage = 10;
     private int lives = 4;
     private boolean isLoser = false;
-    private String name;
-    private GameWorld gw;
+    private final String name;
+    private final GameWorld gw;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
@@ -39,6 +40,12 @@ public class Tank extends MovableObject {
     public void setX(float x){ this.x = x; }
 
     public void setY(float y) { this. y = y;}
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+        this.hitBox.setLocation((int) x, (int) y);
+    }
 
     void toggleUpPressed() {
         this.UpPressed = true;
@@ -121,6 +128,7 @@ public class Tank extends MovableObject {
         x -= vx;
         y -= vy;
         checkBorder();
+        this.hitBox.setLocation((int) x, (int) y);
     }
 
     private void moveForwards() {
@@ -129,6 +137,7 @@ public class Tank extends MovableObject {
         x += vx;
         y += vy;
         checkBorder();
+        this.hitBox.setLocation((int) x, (int) y);
     }
 
     private void shoot() {
@@ -142,7 +151,8 @@ public class Tank extends MovableObject {
                 ResourceHandler.getImage(ResourceConstants.RESOURCE_BULLET_1),
                 this
         );
-        gw.addToProjectileGameObjectCollection(bullet);
+        //gw.addToProjectileGameObjectCollection(bullet);
+        gw.addToMovableGameObjectCollections(bullet);
         ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1).play();
     }
 
@@ -183,8 +193,8 @@ public class Tank extends MovableObject {
         if (x < limitX) {
             x = limitX;
         }
-        if (x >= GameConstants.WORLD_WIDTH - limitX * 2) {
-            x = GameConstants.WORLD_WIDTH - limitX * 2;
+        if (x >= GameConstants.WORLD_WIDTH - limitX * 2.1) {
+            x = (float) (GameConstants.WORLD_WIDTH - limitX * 2.1);
         }
         if (y < limitY) {
             y = limitY;
@@ -216,11 +226,30 @@ public class Tank extends MovableObject {
     }
 
     @Override
+    public Rectangle getHitBox() {
+        return this.hitBox.getBounds();
+    }
+
+    @Override
+    public void handleCollision(Collidable obj) {
+
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return true;
+    }
+
+
+    @Override
     public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-        //g2d.drawRect((int)(x + vx) ,(int)(y + vy),this.img.getWidth(), this.img.getHeight());
+
+        g2d.setColor(Color.magenta);
+        g2d.drawRect((int)(x) ,(int)(y),this.img.getWidth(), this.img.getHeight());
+
     }
 }

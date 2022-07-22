@@ -23,9 +23,4 @@ public class SpeedBoost extends PowerUp {
     public void playSound() {
         ResourceHandler.getSound(ResourceConstants.RESOURCE_SPEED_SOUND).play();
     }
-
-    @Override
-    public void checkCollision(Collidable obj) {
-
-    }
 }

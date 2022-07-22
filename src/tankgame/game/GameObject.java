@@ -7,26 +7,16 @@ public abstract class GameObject {
     protected float x;
     protected float y;
     protected BufferedImage img;
-    protected int width;
-    protected int height;
+    protected Rectangle hitBox;
 
     public GameObject(float x, float y, BufferedImage img) {
         this.x = x;
         this.y = y;
         this.img = img;
-        getImageDimension();
+        this.hitBox = new Rectangle((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
     }
 
     public abstract void drawImage(Graphics g);
-
-    protected void getImageDimension() {
-        width = this.img.getWidth();
-        height = this.img.getHeight();
-    }
-
-    public Rectangle getBounds() {
-        return new Rectangle((int) this.x, (int) this.y, this.width, this.height);
-    }
 
     public float getX() {
         return this.x;

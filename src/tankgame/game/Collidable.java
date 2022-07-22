@@ -1,5 +1,10 @@
 package tankgame.game;
 
+import java.awt.*;
+
 public interface Collidable {
-    public void checkCollision(Collidable obj);
+    Rectangle getHitBox();
+    void handleCollision(Collidable obj);
+    boolean isCollidable();
+
 }

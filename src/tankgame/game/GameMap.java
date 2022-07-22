@@ -36,10 +36,13 @@ public class GameMap {
                     // gw.addToGameCollection(gameObject);
                     if(gameObject instanceof Wall) {
                         gw.addToWallObjectCollection((Wall) gameObject);
+                        gw.addToStationaryGameObjectCollections((StationaryObject) gameObject);
                     } else if(gameObject instanceof PowerUp) {
                         gw.addToPowerUpGameObjectCollection((PowerUp) gameObject);
+                        gw.addToStationaryGameObjectCollections((StationaryObject) gameObject);
                     } else if(gameObject instanceof Tank) {
                         gw.addToTankGameObjectCollection((Tank) gameObject);
+                        gw.addToMovableGameObjectCollections((MovableObject) gameObject);
                     }
                 }
             }

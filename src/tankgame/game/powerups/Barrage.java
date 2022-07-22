@@ -23,9 +23,4 @@ public class Barrage extends PowerUp {
     public void playSound() {
         ResourceHandler.getSound(ResourceConstants.RESOURCE_BARRAGE_SOUND).play();
     }
-
-    @Override
-    public void checkCollision(Collidable obj) {
-
-    }
 }

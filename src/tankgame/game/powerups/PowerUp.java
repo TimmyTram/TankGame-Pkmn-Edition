@@ -1,20 +1,19 @@
 package tankgame.game.powerups;
 
 import tankgame.game.Collidable;
-import tankgame.game.GameObject;
+import tankgame.game.StationaryObject;
 import tankgame.game.tanks.Tank;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class PowerUp extends GameObject implements Collidable {
+public abstract class PowerUp extends StationaryObject implements Collidable {
 
     protected int width;
     protected int height;
 
     public PowerUp(float x, float y, BufferedImage img) {
         super(x, y, img);
-        getImageDimension();
     }
 
     public abstract void empower(Tank tank);
@@ -22,26 +21,28 @@ public abstract class PowerUp extends GameObject implements Collidable {
     @Override
     public void drawImage(Graphics g) {
         g.drawImage(super.img, (int) x, (int) y, null);
+
+        g.setColor(Color.green);
+        g.drawRect((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
     }
 
     @Override
     public void update() {}
 
-    protected void getImageDimension() {
-        this.width = super.img.getWidth();
-        this.height = super.img.getHeight();
+    @Override
+    public boolean isCollidable() {
+        return true;
     }
 
-    public int getWidth() {
-        return this.width;
+
+    @Override
+    public Rectangle getHitBox() {
+        return this.hitBox.getBounds();
     }
 
-    public int getHeight() {
-        return this.height;
-    }
+    @Override
+    public void handleCollision(Collidable obj) {
 
-    public Rectangle getBounds() {
-        return new Rectangle((int) super.x, (int) super.y, this.width, this.height);
     }
 
     public abstract void playSound();
