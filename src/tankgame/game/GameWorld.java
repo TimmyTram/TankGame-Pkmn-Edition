@@ -1,8 +1,10 @@
 package tankgame.game;
 
+import tankgame.Sound;
 import tankgame.constants.GameConstants;
 import tankgame.Launcher;
 import tankgame.ResourceHandler;
+import tankgame.constants.ResourceConstants;
 import tankgame.display.Camera;
 import tankgame.display.GameHUD;
 import tankgame.display.Minimap;
@@ -45,6 +47,9 @@ public class GameWorld extends JPanel implements Runnable {
             if(gameOver) {
                 this.resetGame();
             }
+            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_DRIFTVEIL_CITY_MUSIC));
+            Thread musicThread = new Thread(music);
+            musicThread.start();
             while (true) {
                 this.tick++;
                 this.moveableObjectGameObjectCollections.update();
@@ -62,11 +67,15 @@ public class GameWorld extends JPanel implements Runnable {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
                     gameOver = true;
+                    music.stopSound();
+                    musicThread.interrupt();
                     return;
                 } else if( ((Tank)(this.moveableObjectGameObjectCollections.get(0))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
                     gameOver = true;
+                    music.stopSound();
+                    musicThread.interrupt();
                     return;
                 }
             }

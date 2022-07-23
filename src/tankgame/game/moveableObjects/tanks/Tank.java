@@ -164,7 +164,7 @@ public class Tank extends MoveableObject {
         if(this.currentHealthPoints <= 0 && this.lives > 0) {
             this.lives -= 1;
             this.currentHealthPoints = this.maxHealthPoints;
-            System.out.println(this + " LOST A LIFE. LIVES REMAINING: " + this.lives);
+            System.out.println(this.name + " LOST A LIFE. LIVES REMAINING: " + this.lives);
         } else if(this.currentHealthPoints <= 0) {
             this.isLoser = true;
         }

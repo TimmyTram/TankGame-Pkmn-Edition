@@ -49,12 +49,6 @@ public class ResourceHandler {
         }
 
         public static void initSounds() {
-//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1, new AudioPlayer(ResourceConstants.RESOURCE_BULLET_SOUND_1));
-//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE, new AudioPlayer(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE));
-//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BARRAGE_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_BARRAGE_SOUND));
-//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_HEAL_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_HEAL_SOUND));
-//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_SPEED_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_SPEED_SOUND));
-//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND));
             try {
                 AudioInputStream as;
                 Clip clip;
@@ -88,6 +82,11 @@ public class ResourceHandler {
                 clip = AudioSystem.getClip();
                 clip.open(as);
                 ResourceHandler.sounds.put(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND, clip);
+
+                as = readAudio("music/" + ResourceConstants.RESOURCE_DRIFTVEIL_CITY_MUSIC);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_DRIFTVEIL_CITY_MUSIC, clip);
 
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 System.out.println(e);

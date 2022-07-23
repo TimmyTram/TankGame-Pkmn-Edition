@@ -40,4 +40,6 @@ public class ResourceConstants {
 
     public static final String RESOURCE_ROCK_SMASH_SOUND = "rock_smash.wav";
 
+    public static final String RESOURCE_DRIFTVEIL_CITY_MUSIC = "music.wav";
+
 }
