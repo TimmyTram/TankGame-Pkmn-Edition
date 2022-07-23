@@ -16,6 +16,8 @@ import tankgame.game.stationaryObjects.walls.Wall;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Tank extends MoveableObject {
 
@@ -35,11 +37,13 @@ public class Tank extends MoveableObject {
     private boolean isLoser = false;
     private final String name;
     private final GameWorld gw;
+    private final ArrayList<int[]> validSpawnLocations;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
         this.name = name;
         this.gw = gw;
+        this.validSpawnLocations = gw.getEmptySpaces();
     }
 
     public void setX(float x){ this.x = x; }
@@ -152,7 +156,7 @@ public class Tank extends MoveableObject {
                 0,
                 0,
                 this.angle,
-                GameConstants.BULLET_SPEED,
+                4,
                 ResourceHandler.getImage(ResourceConstants.RESOURCE_BULLET_1),
                 this
         );
@@ -165,9 +169,20 @@ public class Tank extends MoveableObject {
             this.lives -= 1;
             this.currentHealthPoints = this.maxHealthPoints;
             System.out.println(this.name + " LOST A LIFE. LIVES REMAINING: " + this.lives);
+            this.randomizeSpawnLocation();
         } else if(this.currentHealthPoints <= 0) {
             this.isLoser = true;
         }
+    }
+
+    private void randomizeSpawnLocation() {
+        int maxChoices = this.validSpawnLocations.size();
+        int randomSelection = (new Random()).nextInt(maxChoices);
+        int[] location = this.validSpawnLocations.get(randomSelection);
+        this.setPosition(
+                location[1] * ResourceConstants.FLOOR_TILE_DIMENSION,
+                location[0] * ResourceConstants.FLOOR_TILE_DIMENSION
+        );
     }
 
     public boolean getIsLoser() {

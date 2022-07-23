@@ -25,7 +25,6 @@ public class Sound implements Runnable {
 
     @Override
     public void run() {
-        //clip.loop(Clip.LOOP_CONTINUOUSLY);
         this.playSound();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }

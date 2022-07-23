@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
@@ -30,8 +31,9 @@ public class GameWorld extends JPanel implements Runnable {
     private long tick = 0;
     private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
     private GameObjectCollections<StationaryObject> stationaryObjectGameObjectCollections;
+    private ArrayList<int[]> emptySpaces;
 
-    private boolean gameOver = false;
+    private GameState gameState;
 
     /**
      *
@@ -44,7 +46,7 @@ public class GameWorld extends JPanel implements Runnable {
     @Override
     public void run() {
         try {
-            if(gameOver) {
+            if(this.gameState == GameState.STOPPED) {
                 this.resetGame();
             }
             Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_DRIFTVEIL_CITY_MUSIC));
@@ -66,14 +68,14 @@ public class GameWorld extends JPanel implements Runnable {
                 if( ((Tank)(this.moveableObjectGameObjectCollections.get(1))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
-                    gameOver = true;
+                    this.gameState = GameState.STOPPED;
                     music.stopSound();
                     musicThread.interrupt();
                     return;
                 } else if( ((Tank)(this.moveableObjectGameObjectCollections.get(0))).getIsLoser() ) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
-                    gameOver = true;
+                    this.gameState = GameState.STOPPED;
                     music.stopSound();
                     musicThread.interrupt();
                     return;
@@ -90,7 +92,6 @@ public class GameWorld extends JPanel implements Runnable {
     public void resetGame() {
         this.tick = 0;
         this.InitializeGame();
-        this.gameOver = false;
     }
 
     /**
@@ -98,12 +99,14 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
+        this.gameState = GameState.RUNNING;
         this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
                 GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
         this.moveableObjectGameObjectCollections = new GameObjectCollections<>();
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
+        this.emptySpaces = GameMap.getInstance().getEmptySpaces();
 
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
@@ -184,6 +187,10 @@ public class GameWorld extends JPanel implements Runnable {
         this.stationaryObjectGameObjectCollections.add(stationaryObject);
     }
 
+    public ArrayList<int[]> getEmptySpaces() {
+        return this.emptySpaces;
+    }
+
     private void checkCollisions() {
         for(int i = 0; i < this.moveableObjectGameObjectCollections.size(); i++) {
             MoveableObject moveableObject = this.moveableObjectGameObjectCollections.get(i);
@@ -201,8 +208,7 @@ public class GameWorld extends JPanel implements Runnable {
             }
         }
     }
-
-
+    
     private void deleteGarbage() {
         for(int i = 0; i < this.moveableObjectGameObjectCollections.size(); i++) {
             MoveableObject moveableObject = this.moveableObjectGameObjectCollections.get(i);

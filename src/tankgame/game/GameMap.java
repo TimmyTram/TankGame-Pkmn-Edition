@@ -6,11 +6,13 @@ import tankgame.game.stationaryObjects.StationaryObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameMap {
 
     private static GameMap instance;
+    private static final ArrayList<int[]> emptySpaces = new ArrayList<>();
 
     private GameMap() {}
 
@@ -18,6 +20,10 @@ public class GameMap {
         if(instance == null)
             instance = new GameMap();
         return instance;
+    }
+
+    public ArrayList<int[]> getEmptySpaces() {
+        return emptySpaces;
     }
 
     public void initializeMap(GameWorld gw) {
@@ -34,7 +40,9 @@ public class GameMap {
                         gw.addToStationaryGameObjectCollections((StationaryObject) gameObject);
                     else if(gameObject instanceof MoveableObject)
                         gw.addToMovableGameObjectCollections((MoveableObject) gameObject);
-
+                    else if(gameObject == null) {
+                        emptySpaces.add(new int[]{col, row});
+                    }
                 }
             }
 

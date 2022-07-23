@@ -2,6 +2,7 @@ package tankgame.constants;
 
 public class ResourceConstants {
 
+    public static final int FLOOR_TILE_DIMENSION = 48;
     public static final String RESOURCE_LIVES = "lives.png";
 
     public static final String RESOURCE_FLOOR_TILE = "floorTile.png";
@@ -40,6 +41,6 @@ public class ResourceConstants {
 
     public static final String RESOURCE_ROCK_SMASH_SOUND = "rock_smash.wav";
 
-    public static final String RESOURCE_DRIFTVEIL_CITY_MUSIC = "music.wav";
+    public static final String RESOURCE_DRIFTVEIL_CITY_MUSIC = "driftveil_city.wav";
 
 }
