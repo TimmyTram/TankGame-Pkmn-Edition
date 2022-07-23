@@ -4,6 +4,7 @@ import tankgame.constants.ResourceConstants;
 import tankgame.game.GameWorld;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,14 +14,14 @@ import java.util.Objects;
 
 public class ResourceHandler {
         private static Map<String, BufferedImage> images = new HashMap<>();
-        private static Map<String, AudioPlayer> sounds = new HashMap<>();
+        private static Map<String, Clip> sounds = new HashMap<>();
         private static Map<String, List<BufferedImage>> animations = new HashMap<>();
 
         public static BufferedImage getImage(String key) {
             return ResourceHandler.images.get(key);
         }
 
-        public static AudioPlayer getSound(String key) {
+        public static Clip getSound(String key) {
             return ResourceHandler.sounds.get(key);
         }
 
@@ -48,12 +49,51 @@ public class ResourceHandler {
         }
 
         public static void initSounds() {
-            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1, new AudioPlayer(ResourceConstants.RESOURCE_BULLET_SOUND_1));
-            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE, new AudioPlayer(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE));
-            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BARRAGE_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_BARRAGE_SOUND));
-            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_HEAL_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_HEAL_SOUND));
-            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_SPEED_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_SPEED_SOUND));
-            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND));
+//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1, new AudioPlayer(ResourceConstants.RESOURCE_BULLET_SOUND_1));
+//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE, new AudioPlayer(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE));
+//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BARRAGE_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_BARRAGE_SOUND));
+//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_HEAL_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_HEAL_SOUND));
+//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_SPEED_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_SPEED_SOUND));
+//            ResourceHandler.sounds.put(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND, new AudioPlayer(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND));
+            try {
+                AudioInputStream as;
+                Clip clip;
+
+                as = readAudio("sounds/" + ResourceConstants.RESOURCE_BULLET_SOUND_1);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.RESOURCE_BARRAGE_SOUND);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_BARRAGE_SOUND, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.RESOURCE_HEAL_SOUND);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_HEAL_SOUND, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.RESOURCE_SPEED_SOUND);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_SPEED_SOUND, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.RESOURCE_ROCK_SMASH_SOUND);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND, clip);
+
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                System.out.println(e);
+                e.printStackTrace();
+                System.exit(-2);
+            }
         }
 
         public static void initAnimations() {
@@ -65,5 +105,10 @@ public class ResourceHandler {
                     Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(resource),
                             String.format("Could not find %s", resource))
             );
+        }
+
+        private static AudioInputStream readAudio(String resource) throws UnsupportedAudioFileException, IOException {
+            return AudioSystem.getAudioInputStream(Objects.requireNonNull(ResourceHandler.class.getClassLoader().getResource(resource),
+                    String.format("Could not find %s", resource)));
         }
 }

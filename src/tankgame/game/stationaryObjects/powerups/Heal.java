@@ -1,5 +1,6 @@
 package tankgame.game.stationaryObjects.powerups;
 
+import tankgame.Sound;
 import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.moveableObjects.tanks.Tank;
@@ -19,6 +20,6 @@ public class Heal extends PowerUp {
 
     @Override
     public void playSound() {
-        ResourceHandler.getSound(ResourceConstants.RESOURCE_HEAL_SOUND).play();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_HEAL_SOUND))).playSound();
     }
 }

@@ -1,5 +1,6 @@
 package tankgame.game.moveableObjects.projectiles;
 
+import tankgame.Sound;
 import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 import tankgame.game.moveableObjects.tanks.Tank;
@@ -16,7 +17,7 @@ public class Bullet extends Projectile {
 
     @Override
     public void playSound() {
-        ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE).play();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE))).playSound();
     }
 
     @Override

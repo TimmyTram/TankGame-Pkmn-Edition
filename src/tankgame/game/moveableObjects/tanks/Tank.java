@@ -1,5 +1,6 @@
 package tankgame.game.moveableObjects.tanks;
 
+import tankgame.Sound;
 import tankgame.constants.GameConstants;
 import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
@@ -156,7 +157,7 @@ public class Tank extends MoveableObject {
                 this
         );
         gw.addToMovableGameObjectCollections(bullet);
-        ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1).play();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1))).playSound();
     }
 
     private void checkAlive() {

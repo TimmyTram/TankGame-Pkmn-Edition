@@ -1,5 +1,6 @@
 package tankgame.game.stationaryObjects.walls;
 
+import tankgame.Sound;
 import tankgame.constants.ResourceConstants;
 import tankgame.ResourceHandler;
 
@@ -17,7 +18,7 @@ public class BreakableWall extends Wall {
     }
 
     public void playSound() {
-        ResourceHandler.getSound(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND).play();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND))).playSound();
     }
 
 }
