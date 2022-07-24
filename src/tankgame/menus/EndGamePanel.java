@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class EndGamePanel extends JPanel {
     private BufferedImage menuBackground;
@@ -17,7 +18,9 @@ public class EndGamePanel extends JPanel {
     public EndGamePanel(Launcher lf) {
         this.lf = lf;
         try {
-            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("menu/title.png"));
+            menuBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("menu/title.png"),
+                    String.format("Could not find %s", "menu/title.png"))
+            );
         } catch (IOException e) {
             System.out.println("Error cant read menu background");
             e.printStackTrace();

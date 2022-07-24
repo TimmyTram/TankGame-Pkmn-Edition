@@ -35,8 +35,7 @@ public class GameWorld extends JPanel implements Runnable {
     private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
     private GameObjectCollections<StationaryObject> stationaryObjectGameObjectCollections;
     private ArrayList<int[]> emptySpaces;
-
-    private GameState gameState;
+    private GameState.RunningState runningState;
 
     /**
      *
@@ -49,7 +48,10 @@ public class GameWorld extends JPanel implements Runnable {
     @Override
     public void run() {
         try {
-            if(this.gameState == GameState.STOPPED) {
+//            if(this.runningState == GameState.RunningState.STOPPED) {
+//                this.resetGame();
+//            }
+            if(!this.runningState.getState()) {
                 this.resetGame();
             }
             Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
@@ -69,18 +71,20 @@ public class GameWorld extends JPanel implements Runnable {
                 Thread.sleep(1000 / 144);
 
                 if(this.t2.getIsLoser()) {
-                    this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
-                    this.gameState = GameState.STOPPED;
+                    //this.runningState = GameState.RunningState.STOPPED;
+                    this.runningState = this.runningState.nextState();
                     music.stopSound();
                     musicThread.interrupt();
+                    this.lf.setFrame("end");
                     return;
                 } else if(this.t1.getIsLoser()) {
-                    this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
-                    this.gameState = GameState.STOPPED;
+                    //this.runningState = GameState.RunningState.STOPPED;
+                    this.runningState = this.runningState.nextState();
                     music.stopSound();
                     musicThread.interrupt();
+                    this.lf.setFrame("end");
                     return;
                 }
             }
@@ -102,7 +106,7 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
-        this.gameState = GameState.RUNNING;
+        this.runningState = GameState.RunningState.RUNNING;
         this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
                 GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
