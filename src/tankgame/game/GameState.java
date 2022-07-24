@@ -2,6 +2,8 @@ package tankgame.game;
 
 public class GameState {
 
+    public static int PLAYER_WINNER;
+
     public enum RunningState {
 
         RUNNING {

@@ -11,9 +11,9 @@ public class GameHUD {
     private static final int offset = 50;
     private static final int GRAY_OFFSET = 30;
     private final Tank tank;
-    private int x;
-    private int y;
-    private int width;
+    private final int x;
+    private final int y;
+    private final int width;
 
     public GameHUD(Tank tank, int x, int y, int width) {
         this.tank = tank;

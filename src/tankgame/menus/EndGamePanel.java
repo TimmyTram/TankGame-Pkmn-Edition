@@ -1,6 +1,8 @@
 package tankgame.menus;
 
 import tankgame.Launcher;
+import tankgame.constants.GameConstants;
+import tankgame.game.GameState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +15,7 @@ public class EndGamePanel extends JPanel {
     private BufferedImage menuBackground;
     private JButton start;
     private JButton exit;
+    private JLabel winner;
     private Launcher lf;
 
     public EndGamePanel(Launcher lf) {
@@ -28,6 +31,12 @@ public class EndGamePanel extends JPanel {
         }
         this.setBackground(Color.BLACK);
         this.setLayout(null);
+
+        winner = new JLabel();
+        winner.setFont(new Font("Courier New", Font.BOLD, 24));
+        winner.setBounds(87, 300, GameConstants.END_MENU_SCREEN_WIDTH, 50);
+        winner.setBackground(Color.black);
+        winner.setForeground(Color.red);
 
         start = new JButton("Restart");
         start.setFont(new Font("Courier New", Font.BOLD, 24));
@@ -50,10 +59,13 @@ public class EndGamePanel extends JPanel {
             this.lf.closeGame();
         }));
 
-
+        this.add(winner);
         this.add(start);
         this.add(exit);
+    }
 
+    public void updateWinnerStatus() {
+        this.winner.setText("THE WINNER IS PLAYER " + GameState.PLAYER_WINNER + "!");
     }
 
     @Override

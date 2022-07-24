@@ -48,9 +48,6 @@ public class GameWorld extends JPanel implements Runnable {
     @Override
     public void run() {
         try {
-//            if(this.runningState == GameState.RunningState.STOPPED) {
-//                this.resetGame();
-//            }
             if(!this.runningState.getState()) {
                 this.resetGame();
             }
@@ -72,7 +69,7 @@ public class GameWorld extends JPanel implements Runnable {
 
                 if(this.t2.getIsLoser()) {
                     System.out.println("TANK 1 WINS!");
-                    //this.runningState = GameState.RunningState.STOPPED;
+                    GameState.PLAYER_WINNER = 1;
                     this.runningState = this.runningState.nextState();
                     music.stopSound();
                     musicThread.interrupt();
@@ -80,7 +77,7 @@ public class GameWorld extends JPanel implements Runnable {
                     return;
                 } else if(this.t1.getIsLoser()) {
                     System.out.println("TANK 2 WINS!");
-                    //this.runningState = GameState.RunningState.STOPPED;
+                    GameState.PLAYER_WINNER = 2;
                     this.runningState = this.runningState.nextState();
                     music.stopSound();
                     musicThread.interrupt();

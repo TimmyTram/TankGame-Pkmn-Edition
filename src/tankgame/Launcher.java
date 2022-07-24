@@ -82,9 +82,11 @@ public class Launcher {
                 // not stuck executing the game loop.
                 (new Thread(this.gamePanel)).start();
             }
-            case "end" ->
+            case "end" -> {
                 // set the size of the jFrame to the expected size for the end panel
-                    this.jf.setSize(GameConstants.END_MENU_SCREEN_WIDTH, GameConstants.END_MENU_SCREEN_HEIGHT);
+                ((EndGamePanel)this.endPanel).updateWinnerStatus();
+                this.jf.setSize(GameConstants.END_MENU_SCREEN_WIDTH, GameConstants.END_MENU_SCREEN_HEIGHT);
+            }
         }
         this.cl.show(mainPanel, type); // change current panel shown on main panel tp the panel denoted by type.
         this.jf.setVisible(true); // show the JFrame
