@@ -36,6 +36,7 @@ public class GameWorld extends JPanel implements Runnable {
     private GameObjectCollections<StationaryObject> stationaryObjectGameObjectCollections;
     private ArrayList<int[]> emptySpaces;
     private GameState.RunningState runningState;
+    private String gameMap;
 
     /**
      *
@@ -110,26 +111,35 @@ public class GameWorld extends JPanel implements Runnable {
 
         this.moveableObjectGameObjectCollections = new GameObjectCollections<>();
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
-        this.emptySpaces = GameMap.getInstance().getEmptySpaces();
+        this.emptySpaces = new ArrayList<>();
 
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
         ResourceHandler.initMaps();
 
-        int maxChoices = ResourceHandler.getNumberOfMaps();
-        int randChoice = (new Random()).nextInt(maxChoices);
-        GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
+        if(this.gameMap == null) {
+            int maxChoices = ResourceHandler.getNumberOfMaps();
+            int randChoice = (new Random()).nextInt(maxChoices);
+            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
+            System.out.println("Loading into " + ResourceHandler.getGameMap(randChoice) + " . . .");
+        } else {
+            System.out.println("Loading into " + this.gameMap + " . . .");
+            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(this.gameMap));
+        }
 
+        this.emptySpaces = GameMap.getInstance().getEmptySpaces();
         BackgroundLoader.getInstance().initializeBackground();
-
 
         if(((Tank) moveableObjectGameObjectCollections.get(0)).getPlayerID() == 1) {
             this.t1 = (Tank) moveableObjectGameObjectCollections.get(0);
-            t2 = (Tank) moveableObjectGameObjectCollections.get(1);
+            this.t2 = (Tank) moveableObjectGameObjectCollections.get(1);
         } else {
             this.t1 = (Tank) moveableObjectGameObjectCollections.get(1);
             this.t2 = (Tank) moveableObjectGameObjectCollections.get(0);
         }
+
+        this.t1.setValidSpawnLocations(this.emptySpaces);
+        this.t2.setValidSpawnLocations(this.emptySpaces);
 
         minimap = new Minimap();
         minimap.initializeMiniMapDimensions();
@@ -205,8 +215,12 @@ public class GameWorld extends JPanel implements Runnable {
         this.stationaryObjectGameObjectCollections.add(stationaryObject);
     }
 
-    public ArrayList<int[]> getEmptySpaces() {
-        return this.emptySpaces;
+//    public ArrayList<int[]> getEmptySpaces() {
+//        System.out.println(this.emptySpaces + " from method.");
+//        return this.emptySpaces;
+//    }
+    public void selectMap(String map) {
+        this.gameMap = map;
     }
 
     private void checkCollisions() {

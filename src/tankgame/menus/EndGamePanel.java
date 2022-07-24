@@ -38,14 +38,14 @@ public class EndGamePanel extends JPanel {
         winner.setBackground(Color.black);
         winner.setForeground(Color.red);
 
-        start = new JButton("Restart");
-        start.setFont(new Font("Courier New", Font.BOLD, 24));
+        start = new JButton("Return to Start");
+        start.setFont(new Font("Courier New", Font.BOLD, 12));
         start.setBounds(175, 375, 150, 50);
         start.setBackground(Color.black);
         start.setForeground(Color.red);
         start.setFocusPainted(false);
         start.addActionListener((actionEvent -> {
-            this.lf.setFrame("game");
+            this.lf.setFrame("start");
         }));
 
 

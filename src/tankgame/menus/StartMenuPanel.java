@@ -12,6 +12,8 @@ import java.util.Objects;
 public class StartMenuPanel extends JPanel {
     private BufferedImage menuBackground;
     private JButton start;
+
+    private JButton maps;
     private JButton exit;
     private Launcher lf;
 
@@ -40,6 +42,15 @@ public class StartMenuPanel extends JPanel {
             this.lf.setFrame("game");
         }));
 
+        maps = new JButton("Maps");
+        maps.setFont(new Font("Courier New", Font.BOLD, 24));
+        maps.setBounds(175, 200, 150, 50);
+        maps.setBackground(Color.black);
+        maps.setForeground(Color.red);
+        maps.setFocusPainted(false);
+        maps.addActionListener((actionEvent -> {
+            this.lf.setFrame("maps");
+        }));
 
         exit = new JButton("Exit");
         exit.setSize(new Dimension(200, 100));
@@ -54,6 +65,7 @@ public class StartMenuPanel extends JPanel {
 
 
         this.add(start);
+        this.add(maps);
         this.add(exit);
 
     }

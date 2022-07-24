@@ -123,7 +123,7 @@ public class ResourceHandler {
             //ResourceHandler.gameMaps.add(ResourceConstants.MAP_DEBUG);
             ResourceHandler.gameMaps.add(ResourceConstants.MAP_2FORT);
             ResourceHandler.gameMaps.add(ResourceConstants.MAP_PILLAR);
-            ResourceHandler.gameMaps.add(ResourceConstants.MAP_TRAP);
+            ResourceHandler.gameMaps.add(ResourceConstants.MAP_TUNNELS);
         }
 
         private static BufferedImage readImg(String resource) throws IOException {

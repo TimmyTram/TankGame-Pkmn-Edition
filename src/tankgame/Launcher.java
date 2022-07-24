@@ -3,6 +3,7 @@ package tankgame;
 import tankgame.constants.GameConstants;
 import tankgame.game.GameWorld;
 import tankgame.menus.EndGamePanel;
+import tankgame.menus.MapMenuPanel;
 import tankgame.menus.StartMenuPanel;
 
 import javax.swing.*;
@@ -22,6 +23,11 @@ public class Launcher {
      * two buttons start and exit.
      */
     private JPanel startPanel;
+    /**
+     * map menu panel will be used to display the given CSVs as selectable maps
+     * NOTE: This is not scalable and if you add new map CSVs there will not be new buttons created
+     */
+    private JPanel mapMenuPanel;
     /*
      * game panel is used to show our game to the screen. inside this panel
      * also contains the game loop. This is where out objects are updated and
@@ -57,11 +63,13 @@ public class Launcher {
         this.mainPanel = new JPanel(); // create a new main panel
         this.startPanel = new StartMenuPanel(this); // create a new start panel
         this.gamePanel = new GameWorld(this); // create a new game panel
-        this.gamePanel.InitializeGame(); // initialize game, but DO NOT start game
+        this.mapMenuPanel = new MapMenuPanel(this, gamePanel); // create a new map menu panel
+        //this.gamePanel.InitializeGame(); // initialize game, but DO NOT start game
         this.endPanel = new EndGamePanel(this); // create a new end game pane;
         cl = new CardLayout(); // creating a new CardLayout Panel
         this.mainPanel.setLayout(cl); // set the layout of the main panel to our card layout
         this.mainPanel.add(startPanel, "start"); //add the start panel to the main panel
+        this.mainPanel.add(mapMenuPanel, "maps"); // add the map menu panel to the main panel
         this.mainPanel.add(gamePanel, "game");   //add the game panel to the main panel
         this.mainPanel.add(endPanel, "end");    // add the end game panel to the main panel
         this.jf.add(mainPanel); // add the main panel to the JFrame
@@ -73,11 +81,15 @@ public class Launcher {
         this.jf.setVisible(false); // hide the JFrame
         switch (type) {
             case "start" ->
-                // set the size of the jFrame to the expected size for the start panel
-                    this.jf.setSize(GameConstants.START_MENU_SCREEN_WIDTH, GameConstants.START_MENU_SCREEN_HEIGHT);
+                 // set the size of the jFrame to the expected size for the start panel
+                 this.jf.setSize(GameConstants.START_MENU_SCREEN_WIDTH, GameConstants.START_MENU_SCREEN_HEIGHT);
+            case "maps" ->
+                // set the size of the jFrame to the expected size for the map menu panel
+                this.jf.setSize(GameConstants.MAP_MENU_SCREEN_WIDTH, GameConstants.MAP_MENU_SCREEN_HEIGHT);
             case "game" -> {
                 // set the size of the jFrame to the expected size for the game panel
                 this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
+                this.gamePanel.InitializeGame();
                 //start a new thread for the game to run. This will ensure our JFrame is responsive and
                 // not stuck executing the game loop.
                 (new Thread(this.gamePanel)).start();

@@ -38,14 +38,13 @@ public class Tank extends MoveableObject {
     private int playerID;
     private final String name;
     private final GameWorld gw;
-    private final ArrayList<int[]> validSpawnLocations;
+    private ArrayList<int[]> validSpawnLocations;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, int playerID, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
         this.playerID = playerID;
         this.name = name;
         this.gw = gw;
-        this.validSpawnLocations = gw.getEmptySpaces();
     }
 
     public void setX(float x){ this.x = x; }
@@ -56,6 +55,10 @@ public class Tank extends MoveableObject {
         this.x = x;
         this.y = y;
         this.hitBox.setLocation((int) x, (int) y);
+    }
+
+    public void setValidSpawnLocations(ArrayList<int[]> validSpawnLocations) {
+        this.validSpawnLocations = validSpawnLocations;
     }
 
     void toggleUpPressed() {
