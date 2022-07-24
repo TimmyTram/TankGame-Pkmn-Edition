@@ -35,12 +35,14 @@ public class Tank extends MoveableObject {
     private final int damage = 10;
     private int lives = 4;
     private boolean isLoser = false;
+    private int playerID;
     private final String name;
     private final GameWorld gw;
     private final ArrayList<int[]> validSpawnLocations;
 
-    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, String name, GameWorld gw) {
+    public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, int playerID, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
+        this.playerID = playerID;
         this.name = name;
         this.gw = gw;
         this.validSpawnLocations = gw.getEmptySpaces();
@@ -233,6 +235,10 @@ public class Tank extends MoveableObject {
 
     public int getLives() {
         return this.lives;
+    }
+
+    public int getPlayerID() {
+        return this.playerID;
     }
 
     public String getName() {

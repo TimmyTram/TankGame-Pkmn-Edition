@@ -112,31 +112,41 @@ public class GameWorld extends JPanel implements Runnable {
         ResourceHandler.initSounds();
         ResourceHandler.initMaps();
         GameMap.getInstance().initializeMap(this, ResourceHandler.getRandomMap());
+        //GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(ResourceConstants.));
         BackgroundLoader.getInstance().initializeBackground();
+        Tank t1;
+        Tank t2;
+        if(((Tank) moveableObjectGameObjectCollections.get(0)).getPlayerID() == 1) {
+            t1 = (Tank) moveableObjectGameObjectCollections.get(0);
+            t2 = (Tank) moveableObjectGameObjectCollections.get(1);
+        } else {
+            t1 = (Tank) moveableObjectGameObjectCollections.get(1);
+            t2 = (Tank) moveableObjectGameObjectCollections.get(0);
+        }
 
         minimap = new Minimap();
         minimap.initializeMiniMapDimensions();
-        camera1 = new Camera((Tank) moveableObjectGameObjectCollections.get(0), minimap.getScaledHeight());
-        camera2 = new Camera((Tank) moveableObjectGameObjectCollections.get(1), minimap.getScaledHeight());
+        camera1 = new Camera(t1, minimap.getScaledHeight());
+        camera2 = new Camera(t2, minimap.getScaledHeight());
 
         double correctionOffset = 1.13;
         double leftRightOffset = 0.07;
 
         gameHUD1 = new GameHUD(
-                (Tank) moveableObjectGameObjectCollections.get(0),
+                t1,
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset))
         );
         gameHUD2 = new GameHUD(
-                (Tank) moveableObjectGameObjectCollections.get(1),
+                t2,
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20))
         );
 
         TankController tc1 = new TankController(
-                (Tank) moveableObjectGameObjectCollections.get(0),
+                t1,
                 KeyEvent.VK_W,
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
@@ -144,7 +154,7 @@ public class GameWorld extends JPanel implements Runnable {
                 KeyEvent.VK_SPACE
         );
         TankController tc2 = new TankController(
-                (Tank) moveableObjectGameObjectCollections.get(1),
+                t2,
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,

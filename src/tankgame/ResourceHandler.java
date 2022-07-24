@@ -28,7 +28,7 @@ public class ResourceHandler {
             return ResourceHandler.animations.get(key);
         }
 
-        public static String getGameMaps(String key) {
+        public static String getGameMap(String key) {
             if(gameMaps.contains(key)) {
                 return gameMaps.get(gameMaps.indexOf(key));
             }
@@ -112,8 +112,10 @@ public class ResourceHandler {
         }
 
         public static void initMaps() {
-            ResourceHandler.gameMaps.add(ResourceConstants.MAP_DEBUG);
+            //ResourceHandler.gameMaps.add(ResourceConstants.MAP_DEBUG);
             ResourceHandler.gameMaps.add(ResourceConstants.MAP_2FORT);
+            ResourceHandler.gameMaps.add(ResourceConstants.MAP_PILLAR);
+            ResourceHandler.gameMaps.add(ResourceConstants.MAP_TRAP);
         }
 
         private static BufferedImage readImg(String resource) throws IOException {
