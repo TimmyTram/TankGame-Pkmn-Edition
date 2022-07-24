@@ -56,7 +56,7 @@ A Template of the Map is provided in the resources/maps folder named "template.c
 3. BORDER <-- Creates an unbreakable wall that should be placed at the edge of the world
 4. EMPTY <-- No gameObject created
 5. UWALL <-- Creates an unbreakable wall
-6. BWA:: <-- Creates a breakable wall
+6. BWALL <-- Creates a breakable wall
 7. HEAL <-- Creates a Blissey Power Up
 8. BARRAGE <-- Creates a Blastoise Power Up
 9. SPEED <-- Creates a Deoxys Speed Power Up
@@ -67,5 +67,5 @@ A Template of the Map is provided in the resources/maps folder named "template.c
 3. Scroll to the comment where Map constants are listed
 4. Create another constant following the structure as the other map constants
 5. Go to src/tankgame and open ResourceHandler.java
-6. Go to the function initMaps() and add another line ResourceHandler.gameMaps.add(ResourceConstants."The field for your map");
+6. Go to the function initMaps() and add another line of code to add your map
 7. Then simply rebuild the game artifact as listed above
