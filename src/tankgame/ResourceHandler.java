@@ -62,6 +62,8 @@ public class ResourceHandler {
                 ResourceHandler.images.put(ResourceConstants.IMAGES_SPEED, readImg("powerups/" + ResourceConstants.IMAGES_SPEED));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_MENU_TITLE, readImg("menu/" + ResourceConstants.IMAGES_MENU_TITLE));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_LIVES, readImg("lives/" + ResourceConstants.IMAGES_LIVES));
+                ResourceHandler.images.put(ResourceConstants.IMAGES_HUD_1, readImg("hud/" + ResourceConstants.IMAGES_HUD_1));
+                ResourceHandler.images.put(ResourceConstants.IMAGES_HUD_2, readImg("hud/" + ResourceConstants.IMAGES_HUD_2));
             } catch (IOException e) {
                 System.out.println(e);
                 e.printStackTrace();

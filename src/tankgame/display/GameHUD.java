@@ -5,24 +5,28 @@ import tankgame.ResourceHandler;
 import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GameHUD {
 
     private static final int offset = 50;
     private static final int GRAY_OFFSET = 30;
+    private final BufferedImage HUD_BACKGROUND;
     private final Tank tank;
     private final int x;
     private final int y;
     private final int width;
 
-    public GameHUD(Tank tank, int x, int y, int width) {
+    public GameHUD(Tank tank, int x, int y, int width, BufferedImage HUD_BACKGROUND) {
         this.tank = tank;
         this.x = x;
         this.y = y;
         this.width = width;
+        this.HUD_BACKGROUND = HUD_BACKGROUND;
     }
 
     public void drawHUD(Graphics2D g2) {
+        g2.drawImage(this.HUD_BACKGROUND, this.x, this.y, null);
         this.drawHealthBar(g2);
         this.drawLives(g2);
     }

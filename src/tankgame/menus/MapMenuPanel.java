@@ -26,7 +26,7 @@ public class MapMenuPanel extends JPanel {
         this.gamePanel = gamePanel;
         try {
             menuBackground = ImageIO.read(
-                    Objects.requireNonNull(this.getClass().getClassLoader().getResource("menu/title.png"),
+                    Objects.requireNonNull(this.getClass().getClassLoader().getResource("menu/map_selection.png"),
                             String.format("Could not find %s", "menu/title.png"))
             );
         } catch (IOException e) {
@@ -36,9 +36,9 @@ public class MapMenuPanel extends JPanel {
         }
         this.setBackground(Color.BLACK);
         this.setLayout(null);
-        JButton map1 = createMapButtons(ResourceConstants.MAP_2FORT, 175, 50, 150, 50);
-        JButton map2 = createMapButtons(ResourceConstants.MAP_PILLAR, 175, 100, 150, 50);
-        JButton map3 = createMapButtons(ResourceConstants.MAP_TUNNELS, 175, 150, 150, 50);
+        map1 = createMapButtons(ResourceConstants.MAP_2FORT, 175, 50, 150, 50);
+        map2 = createMapButtons(ResourceConstants.MAP_PILLAR, 175, 100, 150, 50);
+        map3 = createMapButtons(ResourceConstants.MAP_TUNNELS, 175, 150, 150, 50);
         this.add(map1);
         this.add(map2);
         this.add(map3);
@@ -60,6 +60,12 @@ public class MapMenuPanel extends JPanel {
             this.lf.setFrame("game");
         }));
         return result;
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(this.menuBackground, 0, 0, null);
     }
 
 }

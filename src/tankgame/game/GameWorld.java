@@ -153,13 +153,15 @@ public class GameWorld extends JPanel implements Runnable {
                 this.t1,
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset))
+                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset)),
+                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_1)
         );
         gameHUD2 = new GameHUD(
                 this.t2,
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20))
+                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20)),
+                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_2)
         );
 
         TankController tc1 = new TankController(
@@ -215,10 +217,6 @@ public class GameWorld extends JPanel implements Runnable {
         this.stationaryObjectGameObjectCollections.add(stationaryObject);
     }
 
-//    public ArrayList<int[]> getEmptySpaces() {
-//        System.out.println(this.emptySpaces + " from method.");
-//        return this.emptySpaces;
-//    }
     public void selectMap(String map) {
         this.gameMap = map;
     }

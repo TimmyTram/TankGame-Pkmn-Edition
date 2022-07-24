@@ -31,6 +31,10 @@ public class ResourceConstants {
 
     public static final String IMAGES_SPEED = "speed.png";
 
+    public static final String IMAGES_HUD_1 = "hud1.png";
+
+    public static final String IMAGES_HUD_2 = "hud2.png";
+
     /*
      * -------------- SOUND RESOURCE CONSTANTS ----------------
      */
