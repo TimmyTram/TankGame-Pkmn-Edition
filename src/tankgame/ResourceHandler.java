@@ -35,6 +35,14 @@ public class ResourceHandler {
             return null;
         }
 
+        public static String getGameMap(int index) {
+            return gameMaps.get(index);
+        }
+
+        public static int getNumberOfMaps() {
+            return gameMaps.size();
+        }
+
         public static String getRandomMap() {
             int maxChoices = gameMaps.size();
             int randomSelection = (new Random()).nextInt(maxChoices);

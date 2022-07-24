@@ -19,6 +19,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
@@ -111,8 +112,11 @@ public class GameWorld extends JPanel implements Runnable {
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
         ResourceHandler.initMaps();
-        GameMap.getInstance().initializeMap(this, ResourceHandler.getRandomMap());
-        //GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(ResourceConstants.));
+
+        int maxChoices = ResourceHandler.getNumberOfMaps();
+        int randChoice = (new Random()).nextInt(maxChoices);
+        GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
+
         BackgroundLoader.getInstance().initializeBackground();
         Tank t1;
         Tank t2;
