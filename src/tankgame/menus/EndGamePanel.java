@@ -13,7 +13,8 @@ import java.util.Objects;
 
 public class EndGamePanel extends JPanel {
     private BufferedImage menuBackground;
-    private JButton start;
+    private JButton restart;
+    private JButton mainMenu;
     private JButton exit;
     private JLabel winner;
     private Launcher lf;
@@ -34,24 +35,34 @@ public class EndGamePanel extends JPanel {
 
         winner = new JLabel();
         winner.setFont(new Font("Courier New", Font.BOLD, 24));
-        winner.setBounds(87, 300, GameConstants.END_MENU_SCREEN_WIDTH, 50);
+        winner.setBounds(87, 275, GameConstants.END_MENU_SCREEN_WIDTH, 50);
         winner.setBackground(Color.black);
         winner.setForeground(Color.red);
 
-        start = new JButton("Return to Start");
-        start.setFont(new Font("Courier New", Font.BOLD, 12));
-        start.setBounds(175, 375, 150, 50);
-        start.setBackground(Color.black);
-        start.setForeground(Color.red);
-        start.setFocusPainted(false);
-        start.addActionListener((actionEvent -> {
+        restart = new JButton("Restart");
+        restart.setFont(new Font("Courier New", Font.BOLD, 24));
+        restart.setBounds(175, 350, 175, 50);
+        restart.setBackground(Color.black);
+        restart.setForeground(Color.red);
+        restart.setFocusPainted(false);
+        restart.addActionListener((actionEvent -> {
+            this.lf.setFrame("game");
+        }));
+
+        mainMenu = new JButton("Main Menu");
+        mainMenu.setFont(new Font("Courier New", Font.BOLD, 24));
+        mainMenu.setBounds(175, 400, 175, 50);
+        mainMenu.setBackground(Color.black);
+        mainMenu.setForeground(Color.red);
+        mainMenu.setFocusPainted(false);
+        mainMenu.addActionListener((actionEvent -> {
             this.lf.setFrame("start");
         }));
 
 
         exit = new JButton("Exit");
         exit.setFont(new Font("Courier New", Font.BOLD, 24));
-        exit.setBounds(175, 450, 150, 50);
+        exit.setBounds(175, 450, 175, 50);
         exit.setBackground(Color.black);
         exit.setForeground(Color.red);
         exit.setFocusPainted(false);
@@ -60,7 +71,8 @@ public class EndGamePanel extends JPanel {
         }));
 
         this.add(winner);
-        this.add(start);
+        this.add(restart);
+        this.add(mainMenu);
         this.add(exit);
     }
 

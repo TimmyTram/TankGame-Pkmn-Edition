@@ -34,7 +34,7 @@ public class StartMenuPanel extends JPanel {
 
         start = new JButton("Start");
         start.setFont(new Font("Courier New", Font.BOLD, 24));
-        start.setBounds(175, 375, 150, 50);
+        start.setBounds(175, 330, 175, 50);
         start.setBackground(Color.black);
         start.setForeground(Color.red);
         start.setFocusPainted(false);
@@ -44,7 +44,7 @@ public class StartMenuPanel extends JPanel {
 
         maps = new JButton("Maps");
         maps.setFont(new Font("Courier New", Font.BOLD, 24));
-        maps.setBounds(175, 200, 150, 50);
+        maps.setBounds(175, 390, 175, 50);
         maps.setBackground(Color.black);
         maps.setForeground(Color.red);
         maps.setFocusPainted(false);
@@ -55,7 +55,7 @@ public class StartMenuPanel extends JPanel {
         exit = new JButton("Exit");
         exit.setSize(new Dimension(200, 100));
         exit.setFont(new Font("Courier New", Font.BOLD, 24));
-        exit.setBounds(175, 450, 150, 50);
+        exit.setBounds(175, 450, 175, 50);
         exit.setBackground(Color.black);
         exit.setForeground(Color.red);
         exit.setFocusPainted(false);
@@ -63,11 +63,9 @@ public class StartMenuPanel extends JPanel {
             this.lf.closeGame();
         }));
 
-
         this.add(start);
         this.add(maps);
         this.add(exit);
-
     }
 
     @Override

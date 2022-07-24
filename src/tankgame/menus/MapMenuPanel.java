@@ -18,7 +18,7 @@ public class MapMenuPanel extends JPanel {
     private JButton map1;
     private JButton map2;
     private JButton map3;
-    private JButton exit;
+    private JButton mainMenu;
     private Launcher lf;
 
     public MapMenuPanel(Launcher lf, GameWorld gamePanel) {
@@ -36,12 +36,25 @@ public class MapMenuPanel extends JPanel {
         }
         this.setBackground(Color.BLACK);
         this.setLayout(null);
-        map1 = createMapButtons(ResourceConstants.MAP_2FORT, 175, 50, 150, 50);
-        map2 = createMapButtons(ResourceConstants.MAP_PILLAR, 175, 100, 150, 50);
-        map3 = createMapButtons(ResourceConstants.MAP_TUNNELS, 175, 150, 150, 50);
+
+        map1 = createMapButtons(ResourceConstants.MAP_2FORT, 175, 50, 175, 50);
+        map2 = createMapButtons(ResourceConstants.MAP_PILLAR, 175, 100, 175, 50);
+        map3 = createMapButtons(ResourceConstants.MAP_TUNNELS, 175, 150, 175, 50);
+
+        mainMenu = new JButton("BACK");
+        mainMenu.setFont(new Font("Courier New", Font.BOLD, 24));
+        mainMenu.setBounds(175, 450, 175, 50);
+        mainMenu.setBackground(Color.black);
+        mainMenu.setForeground(Color.red);
+        mainMenu.setFocusPainted(false);
+        mainMenu.addActionListener((actionEvent -> {
+            this.lf.setFrame("start");
+        }));
+
         this.add(map1);
         this.add(map2);
         this.add(map3);
+        this.add(mainMenu);
     }
 
     private String truncateMapName(String map) {
