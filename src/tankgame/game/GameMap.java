@@ -26,8 +26,8 @@ public class GameMap {
         return emptySpaces;
     }
 
-    public void initializeMap(GameWorld gw) {
-        try(BufferedReader mapReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(GameWorld.class.getClassLoader().getResourceAsStream("maps/map.csv"))))) {
+    public void initializeMap(GameWorld gw, String map) {
+        try(BufferedReader mapReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(GameWorld.class.getClassLoader().getResourceAsStream("maps/" + map))))) {
             GameObjectFactory gameObjectFactory = new GameObjectFactory();
             for(int col = 0; mapReader.ready(); col++) {
                 String[] items = mapReader.readLine().split(",");

@@ -17,7 +17,7 @@ public class Bullet extends Projectile {
 
     @Override
     public void playSound() {
-        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1_COLLIDE))).playSound();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_1))).playSound();
     }
 
     @Override

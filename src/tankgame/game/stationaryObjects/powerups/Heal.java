@@ -20,6 +20,6 @@ public class Heal extends PowerUp {
 
     @Override
     public void playSound() {
-        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_HEAL_SOUND))).playSound();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_HEAL))).playSound();
     }
 }

@@ -21,6 +21,6 @@ public class Barrage extends PowerUp {
     @Override
     public void playSound() {
         //ResourceHandler.getSound(ResourceConstants.RESOURCE_BARRAGE_SOUND).play();
-        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_BARRAGE_SOUND))).playSound();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BARRAGE))).playSound();
     }
 }

@@ -33,8 +33,8 @@ public abstract class Projectile extends MoveableObject {
     }
 
     private void checkBorder() {
-        int limitX = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getWidth();
-        int limitY = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getHeight();
+        int limitX = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
         if(x >= GameConstants.WORLD_WIDTH - limitX || x < limitX || y < limitY || y >= GameConstants.WORLD_HEIGHT - limitY) {
             this.isDestroyed = true;
         }

@@ -46,14 +46,26 @@ The jar folder is to be used to store the built jar of your term-project.
 <!-- you may add more controls if you need to. -->
 
 ## Map Building
-You can create a map by naming it map.csv and using the following IDs (Case-Insensitive) as blocks:
+
+A Template of the Map is provided in the resources/maps folder named "template.csv" and is a 40x30 csv.
+
+
 #### Note: make sure save as CSV (Comma delimited) (*.csv) in MS Excel and NOT CSV UTF-8
-1. PLAYER1 <-- Creates a playable Trainer
-2. PLAYER2 <-- Creates a playable Pokemon
-3. BORDER <-- Creates a rock that should be placed at the edge of the world
+1. PLAYER1 <-- Creates a playable Trainer (REQUIRED FOR ALL MAPS AND MUST HAVE ONLY 1!)
+2. PLAYER2 <-- Creates a playable Pokemon (REQUIRED FOR ALL MAPS AND MUST HAVE ONLY 1!)
+3. BORDER <-- Creates an unbreakable wall that should be placed at the edge of the world
 4. EMPTY <-- No gameObject created
-5. UROCK <-- Creates an unbreakable rock
-6. BROCK <-- Createes a breakable rock
+5. UWALL <-- Creates an unbreakable wall
+6. BWA:: <-- Creates a breakable wall
 7. HEAL <-- Creates a Blissey Power Up
 8. BARRAGE <-- Creates a Blastoise Power Up
 9. SPEED <-- Creates a Deoxys Speed Power Up
+
+### Adding the Map to the Game
+1. Place your map into the resources/maps folder
+2. Go to src/tankgame/constants and open ResourceConstants.java
+3. Scroll to the comment where Map constants are listed
+4. Create another constant following the structure as the other map constants
+5. Go to src/tankgame and open ResourceHandler.java
+6. Go to the function initMaps() and add another line ResourceHandler.gameMaps.add(ResourceConstants."The field for your map");
+7. Then simply rebuild the game artifact as listed above

@@ -24,9 +24,9 @@ public class BackgroundLoader {
         return instance;
     }
     public void initializeBackground() {
-        backgroundImage = ResourceHandler.getImage(ResourceConstants.RESOURCE_FLOOR_TILE);
-        bgWidth = ResourceHandler.getImage(ResourceConstants.RESOURCE_FLOOR_TILE).getWidth();
-        bgHeight = ResourceHandler.getImage(ResourceConstants.RESOURCE_FLOOR_TILE).getHeight();
+        backgroundImage = ResourceHandler.getImage(ResourceConstants.IMAGES_FLOOR_TILE);
+        bgWidth = ResourceHandler.getImage(ResourceConstants.IMAGES_FLOOR_TILE).getWidth();
+        bgHeight = ResourceHandler.getImage(ResourceConstants.IMAGES_FLOOR_TILE).getHeight();
         maxRowTile = GameConstants.WORLD_WIDTH / bgWidth;
         maxColumnTile = GameConstants.WORLD_HEIGHT / bgHeight;
     }

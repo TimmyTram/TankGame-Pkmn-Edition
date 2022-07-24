@@ -49,7 +49,7 @@ public class GameWorld extends JPanel implements Runnable {
             if(this.gameState == GameState.STOPPED) {
                 this.resetGame();
             }
-            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_DRIFTVEIL_CITY_MUSIC));
+            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
             Thread musicThread = new Thread(music);
             musicThread.start();
             while (true) {
@@ -110,7 +110,8 @@ public class GameWorld extends JPanel implements Runnable {
 
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
-        GameMap.getInstance().initializeMap(this);
+        ResourceHandler.initMaps();
+        GameMap.getInstance().initializeMap(this, ResourceHandler.getRandomMap());
         BackgroundLoader.getInstance().initializeBackground();
 
         minimap = new Minimap();
@@ -208,7 +209,7 @@ public class GameWorld extends JPanel implements Runnable {
             }
         }
     }
-    
+
     private void deleteGarbage() {
         for(int i = 0; i < this.moveableObjectGameObjectCollections.size(); i++) {
             MoveableObject moveableObject = this.moveableObjectGameObjectCollections.get(i);

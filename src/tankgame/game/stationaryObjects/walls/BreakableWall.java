@@ -18,7 +18,7 @@ public class BreakableWall extends Wall {
     }
 
     public void playSound() {
-        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_ROCK_SMASH_SOUND))).playSound();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_ROCK_SMASH))).playSound();
     }
 
 }

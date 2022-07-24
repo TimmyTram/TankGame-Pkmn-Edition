@@ -3,44 +3,60 @@ package tankgame.constants;
 public class ResourceConstants {
 
     public static final int FLOOR_TILE_DIMENSION = 48;
-    public static final String RESOURCE_LIVES = "lives.png";
 
-    public static final String RESOURCE_FLOOR_TILE = "floorTile.png";
+    /*
+     * -------------- IMAGE RESOURCE CONSTANTS ----------------
+     */
+    public static final String IMAGES_LIVES = "lives.png";
 
-    public static final String RESOURCE_MENU_TITLE = "title.png";
+    public static final String IMAGES_FLOOR_TILE = "floorTile.png";
 
-    public static final String RESOURCE_TANK_1 = "tank1.png";
+    public static final String IMAGES_MENU_TITLE = "title.png";
 
-    public static final String RESOURCE_TANK_2 = "dawn.png";
+    public static final String IMAGES_TANK_1 = "tank1.png";
 
-    public static final String RESOURCE_BULLET_1 = "pokeball.png";
+    public static final String IMAGES_TANK_2 = "dawn.png";
 
-    //public static String RESOURCE_BULLET_2 = ""; <-- Will add pokemon attack
+    public static final String IMAGES_BULLET_1 = "pokeball.png";
 
-    public static final String RESOURCE_BREAKABLE_WALL = "breakableRock.png";
+    //public static String IMAGES_BULLET_2 = ""; <-- Will add pokemon attack
 
-    public static final String RESOURCE_UNBREAKABLE_WALL = "unbreakableRock.png";
+    public static final String IMAGES_BREAKABLE_WALL = "breakableRock.png";
 
-    public static final String RESOURCE_HEAL = "heal.png";
+    public static final String IMAGES_UNBREAKABLE_WALL = "unbreakableRock.png";
 
-    public static final String RESOURCE_BARRAGE = "barrage.png";
+    public static final String IMAGES_HEAL = "heal.png";
 
-    public static final String RESOURCE_SPEED = "speed.png";
+    public static final String IMAGES_BARRAGE = "barrage.png";
 
-    public static final String RESOURCE_BULLET_SOUND_1 = "throw_pokeball.wav";
+    public static final String IMAGES_SPEED = "speed.png";
 
-    public static final String RESOURCE_BULLET_SOUND_1_COLLIDE = "collide_pokeball.wav";
+    /*
+     * -------------- SOUND RESOURCE CONSTANTS ----------------
+     */
 
-    //public static final String RESOURCE_BULLET_SOUND_2 = ""; <-- Will add pokemon attack sound
+    public static final String SOUND_BULLET_1 = "throw_pokeball.wav";
 
-    public static final String RESOURCE_BARRAGE_SOUND = "barrage.wav";
+    public static final String SOUND_BULLET_COLLIDE_1 = "collide_pokeball.wav";
 
-    public static final String RESOURCE_HEAL_SOUND = "heal.wav";
+    //public static final String SOUND_BULLET_COLLIDE_2 = ""; <-- Will add pokemon attack sound
 
-    public static final String RESOURCE_SPEED_SOUND = "speed.wav";
+    public static final String SOUND_BARRAGE = "barrage.wav";
 
-    public static final String RESOURCE_ROCK_SMASH_SOUND = "rock_smash.wav";
+    public static final String SOUND_HEAL = "heal.wav";
 
-    public static final String RESOURCE_DRIFTVEIL_CITY_MUSIC = "driftveil_city.wav";
+    public static final String SOUND_SPEED = "speed.wav";
+
+    public static final String SOUND_ROCK_SMASH = "rock_smash.wav";
+
+    public static final String SOUND_MUSIC_DRIFTVEIL_CITY = "driftveil_city.wav";
+
+    /*
+     * -------------- MAP RESOURCE CONSTANTS ----------------
+     */
+
+    public static final String MAP_DEBUG = "debug.csv";
+
+    public static final String MAP_2FORT = "2fort.csv";
 
 }

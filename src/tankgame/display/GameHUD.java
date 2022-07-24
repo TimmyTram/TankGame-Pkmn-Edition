@@ -31,10 +31,10 @@ public class GameHUD {
         int lives = this.tank.getLives();
         int livesXPosition = x + offset;
         int livesYPosition = y + (2 * offset);
-        int livesXOffset = ResourceHandler.getImage(ResourceConstants.RESOURCE_LIVES).getWidth();
+        int livesXOffset = ResourceHandler.getImage(ResourceConstants.IMAGES_LIVES).getWidth();
         for(int i = 0; i < lives; i++) {
             livesXPosition += livesXOffset * i;
-            g2.drawImage(ResourceHandler.getImage(ResourceConstants.RESOURCE_LIVES), livesXPosition, livesYPosition, null);
+            g2.drawImage(ResourceHandler.getImage(ResourceConstants.IMAGES_LIVES), livesXPosition, livesYPosition, null);
             livesXPosition = x + offset;
         }
     }

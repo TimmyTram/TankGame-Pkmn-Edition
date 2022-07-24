@@ -157,11 +157,11 @@ public class Tank extends MoveableObject {
                 0,
                 this.angle,
                 4,
-                ResourceHandler.getImage(ResourceConstants.RESOURCE_BULLET_1),
+                ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_1),
                 this
         );
         gw.addToMovableGameObjectCollections(bullet);
-        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_BULLET_SOUND_1))).playSound();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_1))).playSound();
     }
 
     private void checkAlive() {
@@ -207,8 +207,8 @@ public class Tank extends MoveableObject {
     }
 
     private void checkBorder() {
-        int limitX = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getWidth();
-        int limitY = ResourceHandler.getImage(ResourceConstants.RESOURCE_UNBREAKABLE_WALL).getHeight();
+        int limitX = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
         if (x < limitX) {
             x = limitX;
         }

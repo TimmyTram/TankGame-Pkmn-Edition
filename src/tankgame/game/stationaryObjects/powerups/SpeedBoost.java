@@ -20,6 +20,6 @@ public class SpeedBoost extends PowerUp {
 
     @Override
     public void playSound() {
-        (new Sound(ResourceHandler.getSound(ResourceConstants.RESOURCE_SPEED_SOUND))).playSound();
+        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_SPEED))).playSound();
     }
 }
