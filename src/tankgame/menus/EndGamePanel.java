@@ -22,7 +22,7 @@ public class EndGamePanel extends JPanel {
     public EndGamePanel(Launcher lf) {
         this.lf = lf;
         try {
-            menuBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("menu/title.png"),
+            menuBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("menu/map_selection.png"),
                     String.format("Could not find %s", "menu/title.png"))
             );
         } catch (IOException e) {
@@ -35,9 +35,8 @@ public class EndGamePanel extends JPanel {
 
         winner = new JLabel();
         winner.setFont(new Font("Courier New", Font.BOLD, 24));
-        winner.setBounds(87, 275, GameConstants.END_MENU_SCREEN_WIDTH, 50);
-        winner.setBackground(Color.black);
-        winner.setForeground(Color.red);
+        winner.setBounds(90, 275, GameConstants.END_MENU_SCREEN_WIDTH, 50);
+        winner.setForeground(Color.WHITE);
 
         restart = new JButton("Restart");
         restart.setFont(new Font("Courier New", Font.BOLD, 24));
