@@ -45,7 +45,6 @@ public class GameMap {
                     }
                 }
             }
-
         } catch (IOException e) {
             System.out.println(e);
             System.exit(-2);

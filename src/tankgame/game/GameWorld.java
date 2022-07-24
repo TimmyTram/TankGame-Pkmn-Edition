@@ -28,6 +28,8 @@ public class GameWorld extends JPanel implements Runnable {
     private Camera camera2;
     private GameHUD gameHUD1;
     private GameHUD gameHUD2;
+    private Tank t1;
+    private Tank t2;
     private Launcher lf;
     private long tick = 0;
     private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
@@ -66,14 +68,14 @@ public class GameWorld extends JPanel implements Runnable {
                  */
                 Thread.sleep(1000 / 144);
 
-                if( ((Tank)(this.moveableObjectGameObjectCollections.get(1))).getIsLoser() ) {
+                if(this.t2.getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 1 WINS!");
                     this.gameState = GameState.STOPPED;
                     music.stopSound();
                     musicThread.interrupt();
                     return;
-                } else if( ((Tank)(this.moveableObjectGameObjectCollections.get(0))).getIsLoser() ) {
+                } else if(this.t1.getIsLoser()) {
                     this.lf.setFrame("end");
                     System.out.println("TANK 2 WINS!");
                     this.gameState = GameState.STOPPED;
@@ -118,14 +120,14 @@ public class GameWorld extends JPanel implements Runnable {
         GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
 
         BackgroundLoader.getInstance().initializeBackground();
-        Tank t1;
-        Tank t2;
+
+
         if(((Tank) moveableObjectGameObjectCollections.get(0)).getPlayerID() == 1) {
-            t1 = (Tank) moveableObjectGameObjectCollections.get(0);
+            this.t1 = (Tank) moveableObjectGameObjectCollections.get(0);
             t2 = (Tank) moveableObjectGameObjectCollections.get(1);
         } else {
-            t1 = (Tank) moveableObjectGameObjectCollections.get(1);
-            t2 = (Tank) moveableObjectGameObjectCollections.get(0);
+            this.t1 = (Tank) moveableObjectGameObjectCollections.get(1);
+            this.t2 = (Tank) moveableObjectGameObjectCollections.get(0);
         }
 
         minimap = new Minimap();
@@ -137,20 +139,20 @@ public class GameWorld extends JPanel implements Runnable {
         double leftRightOffset = 0.07;
 
         gameHUD1 = new GameHUD(
-                t1,
+                this.t1,
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset))
         );
         gameHUD2 = new GameHUD(
-                t2,
+                this.t2,
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20))
         );
 
         TankController tc1 = new TankController(
-                t1,
+                this.t1,
                 KeyEvent.VK_W,
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
@@ -158,7 +160,7 @@ public class GameWorld extends JPanel implements Runnable {
                 KeyEvent.VK_SPACE
         );
         TankController tc2 = new TankController(
-                t2,
+                this.t2,
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
