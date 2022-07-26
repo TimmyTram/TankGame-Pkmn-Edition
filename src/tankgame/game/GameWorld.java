@@ -30,6 +30,8 @@ public class GameWorld extends JPanel implements Runnable {
     private GameHUD gameHUD2;
     private Tank t1;
     private Tank t2;
+    private TankController tc1;
+    private TankController tc2;
     private Launcher lf;
     private long tick = 0;
     private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
@@ -44,12 +46,17 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public GameWorld(Launcher lf) {
         this.lf = lf;
+        ResourceHandler.initImages();
+        ResourceHandler.initSounds();
+        ResourceHandler.initMaps();
+        //this.InitializeGame();
     }
 
     @Override
     public void run() {
         try {
             if(!this.runningState.getState()) {
+                System.out.println("resetting game.");
                 this.resetGame();
             }
             Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
@@ -96,7 +103,17 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public void resetGame() {
         this.tick = 0;
-        this.InitializeGame();
+        //this.InitializeGame();
+        this.runningState = GameState.RunningState.RUNNING;
+        this.moveableObjectGameObjectCollections.clear();
+        this.stationaryObjectGameObjectCollections.clear();
+        this.emptySpaces.clear();
+        this.loadMap();
+        this.emptySpaces = GameMap.getInstance().getEmptySpaces();
+        BackgroundLoader.getInstance().initializeBackground();
+        this.initTanks();
+        this.t1.setValidSpawnLocations(this.emptySpaces);
+        this.t2.setValidSpawnLocations(this.emptySpaces);
     }
 
     /**
@@ -113,50 +130,32 @@ public class GameWorld extends JPanel implements Runnable {
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
         this.emptySpaces = new ArrayList<>();
 
-        ResourceHandler.initImages();
-        ResourceHandler.initSounds();
-        ResourceHandler.initMaps();
-
-        if(this.gameMap == null) {
-            int maxChoices = ResourceHandler.getNumberOfMaps();
-            int randChoice = (new Random()).nextInt(maxChoices);
-            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
-            System.out.println("Loading into " + ResourceHandler.getGameMap(randChoice) + " . . .");
-        } else {
-            System.out.println("Loading into " + this.gameMap + " . . .");
-            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(this.gameMap));
-        }
+        this.loadMap();
 
         this.emptySpaces = GameMap.getInstance().getEmptySpaces();
         BackgroundLoader.getInstance().initializeBackground();
 
-        if(((Tank) moveableObjectGameObjectCollections.get(0)).getPlayerID() == 1) {
-            this.t1 = (Tank) moveableObjectGameObjectCollections.get(0);
-            this.t2 = (Tank) moveableObjectGameObjectCollections.get(1);
-        } else {
-            this.t1 = (Tank) moveableObjectGameObjectCollections.get(1);
-            this.t2 = (Tank) moveableObjectGameObjectCollections.get(0);
-        }
+        this.initTanks();
 
         this.t1.setValidSpawnLocations(this.emptySpaces);
         this.t2.setValidSpawnLocations(this.emptySpaces);
 
-        minimap = new Minimap();
-        minimap.initializeMiniMapDimensions();
-        camera1 = new Camera(t1, minimap.getScaledHeight());
-        camera2 = new Camera(t2, minimap.getScaledHeight());
+        this.minimap = new Minimap();
+        this.minimap.initializeMiniMapDimensions();
+        this.camera1 = new Camera(t1, minimap.getScaledHeight());
+        this.camera2 = new Camera(t2, minimap.getScaledHeight());
 
         double correctionOffset = 1.13;
         double leftRightOffset = 0.07;
 
-        gameHUD1 = new GameHUD(
+        this.gameHUD1 = new GameHUD(
                 this.t1,
                 0,
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
                 (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset)),
                 ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_1)
         );
-        gameHUD2 = new GameHUD(
+        this.gameHUD2 = new GameHUD(
                 this.t2,
                 GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
                 (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
@@ -164,7 +163,7 @@ public class GameWorld extends JPanel implements Runnable {
                 ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_2)
         );
 
-        TankController tc1 = new TankController(
+         this.tc1 = new TankController(
                 this.t1,
                 KeyEvent.VK_W,
                 KeyEvent.VK_S,
@@ -172,7 +171,7 @@ public class GameWorld extends JPanel implements Runnable {
                 KeyEvent.VK_D,
                 KeyEvent.VK_SPACE
         );
-        TankController tc2 = new TankController(
+        this.tc2 = new TankController(
                 this.t2,
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
@@ -252,6 +251,28 @@ public class GameWorld extends JPanel implements Runnable {
             if(stationaryObject.getIsDestroyed()) {
                 this.stationaryObjectGameObjectCollections.remove(stationaryObject);
             }
+        }
+    }
+
+    private void loadMap() {
+        if(this.gameMap == null) {
+            int maxChoices = ResourceHandler.getNumberOfMaps();
+            int randChoice = (new Random()).nextInt(maxChoices);
+            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
+            System.out.println("Loading into " + ResourceHandler.getGameMap(randChoice) + " . . .");
+        } else {
+            System.out.println("Loading into " + this.gameMap + " . . .");
+            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(this.gameMap));
+        }
+    }
+
+    private void initTanks() {
+        if(((Tank) moveableObjectGameObjectCollections.get(0)).getPlayerID() == 1) {
+            this.t1 = (Tank) moveableObjectGameObjectCollections.get(0);
+            this.t2 = (Tank) moveableObjectGameObjectCollections.get(1);
+        } else {
+            this.t1 = (Tank) moveableObjectGameObjectCollections.get(1);
+            this.t2 = (Tank) moveableObjectGameObjectCollections.get(0);
         }
     }
 
