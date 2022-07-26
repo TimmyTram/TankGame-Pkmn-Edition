@@ -36,6 +36,7 @@ public class GameWorld extends JPanel implements Runnable {
     private long tick = 0;
     private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
     private GameObjectCollections<StationaryObject> stationaryObjectGameObjectCollections;
+    private GameObjectCollections<GameObject> collisionlessGameObjectCollections;
     private ArrayList<int[]> emptySpaces;
     private GameState.RunningState runningState;
     private String gameMap;
@@ -46,6 +47,7 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public GameWorld(Launcher lf) {
         this.lf = lf;
+        System.out.println("Initializing Resources . . .");
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
         ResourceHandler.initMaps();
@@ -55,12 +57,12 @@ public class GameWorld extends JPanel implements Runnable {
     public void run() {
         try {
             if(!this.runningState.getState()) {
-                System.out.println("resetting game.");
+                System.out.println("Resetting Game . . .");
                 this.resetGame();
             }
-            //Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
-            //Thread musicThread = new Thread(music);
-            //musicThread.start();
+            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
+            Thread musicThread = new Thread(music);
+            musicThread.start();
             while (true) {
                 this.tick++;
                 this.moveableObjectGameObjectCollections.update();
@@ -78,16 +80,16 @@ public class GameWorld extends JPanel implements Runnable {
                     System.out.println("TANK 1 WINS!");
                     GameState.PLAYER_WINNER = 1;
                     this.runningState = this.runningState.nextState();
-                    //music.stopSound();
-                    //musicThread.interrupt();
+                    music.stopSound();
+                    musicThread.interrupt();
                     this.lf.setFrame("end");
                     return;
                 } else if(this.t1.getIsLoser()) {
                     System.out.println("TANK 2 WINS!");
                     GameState.PLAYER_WINNER = 2;
                     this.runningState = this.runningState.nextState();
-                    //music.stopSound();
-                    //musicThread.interrupt();
+                    music.stopSound();
+                    musicThread.interrupt();
                     this.lf.setFrame("end");
                     return;
                 }
@@ -105,6 +107,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.runningState = GameState.RunningState.RUNNING;
         this.moveableObjectGameObjectCollections.clear();
         this.stationaryObjectGameObjectCollections.clear();
+        this.collisionlessGameObjectCollections.clear();
         this.emptySpaces.clear();
         this.loadMap();
         this.emptySpaces = GameMap.getInstance().getEmptySpaces();
@@ -119,6 +122,7 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
+        System.out.println("Initializing Game . . .");
         this.runningState = GameState.RunningState.RUNNING;
         this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
                 GameConstants.WORLD_HEIGHT,
@@ -126,6 +130,7 @@ public class GameWorld extends JPanel implements Runnable {
 
         this.moveableObjectGameObjectCollections = new GameObjectCollections<>();
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
+        this.collisionlessGameObjectCollections = new GameObjectCollections<>();
         this.emptySpaces = new ArrayList<>();
         this.loadMap();
         this.emptySpaces = GameMap.getInstance().getEmptySpaces();
@@ -166,6 +171,7 @@ public class GameWorld extends JPanel implements Runnable {
 
         this.moveableObjectGameObjectCollections.draw(buffer);
         this.stationaryObjectGameObjectCollections.draw(buffer);
+        this.collisionlessGameObjectCollections.draw(buffer);
 
         camera1.drawSplitScreen(world);
         camera2.drawSplitScreen(world);
@@ -185,6 +191,10 @@ public class GameWorld extends JPanel implements Runnable {
 
     public void addToStationaryGameObjectCollections(StationaryObject stationaryObject) {
         this.stationaryObjectGameObjectCollections.add(stationaryObject);
+    }
+
+    public void addToCollisionlessGameObjectCollections(GameObject gameObject) {
+        this.collisionlessGameObjectCollections.add(gameObject);
     }
 
     public void selectMap(String map) {
@@ -249,8 +259,8 @@ public class GameWorld extends JPanel implements Runnable {
 
     private void initHUD() {
         this.minimap = new Minimap();
-        this.camera1 = new Camera(t1, minimap.getScaledHeight());
-        this.camera2 = new Camera(t2, minimap.getScaledHeight());
+        this.camera1 = new Camera(t1, (minimap.getScaledHeight() / 2) + 12);
+        this.camera2 = new Camera(t2, (minimap.getScaledHeight() / 2) + 12);
 
         this.gameHUD1 = new GameHUD(
                 this.t1,

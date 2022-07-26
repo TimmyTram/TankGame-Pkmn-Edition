@@ -37,6 +37,7 @@ public abstract class Projectile extends MoveableObject {
         int limitY = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
         if(x >= GameConstants.WORLD_WIDTH - limitX || x < limitX || y < limitY || y >= GameConstants.WORLD_HEIGHT - limitY) {
             this.isDestroyed = true;
+            this.playSound();
         }
     }
 

@@ -1,5 +1,6 @@
 package tankgame.game;
 
+import tankgame.constants.GameObjectID;
 import tankgame.game.moveableObjects.MoveableObject;
 import tankgame.game.stationaryObjects.StationaryObject;
 
@@ -36,7 +37,9 @@ public class GameMap {
                     gameObjectID = gameObjectID.toUpperCase();
                     GameObject gameObject = gameObjectFactory.createGameObject(gameObjectID, row, col, gw);
 
-                    if(gameObject instanceof StationaryObject)
+                    if(GameObjectID.BORDER.equalsIgnoreCase(gameObjectID))
+                        gw.addToCollisionlessGameObjectCollections(gameObject);
+                    else if(gameObject instanceof StationaryObject)
                         gw.addToStationaryGameObjectCollections((StationaryObject) gameObject);
                     else if(gameObject instanceof MoveableObject)
                         gw.addToMovableGameObjectCollections((MoveableObject) gameObject);
