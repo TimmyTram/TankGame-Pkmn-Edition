@@ -49,7 +49,6 @@ public class GameWorld extends JPanel implements Runnable {
         ResourceHandler.initImages();
         ResourceHandler.initSounds();
         ResourceHandler.initMaps();
-        //this.InitializeGame();
     }
 
     @Override
@@ -59,9 +58,9 @@ public class GameWorld extends JPanel implements Runnable {
                 System.out.println("resetting game.");
                 this.resetGame();
             }
-            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
-            Thread musicThread = new Thread(music);
-            musicThread.start();
+            //Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
+            //Thread musicThread = new Thread(music);
+            //musicThread.start();
             while (true) {
                 this.tick++;
                 this.moveableObjectGameObjectCollections.update();
@@ -79,16 +78,16 @@ public class GameWorld extends JPanel implements Runnable {
                     System.out.println("TANK 1 WINS!");
                     GameState.PLAYER_WINNER = 1;
                     this.runningState = this.runningState.nextState();
-                    music.stopSound();
-                    musicThread.interrupt();
+                    //music.stopSound();
+                    //musicThread.interrupt();
                     this.lf.setFrame("end");
                     return;
                 } else if(this.t1.getIsLoser()) {
                     System.out.println("TANK 2 WINS!");
                     GameState.PLAYER_WINNER = 2;
                     this.runningState = this.runningState.nextState();
-                    music.stopSound();
-                    musicThread.interrupt();
+                    //music.stopSound();
+                    //musicThread.interrupt();
                     this.lf.setFrame("end");
                     return;
                 }
@@ -103,7 +102,6 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public void resetGame() {
         this.tick = 0;
-        //this.InitializeGame();
         this.runningState = GameState.RunningState.RUNNING;
         this.moveableObjectGameObjectCollections.clear();
         this.stationaryObjectGameObjectCollections.clear();
@@ -129,40 +127,13 @@ public class GameWorld extends JPanel implements Runnable {
         this.moveableObjectGameObjectCollections = new GameObjectCollections<>();
         this.stationaryObjectGameObjectCollections = new GameObjectCollections<>();
         this.emptySpaces = new ArrayList<>();
-
         this.loadMap();
-
         this.emptySpaces = GameMap.getInstance().getEmptySpaces();
         BackgroundLoader.getInstance().initializeBackground();
-
         this.initTanks();
-
         this.t1.setValidSpawnLocations(this.emptySpaces);
         this.t2.setValidSpawnLocations(this.emptySpaces);
-
-        this.minimap = new Minimap();
-        this.minimap.initializeMiniMapDimensions();
-        this.camera1 = new Camera(t1, minimap.getScaledHeight());
-        this.camera2 = new Camera(t2, minimap.getScaledHeight());
-
-        double correctionOffset = 1.13;
-        double leftRightOffset = 0.07;
-
-        this.gameHUD1 = new GameHUD(
-                this.t1,
-                0,
-                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-                (int)(minimap.getScaledWidth() * (correctionOffset + leftRightOffset)),
-                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_1)
-        );
-        this.gameHUD2 = new GameHUD(
-                this.t2,
-                GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * correctionOffset),
-                (int)(GameConstants.GAME_SCREEN_HEIGHT - minimap.getScaledHeight() * correctionOffset),
-                (GameConstants.GAME_SCREEN_WIDTH) - (GameConstants.GAME_SCREEN_WIDTH - (int)(minimap.getScaledWidth() * (correctionOffset - leftRightOffset) + 20)),
-                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_2)
-        );
-
+        this.initHUD();
          this.tc1 = new TankController(
                 this.t1,
                 KeyEvent.VK_W,
@@ -274,6 +245,28 @@ public class GameWorld extends JPanel implements Runnable {
             this.t1 = (Tank) moveableObjectGameObjectCollections.get(1);
             this.t2 = (Tank) moveableObjectGameObjectCollections.get(0);
         }
+    }
+
+    private void initHUD() {
+        this.minimap = new Minimap();
+        this.camera1 = new Camera(t1, minimap.getScaledHeight());
+        this.camera2 = new Camera(t2, minimap.getScaledHeight());
+
+        this.gameHUD1 = new GameHUD(
+                this.t1,
+                0,
+                (GameConstants.GAME_SCREEN_HEIGHT - ((this.minimap.getScaledHeight() / 2 + 12))),
+                this.minimap.getScaledWidth(),
+                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_1)
+        );
+
+        this.gameHUD2 = new GameHUD(
+                this.t2,
+                (GameConstants.GAME_SCREEN_WIDTH - this.minimap.getScaledWidth()),
+                (GameConstants.GAME_SCREEN_HEIGHT - ((this.minimap.getScaledHeight() / 2 + 12))),
+                this.minimap.getScaledWidth(),
+                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_2)
+        );
     }
 
 }

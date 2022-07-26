@@ -3,32 +3,27 @@ package tankgame.display;
 import tankgame.constants.GameConstants;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Minimap {
 
     private static final double SCALE = 0.2;
+    private final double scaledWidth;
+    private final double scaledHeight;
 
-    private BufferedImage minimap;
-    private double scaledWidth;
-    private double scaledHeight;
 
-    private double truePositionX;
-    private double truePositionY;
-
-    public Minimap() {}
-
-    public void initializeMiniMapDimensions() {
-        scaledWidth = GameConstants.WORLD_WIDTH * SCALE;
-        scaledHeight = GameConstants.WORLD_HEIGHT * SCALE;
-        truePositionX = GameConstants.WORLD_WIDTH + scaledWidth - 10;
-        truePositionY = 2 * GameConstants.WORLD_HEIGHT + scaledHeight;
+    public Minimap() {
+        this.scaledWidth = GameConstants.GAME_SCREEN_WIDTH / 2f - (GameConstants.WORLD_WIDTH * SCALE) / 2f;
+        this.scaledHeight = GameConstants.GAME_SCREEN_HEIGHT - GameConstants.WORLD_HEIGHT * (SCALE * 1.14);
     }
 
     public void drawMinimap(BufferedImage world, Graphics2D g2) {
         BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
-        g2.scale(SCALE, SCALE);
-        g2.drawImage(minimap, (int)(truePositionX), (int)(truePositionY), null);
+        AffineTransform affineTransform = new AffineTransform();
+        affineTransform.translate(this.scaledWidth, this.scaledHeight);
+        affineTransform.scale(SCALE, SCALE);
+        g2.drawImage(minimap, affineTransform, null);
     }
 
     public int getScaledWidth() {

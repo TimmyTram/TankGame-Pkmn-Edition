@@ -14,7 +14,7 @@ public class Camera {
 
     public Camera(Tank tank, int HUD_LIMIT) {
         this.tank = tank;
-        this.HUD_LIMIT = (int)(HUD_LIMIT * 1.13);
+        this.HUD_LIMIT = (HUD_LIMIT / 2) + 12;
     }
 
     public void drawSplitScreen(BufferedImage world) {
