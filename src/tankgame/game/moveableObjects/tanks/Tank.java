@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class Tank extends MoveableObject {
 
-    private float R = 2;
+    private float R = 6;
     private final float ROTATIONSPEED = 2.25f;
     private boolean UpPressed;
     private boolean DownPressed;
@@ -32,7 +32,7 @@ public class Tank extends MoveableObject {
     private int ticksTillNextShot = 100;
     private final int maxHealthPoints = 100;
     private int currentHealthPoints = 100;
-    private final int damage = 10;
+    private final int damage = 100;
     private int lives = 4;
     private boolean isLoser = false;
     private int playerID;
@@ -184,6 +184,7 @@ public class Tank extends MoveableObject {
         int maxChoices = this.validSpawnLocations.size();
         int randomSelection = (new Random()).nextInt(maxChoices);
         int[] location = this.validSpawnLocations.get(randomSelection);
+        System.out.println(this.name + " respawned @: "  + " row: " + (location[0] + 1) + " col: " + (location[1] + 1));
         this.setPosition(
                 location[1] * ResourceConstants.FLOOR_TILE_DIMENSION,
                 location[0] * ResourceConstants.FLOOR_TILE_DIMENSION

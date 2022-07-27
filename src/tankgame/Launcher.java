@@ -64,7 +64,7 @@ public class Launcher {
         this.startPanel = new StartMenuPanel(this); // create a new start panel
         this.gamePanel = new GameWorld(this); // create a new game panel
         this.mapMenuPanel = new MapMenuPanel(this, gamePanel); // create a new map menu panel
-        //this.gamePanel.InitializeGame(); // initialize game, but DO NOT start game
+        this.gamePanel.InitializeGame(); // initialize game, but DO NOT start game
         this.endPanel = new EndGamePanel(this); // create a new end game pane;
         cl = new CardLayout(); // creating a new CardLayout Panel
         this.mainPanel.setLayout(cl); // set the layout of the main panel to our card layout
@@ -89,7 +89,7 @@ public class Launcher {
             case "game" -> {
                 // set the size of the jFrame to the expected size for the game panel
                 this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
-                this.gamePanel.InitializeGame();
+                //this.gamePanel.InitializeGame();
                 //start a new thread for the game to run. This will ensure our JFrame is responsive and
                 // not stuck executing the game loop.
                 (new Thread(this.gamePanel)).start();

@@ -115,6 +115,8 @@ public class GameWorld extends JPanel implements Runnable {
         this.initTanks();
         this.t1.setValidSpawnLocations(this.emptySpaces);
         this.t2.setValidSpawnLocations(this.emptySpaces);
+        this.initHUD();
+        this.initControllers();
     }
 
     /**
@@ -139,24 +141,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.t1.setValidSpawnLocations(this.emptySpaces);
         this.t2.setValidSpawnLocations(this.emptySpaces);
         this.initHUD();
-         this.tc1 = new TankController(
-                this.t1,
-                KeyEvent.VK_W,
-                KeyEvent.VK_S,
-                KeyEvent.VK_A,
-                KeyEvent.VK_D,
-                KeyEvent.VK_SPACE
-        );
-        this.tc2 = new TankController(
-                this.t2,
-                KeyEvent.VK_UP,
-                KeyEvent.VK_DOWN,
-                KeyEvent.VK_LEFT,
-                KeyEvent.VK_RIGHT,
-                KeyEvent.VK_ENTER
-        );
-        this.lf.getJf().addKeyListener(tc1);
-        this.lf.getJf().addKeyListener(tc2);
+        this.initControllers();
     }
 
 
@@ -277,6 +262,27 @@ public class GameWorld extends JPanel implements Runnable {
                 this.minimap.getScaledWidth(),
                 ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_2)
         );
+    }
+
+    private void initControllers() {
+        this.tc1 = new TankController(
+                this.t1,
+                KeyEvent.VK_W,
+                KeyEvent.VK_S,
+                KeyEvent.VK_A,
+                KeyEvent.VK_D,
+                KeyEvent.VK_SPACE
+        );
+        this.tc2 = new TankController(
+                this.t2,
+                KeyEvent.VK_UP,
+                KeyEvent.VK_DOWN,
+                KeyEvent.VK_LEFT,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.VK_ENTER
+        );
+        this.lf.getJf().addKeyListener(tc1);
+        this.lf.getJf().addKeyListener(tc2);
     }
 
 }
