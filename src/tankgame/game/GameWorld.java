@@ -144,7 +144,6 @@ public class GameWorld extends JPanel implements Runnable {
         this.initControllers();
     }
 
-
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -184,6 +183,7 @@ public class GameWorld extends JPanel implements Runnable {
 
     public void selectMap(String map) {
         this.gameMap = map;
+        this.resetGame();
     }
 
     private void checkCollisions() {
