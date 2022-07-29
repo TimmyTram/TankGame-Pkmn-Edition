@@ -64,6 +64,8 @@ public class ResourceHandler {
                 ResourceHandler.images.put(ResourceConstants.IMAGES_LIVES, readImg("lives/" + ResourceConstants.IMAGES_LIVES));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_HUD_1, readImg("hud/" + ResourceConstants.IMAGES_HUD_1));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_HUD_2, readImg("hud/" + ResourceConstants.IMAGES_HUD_2));
+
+                ResourceHandler.images.put(ResourceConstants.IMAGES_TANK_ARROW, readImg("tanks/" + ResourceConstants.IMAGES_TANK_ARROW));
             } catch (IOException e) {
                 System.out.println(e);
                 e.printStackTrace();
@@ -118,7 +120,40 @@ public class ResourceHandler {
         }
 
         public static void initAnimations() {
-
+            try {
+                String basename = "dawn_%d";
+                List<BufferedImage> temp = new ArrayList<>();
+                for(int i = 1; i <= 4; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/trainer/right/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("TRAINER_RIGHT", temp);
+                temp = new ArrayList<>();
+                for(int i = 1; i <= 4; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/trainer/left/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("TRAINER_LEFT", temp);
+                temp = new ArrayList<>();
+                for(int i = 1; i<= 4; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/trainer/up/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("TRAINER_UP", temp);
+                temp = new ArrayList<>();
+                for(int i = 1; i<= 4; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/trainer/down/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("TRAINER_DOWN", temp);
+            } catch (IOException e) {
+                System.out.println(e);
+                System.exit(-2);
+            }
         }
 
         public static void initMaps() {

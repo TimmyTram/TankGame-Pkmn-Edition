@@ -1,5 +1,6 @@
 package tankgame.game.moveableObjects.tanks;
 
+import tankgame.Animation;
 import tankgame.Sound;
 import tankgame.constants.GameConstants;
 import tankgame.constants.ResourceConstants;
@@ -39,12 +40,15 @@ public class Tank extends MoveableObject {
     private final String name;
     private final GameWorld gw;
     private ArrayList<int[]> validSpawnLocations;
+    private Animation animation;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, int playerID, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
         this.playerID = playerID;
         this.name = name;
         this.gw = gw;
+        this.animation = new Animation(this.x, this.y, ResourceHandler.getAnimation("TRAINER_RIGHT"));
+        this.animation.start();
     }
 
     public void setX(float x){ this.x = x; }
@@ -123,9 +127,31 @@ public class Tank extends MoveableObject {
             this.shoot();
             tick = 0;
         }
+        this.animation.setX(this.x);
+        this.animation.setY(this.y);
+        this.animationHandler();
         tick++;
         checkAlive();
         checkBorder();
+    }
+
+    private void animationHandler() {
+
+        float unitCircleAngle = Math.abs(this.angle) % 360;
+        if(this.angle > 0) {
+            // because of how tanks rotate we need to convert this positive angle into how angles would work on a unit circle
+            unitCircleAngle = Math.abs((this.angle % 360) - 360);
+        }
+
+        if((unitCircleAngle >= 315 && unitCircleAngle <= 360) || (unitCircleAngle <= 45 && unitCircleAngle >= 0)) {
+            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_RIGHT"));
+        } else if(unitCircleAngle >= 135 && unitCircleAngle <= 225) {
+            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_LEFT"));
+        } else if((unitCircleAngle >= 225 && unitCircleAngle <= 315)) {
+            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_DOWN"));
+        } else if((unitCircleAngle >= 45 && unitCircleAngle <= 135)) {
+            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_UP"));
+        }
     }
 
     private void rotateLeft() {
@@ -296,9 +322,19 @@ public class Tank extends MoveableObject {
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
+//        else if((this.angle % 360) >= 0 && (this.angle % 360) <= 90) {
+//            System.out.println("look left");
+//        } else if((this.angle % 360) >= 0 && (this.angle % 360) <= 90) {
+//            System.out.println("look down");
+//        } else if((this.angle % 360) >= 0 && (this.angle % 360) <= 90) {
+//            System.out.println("look up");
+//        }
+        //System.out.println(unitCircleAngle);
 
-        g2d.setColor(Color.magenta);
-        g2d.drawRect((int)(x) ,(int)(y),this.img.getWidth(), this.img.getHeight());
+        this.animation.drawImage(g2d);
+
+//        g2d.setColor(Color.magenta);
+//        g2d.drawRect((int)(x) ,(int)(y),this.img.getWidth(), this.img.getHeight());
 
     }
 }

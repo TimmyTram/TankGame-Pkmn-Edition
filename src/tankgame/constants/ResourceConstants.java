@@ -17,6 +17,8 @@ public class ResourceConstants {
 
     public static final String IMAGES_TANK_2 = "dawn.png";
 
+    public static final String IMAGES_TANK_ARROW = "arrow.png";
+
     public static final String IMAGES_BULLET_1 = "pokeball.png";
 
     //public static String IMAGES_BULLET_2 = ""; <-- Will add pokemon attack

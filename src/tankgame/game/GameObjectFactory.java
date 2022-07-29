@@ -25,7 +25,7 @@ public class GameObjectFactory {
                         0,
                         0,
                         0,
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_1),
+                        ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW),
                         1,
                         "Lucas",
                         gw
@@ -39,7 +39,7 @@ public class GameObjectFactory {
                         0,
                         0,
                         0,
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_2),
+                        ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW),
                         2,
                         "Dawn",
                         gw
