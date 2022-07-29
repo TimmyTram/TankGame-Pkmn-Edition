@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class Tank extends MoveableObject {
 
-    private float R = 6;
+    private float R = 2;
     private final float ROTATIONSPEED = 2.25f;
     private boolean UpPressed;
     private boolean DownPressed;
@@ -136,13 +136,13 @@ public class Tank extends MoveableObject {
     }
 
     private void animationHandler() {
-
         float unitCircleAngle = Math.abs(this.angle) % 360;
         if(this.angle > 0) {
-            // because of how tanks rotate we need to convert this positive angle into how angles would work on a unit circle
+            // if we rotated clockwise the angle would not match a unit circle, so we use this formula to help convert it.
             unitCircleAngle = Math.abs((this.angle % 360) - 360);
         }
 
+        // Refer to the UNIT CIRCLE diagram to find the areas of a circle where a player should face.
         if((unitCircleAngle >= 315 && unitCircleAngle <= 360) || (unitCircleAngle <= 45 && unitCircleAngle >= 0)) {
             this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_RIGHT"));
         } else if(unitCircleAngle >= 135 && unitCircleAngle <= 225) {
@@ -152,6 +152,7 @@ public class Tank extends MoveableObject {
         } else if((unitCircleAngle >= 45 && unitCircleAngle <= 135)) {
             this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_UP"));
         }
+        //System.out.println(this.vx);
     }
 
     private void rotateLeft() {
@@ -232,6 +233,7 @@ public class Tank extends MoveableObject {
 
     public void changeSpeed(float speed) {
         this.R = speed;
+        this.animation.setDelay((int) (this.animation.getInitialDelay() / (this.R / 2)));
     }
 
     public void changeDelayBetweenShots(int delay) {
@@ -322,15 +324,6 @@ public class Tank extends MoveableObject {
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-//        else if((this.angle % 360) >= 0 && (this.angle % 360) <= 90) {
-//            System.out.println("look left");
-//        } else if((this.angle % 360) >= 0 && (this.angle % 360) <= 90) {
-//            System.out.println("look down");
-//        } else if((this.angle % 360) >= 0 && (this.angle % 360) <= 90) {
-//            System.out.println("look up");
-//        }
-        //System.out.println(unitCircleAngle);
-
         this.animation.drawImage(g2d);
 
 //        g2d.setColor(Color.magenta);

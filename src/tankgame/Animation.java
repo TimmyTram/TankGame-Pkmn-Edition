@@ -7,7 +7,8 @@ import java.util.List;
 public class Animation extends Thread {
 
     private float x, y;
-    private final int delay = 60;
+    private final int initialDelay = 120;
+    private int currentDelay;
     private List<BufferedImage> frames;
     private boolean isRunning;
     private int currentFrame = 0;
@@ -16,18 +17,23 @@ public class Animation extends Thread {
         this.x = x;
         this.y = y;
         this.frames = frames;
+        this.currentDelay = this.initialDelay;
     }
 
     public boolean isRunning() {
         return this.isRunning;
     }
 
-    public void setRunning(boolean status) {
-        this.isRunning = status;
-    }
-
     public void setFrames(List<BufferedImage> frames) {
         this.frames = frames;
+    }
+
+    public void setDelay(int delay) {
+        this.currentDelay = delay;
+    }
+
+    public int getInitialDelay() {
+        return this.initialDelay;
     }
 
     public void setX (float x) {
@@ -53,7 +59,7 @@ public class Animation extends Thread {
 //                if(this.currentFrame == this.frames.size() - 1) {
 //                    this.isRunning = false;
 //                }
-                Thread.sleep(delay);
+                Thread.sleep(currentDelay);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
