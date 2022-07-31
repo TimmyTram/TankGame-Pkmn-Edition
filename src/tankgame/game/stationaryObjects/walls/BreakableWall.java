@@ -1,8 +1,8 @@
 package tankgame.game.stationaryObjects.walls;
 
-import tankgame.Sound;
+import tankgame.util.Sound;
 import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
+import tankgame.game.loaders.ResourceLoader;
 
 import java.awt.image.BufferedImage;
 
@@ -18,7 +18,7 @@ public class BreakableWall extends Wall {
     }
 
     public void playSound() {
-        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_ROCK_SMASH))).playSound();
+        (new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_ROCK_SMASH))).playSound();
     }
 
 }

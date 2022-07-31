@@ -2,7 +2,7 @@ package tankgame.game;
 
 import tankgame.constants.GameObjectID;
 import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
+import tankgame.game.loaders.ResourceLoader;
 import tankgame.game.stationaryObjects.powerups.Barrage;
 import tankgame.game.stationaryObjects.powerups.Heal;
 import tankgame.game.stationaryObjects.powerups.SpeedBoost;
@@ -20,12 +20,12 @@ public class GameObjectFactory {
 
             case GameObjectID.PLAYER_1 -> {
                 return new Tank(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getHeight(),
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_TANK_ARROW).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_TANK_ARROW).getHeight(),
                         0,
                         0,
                         0,
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_TANK_ARROW),
                         1,
                         "DAWN",
                         gw
@@ -34,12 +34,12 @@ public class GameObjectFactory {
 
             case GameObjectID.PLAYER_2 -> {
                 return new Tank(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getHeight(),
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_TANK_ARROW).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_TANK_ARROW).getHeight(),
                         0,
                         0,
                         0,
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_TANK_ARROW),
                         2,
                         "BIDOOF",
                         gw
@@ -48,41 +48,41 @@ public class GameObjectFactory {
 
             case GameObjectID.BORDER, GameObjectID.UNBREAKABLE_WALL -> {
                 return new UnbreakableWall(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight(),
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL)
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight(),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL)
                 );
             }
 
             case GameObjectID.BREAKABLE_WALL -> {
                 return new BreakableWall(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_BREAKABLE_WALL).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_BREAKABLE_WALL).getHeight(),
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_BREAKABLE_WALL)
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_BREAKABLE_WALL).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_BREAKABLE_WALL).getHeight(),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_BREAKABLE_WALL)
                 );
             }
 
             case GameObjectID.HEAL -> {
                 return new Heal(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_HEAL).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_HEAL).getHeight(),
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_HEAL)
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_HEAL).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_HEAL).getHeight(),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_HEAL)
                 );
             }
 
             case GameObjectID.BARRAGE -> {
                 return new Barrage(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_BARRAGE).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_BARRAGE).getHeight(),
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_BARRAGE)
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_BARRAGE).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_BARRAGE).getHeight(),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_BARRAGE)
                 );
             }
 
             case GameObjectID.SPEED_BOOST -> {
                 return new SpeedBoost(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_SPEED).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_SPEED).getHeight(),
-                        ResourceHandler.getImage(ResourceConstants.IMAGES_SPEED)
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_SPEED).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_SPEED).getHeight(),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_SPEED)
                 );
             }
 

@@ -1,10 +1,10 @@
 package tankgame.game.moveableObjects.tanks;
 
-import tankgame.Animation;
-import tankgame.Sound;
+import tankgame.util.Animation;
+import tankgame.util.Sound;
 import tankgame.constants.GameConstants;
 import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
+import tankgame.game.loaders.ResourceLoader;
 import tankgame.game.Collidable;
 import tankgame.game.GameObject;
 import tankgame.game.GameWorld;
@@ -59,23 +59,23 @@ public class Tank extends MoveableObject {
     private Animation initAnimation() {
         if(this.playerID == 1) {
             this.animationType = "TRAINER";
-            return new Animation(this.x, this.y, ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
+            return new Animation(this.x, this.y, ResourceLoader.getAnimation(this.animationType + "_RIGHT"));
         }
         this.animationType = "POKEMON";
-        return new Animation(this.x, this.y, ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
+        return new Animation(this.x, this.y, ResourceLoader.getAnimation(this.animationType + "_RIGHT"));
     }
 
     private void initBullet() {
         switch(this.playerID) {
             case 1 -> {
-                this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_TRAINER);
-                this.bulletSpawnSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_TRAINER));
-                this.bulletCollideSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER));
+                this.bulletImage = ResourceLoader.getImage(ResourceConstants.IMAGES_BULLET_TRAINER);
+                this.bulletSpawnSound = new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_BULLET_TRAINER));
+                this.bulletCollideSound = new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER));
             }
             case 2 -> {
-                this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_POKEMON);
-                this.bulletSpawnSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_POKEMON));
-                this.bulletCollideSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON));
+                this.bulletImage = ResourceLoader.getImage(ResourceConstants.IMAGES_BULLET_POKEMON);
+                this.bulletSpawnSound = new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_BULLET_POKEMON));
+                this.bulletCollideSound = new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON));
             }
         }
     }
@@ -177,13 +177,13 @@ public class Tank extends MoveableObject {
 
         // Refer to the UNIT CIRCLE diagram to find the areas of a circle where a player should face.
         if((unitCircleAngle >= 315 && unitCircleAngle <= 360) || (unitCircleAngle <= 45 && unitCircleAngle >= 0)) {
-            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
+            this.animation.setFrames(ResourceLoader.getAnimation(this.animationType + "_RIGHT"));
         } else if(unitCircleAngle >= 135 && unitCircleAngle <= 225) {
-            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_LEFT"));
+            this.animation.setFrames(ResourceLoader.getAnimation(this.animationType + "_LEFT"));
         } else if((unitCircleAngle >= 225 && unitCircleAngle <= 315)) {
-            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_DOWN"));
+            this.animation.setFrames(ResourceLoader.getAnimation(this.animationType + "_DOWN"));
         } else if((unitCircleAngle >= 45 && unitCircleAngle <= 135)) {
-            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_UP"));
+            this.animation.setFrames(ResourceLoader.getAnimation(this.animationType + "_UP"));
         }
     }
 
@@ -273,8 +273,8 @@ public class Tank extends MoveableObject {
     }
 
     private void checkBorder() {
-        int limitX = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth();
-        int limitY = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
+        int limitX = ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
         if (x < limitX) {
             x = limitX;
         }

@@ -1,8 +1,8 @@
 package tankgame.game.stationaryObjects.powerups;
 
-import tankgame.Sound;
+import tankgame.util.Sound;
 import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
+import tankgame.game.loaders.ResourceLoader;
 import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.image.BufferedImage;
@@ -21,6 +21,6 @@ public class Barrage extends PowerUp {
     @Override
     public void playSound() {
         //ResourceHandler.getSound(ResourceConstants.RESOURCE_BARRAGE_SOUND).play();
-        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BARRAGE))).playSound();
+        (new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_BARRAGE))).playSound();
     }
 }

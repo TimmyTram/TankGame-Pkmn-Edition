@@ -1,4 +1,4 @@
-package tankgame;
+package tankgame.util;
 
 import javax.sound.sampled.Clip;
 

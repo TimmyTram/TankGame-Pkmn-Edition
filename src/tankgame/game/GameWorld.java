@@ -1,13 +1,15 @@
 package tankgame.game;
 
-import tankgame.Sound;
+import tankgame.util.Sound;
 import tankgame.constants.GameConstants;
 import tankgame.Launcher;
-import tankgame.ResourceHandler;
+import tankgame.game.loaders.ResourceLoader;
 import tankgame.constants.ResourceConstants;
 import tankgame.display.Camera;
 import tankgame.display.GameHUD;
 import tankgame.display.Minimap;
+import tankgame.game.loaders.BackgroundLoader;
+import tankgame.game.loaders.GameMapLoader;
 import tankgame.game.moveableObjects.MoveableObject;
 import tankgame.game.moveableObjects.projectiles.Projectile;
 import tankgame.game.stationaryObjects.StationaryObject;
@@ -48,10 +50,10 @@ public class GameWorld extends JPanel implements Runnable {
     public GameWorld(Launcher lf) {
         this.lf = lf;
         System.out.println("Initializing Resources . . .");
-        ResourceHandler.initImages();
-        ResourceHandler.initSounds();
-        ResourceHandler.initAnimations();
-        ResourceHandler.initMaps();
+        ResourceLoader.initImages();
+        ResourceLoader.initSounds();
+        ResourceLoader.initAnimations();
+        ResourceLoader.initMaps();
     }
 
     @Override
@@ -61,7 +63,7 @@ public class GameWorld extends JPanel implements Runnable {
                 System.out.println("Resetting Game . . .");
                 this.resetGame();
             }
-            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
+            Sound music = new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
             Thread musicThread = new Thread(music);
             musicThread.start();
             while (true) {
@@ -111,7 +113,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.collisionlessGameObjectCollections.clear();
         this.emptySpaces.clear();
         this.loadMap();
-        this.emptySpaces = GameMap.getInstance().getEmptySpaces();
+        this.emptySpaces = GameMapLoader.getInstance().getEmptySpaces();
         BackgroundLoader.getInstance().initializeBackground();
         this.initTanks();
         this.t1.setValidSpawnLocations(this.emptySpaces);
@@ -136,7 +138,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.collisionlessGameObjectCollections = new GameObjectCollections<>();
         this.emptySpaces = new ArrayList<>();
         this.loadMap();
-        this.emptySpaces = GameMap.getInstance().getEmptySpaces();
+        this.emptySpaces = GameMapLoader.getInstance().getEmptySpaces();
         BackgroundLoader.getInstance().initializeBackground();
         this.initTanks();
         this.t1.setValidSpawnLocations(this.emptySpaces);
@@ -223,13 +225,13 @@ public class GameWorld extends JPanel implements Runnable {
 
     private void loadMap() {
         if(this.gameMap == null) {
-            int maxChoices = ResourceHandler.getNumberOfMaps();
+            int maxChoices = ResourceLoader.getNumberOfMaps();
             int randChoice = (new Random()).nextInt(maxChoices);
-            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(randChoice));
-            System.out.println("Loading into " + ResourceHandler.getGameMap(randChoice) + " . . .");
+            GameMapLoader.getInstance().initializeMap(this, ResourceLoader.getGameMap(randChoice));
+            System.out.println("Loading into " + ResourceLoader.getGameMap(randChoice) + " . . .");
         } else {
             System.out.println("Loading into " + this.gameMap + " . . .");
-            GameMap.getInstance().initializeMap(this, ResourceHandler.getGameMap(this.gameMap));
+            GameMapLoader.getInstance().initializeMap(this, ResourceLoader.getGameMap(this.gameMap));
         }
     }
 
@@ -253,7 +255,7 @@ public class GameWorld extends JPanel implements Runnable {
                 0,
                 (GameConstants.GAME_SCREEN_HEIGHT - ((this.minimap.getScaledHeight() / 2 + 12))),
                 this.minimap.getScaledWidth(),
-                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_1)
+                ResourceLoader.getImage(ResourceConstants.IMAGES_HUD_1)
         );
 
         this.gameHUD2 = new GameHUD(
@@ -261,7 +263,7 @@ public class GameWorld extends JPanel implements Runnable {
                 (GameConstants.GAME_SCREEN_WIDTH - this.minimap.getScaledWidth()),
                 (GameConstants.GAME_SCREEN_HEIGHT - ((this.minimap.getScaledHeight() / 2 + 12))),
                 this.minimap.getScaledWidth(),
-                ResourceHandler.getImage(ResourceConstants.IMAGES_HUD_2)
+                ResourceLoader.getImage(ResourceConstants.IMAGES_HUD_2)
         );
     }
 

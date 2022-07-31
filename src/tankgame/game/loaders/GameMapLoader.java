@@ -1,6 +1,9 @@
-package tankgame.game;
+package tankgame.game.loaders;
 
 import tankgame.constants.GameObjectID;
+import tankgame.game.GameObject;
+import tankgame.game.GameObjectFactory;
+import tankgame.game.GameWorld;
 import tankgame.game.moveableObjects.MoveableObject;
 import tankgame.game.stationaryObjects.StationaryObject;
 
@@ -8,19 +11,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
-public class GameMap {
+public class GameMapLoader {
 
-    private static GameMap instance;
+    private static GameMapLoader instance;
     private static final ArrayList<int[]> emptySpaces = new ArrayList<>();
 
-    private GameMap() {}
+    private GameMapLoader() {}
 
-    public static GameMap getInstance() {
+    public static GameMapLoader getInstance() {
         if(instance == null)
-            instance = new GameMap();
+            instance = new GameMapLoader();
         return instance;
     }
 

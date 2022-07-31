@@ -1,4 +1,4 @@
-package tankgame;
+package tankgame.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

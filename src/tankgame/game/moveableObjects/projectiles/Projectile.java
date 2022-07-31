@@ -2,7 +2,7 @@ package tankgame.game.moveableObjects.projectiles;
 
 import tankgame.constants.GameConstants;
 import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
+import tankgame.game.loaders.ResourceLoader;
 import tankgame.game.Collidable;
 import tankgame.game.moveableObjects.MoveableObject;
 import tankgame.game.moveableObjects.tanks.Tank;
@@ -33,8 +33,8 @@ public abstract class Projectile extends MoveableObject {
     }
 
     private void checkBorder() {
-        int limitX = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth();
-        int limitY = ResourceHandler.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
+        int limitX = ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth();
+        int limitY = ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight();
         if(x >= GameConstants.WORLD_WIDTH - limitX || x < limitX || y < limitY || y >= GameConstants.WORLD_HEIGHT - limitY) {
             this.isDestroyed = true;
             this.playSound();

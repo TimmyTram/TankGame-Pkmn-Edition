@@ -1,8 +1,7 @@
-package tankgame.game;
+package tankgame.game.loaders;
 
 import tankgame.constants.GameConstants;
 import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,9 +23,9 @@ public class BackgroundLoader {
         return instance;
     }
     public void initializeBackground() {
-        backgroundImage = ResourceHandler.getImage(ResourceConstants.IMAGES_FLOOR_TILE);
-        bgWidth = ResourceHandler.getImage(ResourceConstants.IMAGES_FLOOR_TILE).getWidth();
-        bgHeight = ResourceHandler.getImage(ResourceConstants.IMAGES_FLOOR_TILE).getHeight();
+        backgroundImage = ResourceLoader.getImage(ResourceConstants.IMAGES_FLOOR_TILE);
+        bgWidth = ResourceLoader.getImage(ResourceConstants.IMAGES_FLOOR_TILE).getWidth();
+        bgHeight = ResourceLoader.getImage(ResourceConstants.IMAGES_FLOOR_TILE).getHeight();
         maxRowTile = GameConstants.WORLD_WIDTH / bgWidth;
         maxColumnTile = GameConstants.WORLD_HEIGHT / bgHeight;
     }
