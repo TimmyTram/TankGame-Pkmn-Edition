@@ -2,8 +2,6 @@ package tankgame.menus;
 
 import tankgame.Launcher;
 import tankgame.constants.GameConstants;
-import tankgame.constants.ResourceConstants;
-import tankgame.game.GameWorld;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,19 +10,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MapMenuPanel extends JPanel {
+public class HelpMenuPanel extends JPanel {
 
     private BufferedImage menuBackground;
-    private GameWorld gamePanel;
-    private JButton map1;
-    private JButton map2;
-    private JButton map3;
     private JButton mainMenu;
+    private JButton viewPowerUps;
+    private JButton viewKeyBinds;
     private Launcher lf;
 
-    public MapMenuPanel(Launcher lf, GameWorld gamePanel) {
+    public HelpMenuPanel(Launcher lf) {
         this.lf = lf;
-        this.gamePanel = gamePanel;
         try {
             menuBackground = ImageIO.read(
                     Objects.requireNonNull(this.getClass().getClassLoader().getResource("menu/map_selection.png"),
@@ -38,9 +33,25 @@ public class MapMenuPanel extends JPanel {
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
-        map1 = createMapButtons(ResourceConstants.MAP_2FORT, 175, 40, 175, 40);
-        map2 = createMapButtons(ResourceConstants.MAP_PILLAR, 175, 90, 175, 40);
-        map3 = createMapButtons(ResourceConstants.MAP_TUNNELS, 175, 140, 175, 40);
+        viewKeyBinds = new JButton("KEYBINDS");
+        viewKeyBinds.setFont(new Font("Courier New", Font.BOLD, 24));
+        viewKeyBinds.setBounds(175, 40, 175, 40);
+        viewKeyBinds.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        viewKeyBinds.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
+        viewKeyBinds.setFocusPainted(false);
+        viewKeyBinds.addActionListener((actionEvent -> {
+            this.lf.setFrame("keybind");
+        }));
+
+        viewPowerUps = new JButton("POWER UPS");
+        viewPowerUps.setFont(new Font("Courier New", Font.BOLD, 24));
+        viewPowerUps.setBounds(175, 90, 175, 40);
+        viewPowerUps.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        viewPowerUps.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
+        viewPowerUps.setFocusPainted(false);
+        viewPowerUps.addActionListener((actionEvent -> {
+            this.lf.setFrame("powerups");
+        }));
 
         mainMenu = new JButton("BACK");
         mainMenu.setFont(new Font("Courier New", Font.BOLD, 24));
@@ -52,28 +63,9 @@ public class MapMenuPanel extends JPanel {
             this.lf.setFrame("start");
         }));
 
-        this.add(map1);
-        this.add(map2);
-        this.add(map3);
+        this.add(viewKeyBinds);
+        this.add(viewPowerUps);
         this.add(mainMenu);
-    }
-
-    private String truncateMapName(String map) {
-        return map.substring(0, map.indexOf("."));
-    }
-
-    private JButton createMapButtons(String map, int x, int y, int width, int height) {
-        JButton result =  new JButton(this.truncateMapName(map));
-        result.setFont(new Font("Courier New", Font.BOLD, 24));
-        result.setBounds(x, y, width, height);
-        result.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
-        result.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
-        result.setFocusPainted(false);
-        result.addActionListener((actionEvent -> {
-            this.gamePanel.selectMap(map);
-            this.lf.setFrame("game");
-        }));
-        return result;
     }
 
     @Override

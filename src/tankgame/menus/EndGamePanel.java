@@ -41,8 +41,8 @@ public class EndGamePanel extends JPanel {
         restart = new JButton("Restart");
         restart.setFont(new Font("Courier New", Font.BOLD, 24));
         restart.setBounds(175, 350, 175, 50);
-        restart.setBackground(Color.black);
-        restart.setForeground(Color.red);
+        restart.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        restart.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
         restart.setFocusPainted(false);
         restart.addActionListener((actionEvent -> {
             this.lf.setFrame("game");
@@ -51,8 +51,8 @@ public class EndGamePanel extends JPanel {
         mainMenu = new JButton("Main Menu");
         mainMenu.setFont(new Font("Courier New", Font.BOLD, 24));
         mainMenu.setBounds(175, 400, 175, 50);
-        mainMenu.setBackground(Color.black);
-        mainMenu.setForeground(Color.red);
+        mainMenu.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        mainMenu.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
         mainMenu.setFocusPainted(false);
         mainMenu.addActionListener((actionEvent -> {
             this.lf.setFrame("start");
@@ -62,8 +62,8 @@ public class EndGamePanel extends JPanel {
         exit = new JButton("Exit");
         exit.setFont(new Font("Courier New", Font.BOLD, 24));
         exit.setBounds(175, 450, 175, 50);
-        exit.setBackground(Color.black);
-        exit.setForeground(Color.red);
+        exit.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        exit.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
         exit.setFocusPainted(false);
         exit.addActionListener((actionEvent -> {
             this.lf.closeGame();
