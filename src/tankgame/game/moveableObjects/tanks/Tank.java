@@ -42,6 +42,8 @@ public class Tank extends MoveableObject {
     private ArrayList<int[]> validSpawnLocations;
     private Animation animation;
     private String animationType;
+    private BufferedImage bulletImage;
+    private Sound bulletSound;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, int playerID, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
@@ -50,6 +52,7 @@ public class Tank extends MoveableObject {
         this.gw = gw;
         this.animation = this.initAnimation();
         this.animation.start();
+        this.initBullet();
     }
 
     private Animation initAnimation() {
@@ -59,6 +62,16 @@ public class Tank extends MoveableObject {
         }
         this.animationType = "POKEMON";
         return new Animation(this.x, this.y, ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
+    }
+
+    private void initBullet() {
+        if(this.playerID == 1) {
+            this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_TRAINER);
+            this.bulletSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_TRAINER));
+        } else if(this.playerID == 2) {
+            this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_POKEMON);
+            this.bulletSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_POKEMON));
+        }
     }
 
     public void setX(float x){ this.x = x; }
@@ -198,11 +211,11 @@ public class Tank extends MoveableObject {
                 0,
                 this.angle,
                 4,
-                ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_1),
+                this.bulletImage,
                 this
         );
         gw.addToMovableGameObjectCollections(bullet);
-        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_1))).playSound();
+        this.bulletSound.playSound();
     }
 
     private void checkAlive() {

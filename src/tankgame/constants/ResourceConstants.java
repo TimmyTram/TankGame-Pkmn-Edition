@@ -14,9 +14,9 @@ public class ResourceConstants {
     public static final String IMAGES_MENU_TITLE = "title.png";
     public static final String IMAGES_TANK_ARROW = "arrow.png";
 
-    public static final String IMAGES_BULLET_1 = "pokeball.png";
+    public static final String IMAGES_BULLET_TRAINER = "pokeball.png";
 
-    //public static String IMAGES_BULLET_2 = ""; <-- Will add pokemon attack
+    public static String IMAGES_BULLET_POKEMON = "rockproj.png";
 
     public static final String IMAGES_BREAKABLE_WALL = "breakableRock.png";
 
@@ -36,11 +36,11 @@ public class ResourceConstants {
      * -------------- SOUND RESOURCE CONSTANTS ----------------
      */
 
-    public static final String SOUND_BULLET_1 = "throw_pokeball.wav";
+    public static final String SOUND_BULLET_TRAINER = "throw_pokeball.wav";
+    public static final String SOUND_BULLET_POKEMON = "throw_rock_proj.wav";
+    public static final String SOUND_BULLET_COLLIDE_TRAINER = "collide_pokeball.wav";
 
-    public static final String SOUND_BULLET_COLLIDE_1 = "collide_pokeball.wav";
-
-    //public static final String SOUND_BULLET_COLLIDE_2 = ""; <-- Will add pokemon attack sound
+    public static final String SOUND_BULLET_COLLIDE_POKEMON = "collide_rock_proj.wav";
 
     public static final String SOUND_BARRAGE = "barrage.wav";
 

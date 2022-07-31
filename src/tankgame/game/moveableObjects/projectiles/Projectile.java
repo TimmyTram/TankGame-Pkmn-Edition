@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage;
 
 public abstract class Projectile extends MoveableObject {
 
-    private final Tank ownership;
-    private boolean isDestroyed = false;
+    protected final Tank ownership;
+    protected boolean isDestroyed = false;
 
     public Projectile(float x, float y, float vx, float vy, float angle, float R, BufferedImage img, Tank ownership) {
         super(x, y, vx, vy, angle, R, img);

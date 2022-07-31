@@ -18,8 +18,8 @@ public abstract class Wall extends StationaryObject implements Collidable {
     public void drawImage(Graphics g) {
         g.drawImage(super.img, (int) x, (int) y, null);
 
-        g.setColor(Color.red);
-        g.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+//        g.setColor(Color.red);
+//        g.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
     }
 
     @Override

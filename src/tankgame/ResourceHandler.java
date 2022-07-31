@@ -45,7 +45,8 @@ public class ResourceHandler {
 
         public static void initImages() {
             try {
-                ResourceHandler.images.put(ResourceConstants.IMAGES_BULLET_1, readImg("bullet/" + ResourceConstants.IMAGES_BULLET_1));
+                ResourceHandler.images.put(ResourceConstants.IMAGES_BULLET_TRAINER, readImg("bullet/" + ResourceConstants.IMAGES_BULLET_TRAINER));
+                ResourceHandler.images.put(ResourceConstants.IMAGES_BULLET_POKEMON, readImg("bullet/" + ResourceConstants.IMAGES_BULLET_POKEMON));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_FLOOR_TILE, readImg("floor/" + ResourceConstants.IMAGES_FLOOR_TILE));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_UNBREAKABLE_WALL, readImg("walls/" + ResourceConstants.IMAGES_UNBREAKABLE_WALL));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_BREAKABLE_WALL, readImg("walls/" + ResourceConstants.IMAGES_BREAKABLE_WALL));
@@ -68,15 +69,25 @@ public class ResourceHandler {
                 AudioInputStream as;
                 Clip clip;
 
-                as = readAudio("sounds/" + ResourceConstants.SOUND_BULLET_1);
+                as = readAudio("sounds/" + ResourceConstants.SOUND_BULLET_TRAINER);
                 clip = AudioSystem.getClip();
                 clip.open(as);
-                ResourceHandler.sounds.put(ResourceConstants.SOUND_BULLET_1, clip);
+                ResourceHandler.sounds.put(ResourceConstants.SOUND_BULLET_TRAINER, clip);
 
-                as = readAudio("sounds/" + ResourceConstants.SOUND_BULLET_COLLIDE_1);
+                as = readAudio("sounds/" + ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER);
                 clip = AudioSystem.getClip();
                 clip.open(as);
-                ResourceHandler.sounds.put(ResourceConstants.SOUND_BULLET_COLLIDE_1, clip);
+                ResourceHandler.sounds.put(ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.SOUND_BULLET_POKEMON);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.SOUND_BULLET_POKEMON, clip);
+
+                as = readAudio("sounds/" + ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON);
+                clip = AudioSystem.getClip();
+                clip.open(as);
+                ResourceHandler.sounds.put(ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON, clip);
 
                 as = readAudio("sounds/" + ResourceConstants.SOUND_BARRAGE);
                 clip = AudioSystem.getClip();

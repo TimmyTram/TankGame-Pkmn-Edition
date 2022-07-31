@@ -17,7 +17,11 @@ public class Bullet extends Projectile {
 
     @Override
     public void playSound() {
-        (new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_1))).playSound();
+        if(this.ownership.getPlayerID() == 1) {
+            new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER)).playSound();
+        } else if(this.ownership.getPlayerID() == 2) {
+            new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON)).playSound();
+        }
     }
 
     @Override
@@ -27,7 +31,7 @@ public class Bullet extends Projectile {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, (int) x, (int) y, null);
 
-        g2d.setColor(Color.yellow);
-        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+//        g2d.setColor(Color.yellow);
+//        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
     }
 }
