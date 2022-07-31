@@ -1,14 +1,9 @@
 package tankgame.menus;
 
 import tankgame.Launcher;
-import tankgame.constants.GameConstants;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class CheatCodePanel extends MenuPanel {
     private JButton help;
@@ -17,7 +12,7 @@ public class CheatCodePanel extends MenuPanel {
 
 
     public CheatCodePanel(Launcher lf) {
-        super(lf, "map_selection.png");
+        super(lf, "menu.png");
 
         String[] labels = {"CHEAT CODES", "RENDER HITBOXES", "ONE SHOT ONE KILL"};
         for(int i = 0; i < labels.length; i++) {

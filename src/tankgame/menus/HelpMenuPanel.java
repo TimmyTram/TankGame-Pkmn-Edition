@@ -12,7 +12,7 @@ public class HelpMenuPanel extends MenuPanel {
     private JButton viewCheatCodes;
 
     public HelpMenuPanel(Launcher lf) {
-        super(lf, "map_selection.png");
+        super(lf, "menu.png");
         viewKeyBinds = super.createButton("KEYBIND", 24, 175, 40, 175, 40, "keybind");
         viewPowerUps = super.createButton("POWER UPS", 24, 175, 90, 175, 40, "powerups");
         viewCheatCodes = super.createButton("CHEAT CODES", 20, 175, 140, 175, 40, "cheatCodes");

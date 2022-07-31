@@ -9,14 +9,13 @@ import java.awt.*;
 
 
 public class EndGamePanel extends MenuPanel {
-
     private JButton restart;
     private JButton mainMenu;
     private JButton exit;
     private JLabel winner;
 
     public EndGamePanel(Launcher lf) {
-        super(lf, "map_selection.png");
+        super(lf, "menu.png");
         winner = new JLabel();
         winner.setFont(new Font("Courier New", Font.BOLD, 24));
         winner.setBounds(90, 275, GameConstants.END_MENU_SCREEN_WIDTH, 50);

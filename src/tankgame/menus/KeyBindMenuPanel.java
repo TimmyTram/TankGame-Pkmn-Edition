@@ -9,7 +9,7 @@ public class KeyBindMenuPanel extends MenuPanel {
     private JButton help;
 
     public KeyBindMenuPanel(Launcher lf) {
-        super(lf, "map_selection.png");
+        super(lf, "menu.png");
 
         help = super.createButton("BACK", 24, 175, 450, 175, 40, "help");
 

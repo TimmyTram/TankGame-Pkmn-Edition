@@ -17,7 +17,7 @@ public class MapMenuPanel extends MenuPanel {
     private JButton mainMenu;
 
     public MapMenuPanel(Launcher lf, GameWorld gamePanel) {
-        super(lf, "map_selection.png");
+        super(lf, "menu.png");
         this.gamePanel = gamePanel;
         map1 = createMapButtons(ResourceConstants.MAP_2FORT, 175, 40, 175, 40);
         map2 = createMapButtons(ResourceConstants.MAP_PILLAR, 175, 90, 175, 40);
