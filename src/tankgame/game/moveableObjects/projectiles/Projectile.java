@@ -65,6 +65,10 @@ public abstract class Projectile extends MoveableObject {
             }
             this.playSound();
         }
+        if(obj instanceof Projectile && ((Projectile) obj).getOwnership() != this.ownership) {
+            this.setDestroyed(true);
+            this.playSound();
+        }
     }
 
     @Override
