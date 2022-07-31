@@ -1,5 +1,6 @@
 package tankgame.game.moveableObjects.tanks;
 
+import tankgame.game.GameState;
 import tankgame.util.Animation;
 import tankgame.util.Sound;
 import tankgame.constants.GameConstants;
@@ -357,9 +358,6 @@ public class Tank extends MoveableObject {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
         this.animation.drawImage(g2d);
-
-//        g2d.setColor(Color.magenta);
-//        g2d.drawRect((int)(x) ,(int)(y),this.img.getWidth(), this.img.getHeight());
-
+        super.drawHitbox(g);
     }
 }

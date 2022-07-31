@@ -1,5 +1,6 @@
 package tankgame.game;
 
+import tankgame.util.CheatController;
 import tankgame.util.Sound;
 import tankgame.constants.GameConstants;
 import tankgame.Launcher;
@@ -34,6 +35,7 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t2;
     private TankController tc1;
     private TankController tc2;
+    private CheatController cheatController;
     private Launcher lf;
     private long tick = 0;
     private GameObjectCollections<MoveableObject> moveableObjectGameObjectCollections;
@@ -108,6 +110,7 @@ public class GameWorld extends JPanel implements Runnable {
     public void resetGame() {
         this.tick = 0;
         this.runningState = GameState.RunningState.RUNNING;
+        GameState.hitboxState = GameState.HitboxState.OFF;
         this.moveableObjectGameObjectCollections.clear();
         this.stationaryObjectGameObjectCollections.clear();
         this.collisionlessGameObjectCollections.clear();
@@ -145,6 +148,8 @@ public class GameWorld extends JPanel implements Runnable {
         this.t2.setValidSpawnLocations(this.emptySpaces);
         this.initHUD();
         this.initControllers();
+        cheatController = new CheatController();
+        this.lf.getJf().addKeyListener(cheatController);
     }
 
     @Override

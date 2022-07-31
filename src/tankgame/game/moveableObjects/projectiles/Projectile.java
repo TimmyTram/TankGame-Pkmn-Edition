@@ -56,11 +56,6 @@ public abstract class Projectile extends MoveableObject {
     }
 
     @Override
-    public Rectangle getHitBox() {
-        return this.hitBox.getBounds();
-    }
-
-    @Override
     public void handleCollision(Collidable obj) {
         if(obj instanceof Wall) {
             this.isDestroyed = true;

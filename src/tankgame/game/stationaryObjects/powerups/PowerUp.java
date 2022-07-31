@@ -18,9 +18,7 @@ public abstract class PowerUp extends StationaryObject implements Collidable {
     @Override
     public void drawImage(Graphics g) {
         g.drawImage(super.img, (int) x, (int) y, null);
-
-//        g.setColor(Color.green);
-//        g.drawRect((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
+        super.drawHitbox(g);
     }
 
     @Override
@@ -38,9 +36,7 @@ public abstract class PowerUp extends StationaryObject implements Collidable {
     }
 
     @Override
-    public void handleCollision(Collidable obj) {
-
-    }
+    public void handleCollision(Collidable obj) {}
 
     public abstract void playSound();
 

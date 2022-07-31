@@ -2,7 +2,9 @@ package tankgame.game.moveableObjects;
 
 import tankgame.game.Collidable;
 import tankgame.game.GameObject;
+import tankgame.game.GameState;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class MoveableObject extends GameObject implements Collidable {
@@ -35,4 +37,12 @@ public abstract class MoveableObject extends GameObject implements Collidable {
     public float getVy() {
         return this.vy;
     }
+
+    public void drawHitbox(Graphics g) {
+        if(GameState.hitboxState == GameState.HitboxState.ON) {
+            g.setColor(Color.yellow);
+            g.drawRect((int)(x) ,(int)(y),this.img.getWidth(), this.img.getHeight());
+        }
+    }
+
 }
