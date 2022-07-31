@@ -4,11 +4,16 @@ import tankgame.Launcher;
 import tankgame.constants.GameConstants;
 import tankgame.game.GameState;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
 
 public class EndGamePanel extends MenuPanel {
+    private BufferedImage winPotrait;
     private JButton restart;
     private JButton mainMenu;
     private JButton exit;
@@ -42,5 +47,28 @@ public class EndGamePanel extends MenuPanel {
 
     public void updateWinnerStatus() {
         this.winner.setText("THE WINNER IS PLAYER " + GameState.PLAYER_WINNER + "!");
+        this.updateWinPortrait();
     }
+
+    private void updateWinPortrait() {
+        String relativePath = "potrait/win_" + GameState.PLAYER_WINNER + ".png";
+        try {
+            this.winPotrait = ImageIO.read(
+                    Objects.requireNonNull(this.getClass().getClassLoader().getResource(relativePath),
+                            String.format("Could not find %s", relativePath))
+            );
+        } catch (IOException e) {
+            System.out.println("Error cant read: " + relativePath);
+            e.printStackTrace();
+            System.exit(-3);
+        }
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(this.menuBackground, 0, 0, null);
+        g2.drawImage(this.winPotrait, 165, 10, null);
+    }
+
 }
