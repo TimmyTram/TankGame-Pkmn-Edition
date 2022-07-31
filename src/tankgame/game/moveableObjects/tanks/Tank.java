@@ -43,7 +43,8 @@ public class Tank extends MoveableObject {
     private Animation animation;
     private String animationType;
     private BufferedImage bulletImage;
-    private Sound bulletSound;
+    private Sound bulletSpawnSound;
+    private Sound bulletCollideSound;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, int playerID, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
@@ -65,13 +66,22 @@ public class Tank extends MoveableObject {
     }
 
     private void initBullet() {
-        if(this.playerID == 1) {
-            this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_TRAINER);
-            this.bulletSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_TRAINER));
-        } else if(this.playerID == 2) {
-            this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_POKEMON);
-            this.bulletSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_POKEMON));
+        switch(this.playerID) {
+            case 1 -> {
+                this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_TRAINER);
+                this.bulletSpawnSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_TRAINER));
+                this.bulletCollideSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER));
+            }
+            case 2 -> {
+                this.bulletImage = ResourceHandler.getImage(ResourceConstants.IMAGES_BULLET_POKEMON);
+                this.bulletSpawnSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_POKEMON));
+                this.bulletCollideSound = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON));
+            }
         }
+    }
+
+    public Sound getBulletCollideSound() {
+        return this.bulletCollideSound;
     }
 
     public void setX(float x){ this.x = x; }
@@ -215,7 +225,7 @@ public class Tank extends MoveableObject {
                 this
         );
         gw.addToMovableGameObjectCollections(bullet);
-        this.bulletSound.playSound();
+        this.bulletSpawnSound.playSound();
     }
 
     private void checkAlive() {

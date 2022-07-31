@@ -19,8 +19,8 @@ public abstract class PowerUp extends StationaryObject implements Collidable {
     public void drawImage(Graphics g) {
         g.drawImage(super.img, (int) x, (int) y, null);
 
-        g.setColor(Color.green);
-        g.drawRect((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
+//        g.setColor(Color.green);
+//        g.drawRect((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
     }
 
     @Override

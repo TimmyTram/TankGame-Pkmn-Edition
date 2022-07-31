@@ -1,8 +1,5 @@
 package tankgame.game.moveableObjects.projectiles;
 
-import tankgame.Sound;
-import tankgame.constants.ResourceConstants;
-import tankgame.ResourceHandler;
 import tankgame.game.moveableObjects.tanks.Tank;
 
 import java.awt.*;
@@ -17,11 +14,7 @@ public class Bullet extends Projectile {
 
     @Override
     public void playSound() {
-        if(this.ownership.getPlayerID() == 1) {
-            new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_TRAINER)).playSound();
-        } else if(this.ownership.getPlayerID() == 2) {
-            new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_BULLET_COLLIDE_POKEMON)).playSound();
-        }
+        this.ownership.getBulletCollideSound().playSound();
     }
 
     @Override
