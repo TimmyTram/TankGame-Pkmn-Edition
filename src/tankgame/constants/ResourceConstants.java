@@ -12,11 +12,6 @@ public class ResourceConstants {
     public static final String IMAGES_FLOOR_TILE = "floorTile.png";
 
     public static final String IMAGES_MENU_TITLE = "title.png";
-
-    public static final String IMAGES_TANK_1 = "tank1.png";
-
-    public static final String IMAGES_TANK_2 = "dawn.png";
-
     public static final String IMAGES_TANK_ARROW = "arrow.png";
 
     public static final String IMAGES_BULLET_1 = "pokeball.png";

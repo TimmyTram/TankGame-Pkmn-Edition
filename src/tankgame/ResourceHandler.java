@@ -43,16 +43,8 @@ public class ResourceHandler {
             return gameMaps.size();
         }
 
-        public static String getRandomMap() {
-            int maxChoices = gameMaps.size();
-            int randomSelection = (new Random()).nextInt(maxChoices);
-            return gameMaps.get(randomSelection);
-        }
-
         public static void initImages() {
             try {
-                ResourceHandler.images.put(ResourceConstants.IMAGES_TANK_1, readImg("tanks/" + ResourceConstants.IMAGES_TANK_1));
-                ResourceHandler.images.put(ResourceConstants.IMAGES_TANK_2, readImg("tanks/" + ResourceConstants.IMAGES_TANK_2));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_BULLET_1, readImg("bullet/" + ResourceConstants.IMAGES_BULLET_1));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_FLOOR_TILE, readImg("floor/" + ResourceConstants.IMAGES_FLOOR_TILE));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_UNBREAKABLE_WALL, readImg("walls/" + ResourceConstants.IMAGES_UNBREAKABLE_WALL));
@@ -64,7 +56,6 @@ public class ResourceHandler {
                 ResourceHandler.images.put(ResourceConstants.IMAGES_LIVES, readImg("lives/" + ResourceConstants.IMAGES_LIVES));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_HUD_1, readImg("hud/" + ResourceConstants.IMAGES_HUD_1));
                 ResourceHandler.images.put(ResourceConstants.IMAGES_HUD_2, readImg("hud/" + ResourceConstants.IMAGES_HUD_2));
-
                 ResourceHandler.images.put(ResourceConstants.IMAGES_TANK_ARROW, readImg("tanks/" + ResourceConstants.IMAGES_TANK_ARROW));
             } catch (IOException e) {
                 System.out.println(e);
@@ -122,64 +113,39 @@ public class ResourceHandler {
         public static void initAnimations() {
             try {
                 String basename = "dawn_%d";
-                List<BufferedImage> temp = new ArrayList<>();
-                for(int i = 1; i <= 4; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/trainer/right/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("TRAINER_RIGHT", temp);
-                temp = new ArrayList<>();
-                for(int i = 1; i <= 4; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/trainer/left/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("TRAINER_LEFT", temp);
-                temp = new ArrayList<>();
-                for(int i = 1; i<= 4; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/trainer/up/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("TRAINER_UP", temp);
-                temp = new ArrayList<>();
-                for(int i = 1; i<= 4; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/trainer/down/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("TRAINER_DOWN", temp);
-
+                ResourceHandler.animations.put(
+                        "TRAINER_RIGHT",
+                        readAnimations(4, basename, "animations/trainer/right/", ".png")
+                );
+                ResourceHandler.animations.put(
+                        "TRAINER_LEFT",
+                        readAnimations(4, basename, "animations/trainer/left/", ".png")
+                );
+                ResourceHandler.animations.put(
+                        "TRAINER_UP",
+                        readAnimations(4, basename, "animations/trainer/up/", ".png")
+                );
+                ResourceHandler.animations.put(
+                        "TRAINER_DOWN",
+                        readAnimations(4, basename, "animations/trainer/down/", ".png")
+                );
                 basename = "bidoof_%d";
-                temp = new ArrayList<>();
-                for(int i = 1; i<= 2; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/pokemon/right/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("POKEMON_RIGHT", temp);
-                temp = new ArrayList<>();
-                for(int i = 1; i<= 2; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/pokemon/left/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("POKEMON_LEFT", temp);
-                temp = new ArrayList<>();
-                for(int i = 1; i<= 2; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/pokemon/up/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("POKEMON_UP", temp);
-                temp = new ArrayList<>();
-                for(int i = 1; i<= 2; i++) {
-                    String fname = String.format(basename, i);
-                    String fullPath = "animations/pokemon/down/" + fname + ".png";
-                    temp.add(readImg(fullPath));
-                }
-                ResourceHandler.animations.put("POKEMON_DOWN", temp);
+                ResourceHandler.animations.put(
+                        "POKEMON_RIGHT",
+                        readAnimations(2, basename, "animations/pokemon/right/", ".png")
+                );
+                ResourceHandler.animations.put(
+                        "POKEMON_LEFT",
+                        readAnimations(2, basename, "animations/pokemon/left/", ".png")
+                );
+                ResourceHandler.animations.put(
+                        "POKEMON_UP",
+                        readAnimations(2, basename, "animations/pokemon/up/", ".png")
+                );
+                ResourceHandler.animations.put(
+                        "POKEMON_DOWN",
+                        readAnimations(2, basename, "animations/pokemon/down/", ".png")
+                );
             } catch (IOException e) {
                 System.out.println(e);
                 System.exit(-2);
@@ -203,4 +169,15 @@ public class ResourceHandler {
             return AudioSystem.getAudioInputStream(Objects.requireNonNull(ResourceHandler.class.getClassLoader().getResource(resource),
                     String.format("Could not find %s", resource)));
         }
+
+        private static ArrayList<BufferedImage> readAnimations(int length, String basename, String path, String extension) throws IOException {
+            ArrayList<BufferedImage> result = new ArrayList<>();
+            for(int i = 1; i <= length; i++) {
+                String fname = String.format(basename, i);
+                String fullPath = path + fname + extension;
+                result.add(readImg(fullPath));
+            }
+            return result;
+        }
+
 }
