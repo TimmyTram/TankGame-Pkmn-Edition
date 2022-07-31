@@ -61,9 +61,9 @@ public class GameWorld extends JPanel implements Runnable {
                 System.out.println("Resetting Game . . .");
                 this.resetGame();
             }
-            //Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
-            //Thread musicThread = new Thread(music);
-            //musicThread.start();
+            Sound music = new Sound(ResourceHandler.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
+            Thread musicThread = new Thread(music);
+            musicThread.start();
             while (true) {
                 this.tick++;
                 this.moveableObjectGameObjectCollections.update();
@@ -81,16 +81,16 @@ public class GameWorld extends JPanel implements Runnable {
                     System.out.println("TANK 1 WINS!");
                     GameState.PLAYER_WINNER = 1;
                     this.runningState = this.runningState.nextState();
-                    //music.stopSound();
-                    //musicThread.interrupt();
+                    music.stopSound();
+                    musicThread.interrupt();
                     this.lf.setFrame("end");
                     return;
                 } else if(this.t1.getIsLoser()) {
                     System.out.println("TANK 2 WINS!");
                     GameState.PLAYER_WINNER = 2;
                     this.runningState = this.runningState.nextState();
-                    //music.stopSound();
-                    //musicThread.interrupt();
+                    music.stopSound();
+                    musicThread.interrupt();
                     this.lf.setFrame("end");
                     return;
                 }

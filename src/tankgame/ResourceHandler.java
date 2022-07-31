@@ -150,6 +150,36 @@ public class ResourceHandler {
                     temp.add(readImg(fullPath));
                 }
                 ResourceHandler.animations.put("TRAINER_DOWN", temp);
+
+                basename = "bidoof_%d";
+                temp = new ArrayList<>();
+                for(int i = 1; i<= 2; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/pokemon/right/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("POKEMON_RIGHT", temp);
+                temp = new ArrayList<>();
+                for(int i = 1; i<= 2; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/pokemon/left/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("POKEMON_LEFT", temp);
+                temp = new ArrayList<>();
+                for(int i = 1; i<= 2; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/pokemon/up/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("POKEMON_UP", temp);
+                temp = new ArrayList<>();
+                for(int i = 1; i<= 2; i++) {
+                    String fname = String.format(basename, i);
+                    String fullPath = "animations/pokemon/down/" + fname + ".png";
+                    temp.add(readImg(fullPath));
+                }
+                ResourceHandler.animations.put("POKEMON_DOWN", temp);
             } catch (IOException e) {
                 System.out.println(e);
                 System.exit(-2);
@@ -157,7 +187,6 @@ public class ResourceHandler {
         }
 
         public static void initMaps() {
-            //ResourceHandler.gameMaps.add(ResourceConstants.MAP_DEBUG);
             ResourceHandler.gameMaps.add(ResourceConstants.MAP_2FORT);
             ResourceHandler.gameMaps.add(ResourceConstants.MAP_PILLAR);
             ResourceHandler.gameMaps.add(ResourceConstants.MAP_TUNNELS);

@@ -33,7 +33,7 @@ public class Tank extends MoveableObject {
     private int ticksTillNextShot = 100;
     private final int maxHealthPoints = 100;
     private int currentHealthPoints = 100;
-    private final int damage = 100;
+    private final int damage = 10;
     private int lives = 4;
     private boolean isLoser = false;
     private int playerID;
@@ -41,14 +41,24 @@ public class Tank extends MoveableObject {
     private final GameWorld gw;
     private ArrayList<int[]> validSpawnLocations;
     private Animation animation;
+    private String animationType;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img, int playerID, String name, GameWorld gw) {
         super(x, y, 2, vx, vy, angle, img);
         this.playerID = playerID;
         this.name = name;
         this.gw = gw;
-        this.animation = new Animation(this.x, this.y, ResourceHandler.getAnimation("TRAINER_RIGHT"));
+        this.animation = this.initAnimation();
         this.animation.start();
+    }
+
+    private Animation initAnimation() {
+        if(this.playerID == 1) {
+            this.animationType = "TRAINER";
+            return new Animation(this.x, this.y, ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
+        }
+        this.animationType = "POKEMON";
+        return new Animation(this.x, this.y, ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
     }
 
     public void setX(float x){ this.x = x; }
@@ -144,15 +154,14 @@ public class Tank extends MoveableObject {
 
         // Refer to the UNIT CIRCLE diagram to find the areas of a circle where a player should face.
         if((unitCircleAngle >= 315 && unitCircleAngle <= 360) || (unitCircleAngle <= 45 && unitCircleAngle >= 0)) {
-            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_RIGHT"));
+            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_RIGHT"));
         } else if(unitCircleAngle >= 135 && unitCircleAngle <= 225) {
-            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_LEFT"));
+            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_LEFT"));
         } else if((unitCircleAngle >= 225 && unitCircleAngle <= 315)) {
-            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_DOWN"));
+            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_DOWN"));
         } else if((unitCircleAngle >= 45 && unitCircleAngle <= 135)) {
-            this.animation.setFrames(ResourceHandler.getAnimation("TRAINER_UP"));
+            this.animation.setFrames(ResourceHandler.getAnimation(this.animationType + "_UP"));
         }
-        //System.out.println(this.vx);
     }
 
     private void rotateLeft() {

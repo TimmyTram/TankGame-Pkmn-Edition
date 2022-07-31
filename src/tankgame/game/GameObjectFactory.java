@@ -20,28 +20,28 @@ public class GameObjectFactory {
 
             case GameObjectID.PLAYER_1 -> {
                 return new Tank(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_1).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_1).getHeight(),
+                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getWidth(),
+                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getHeight(),
                         0,
                         0,
                         0,
                         ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW),
                         1,
-                        "Lucas",
+                        "DAWN",
                         gw
                 );
             }
 
             case GameObjectID.PLAYER_2 -> {
                 return new Tank(
-                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_2).getWidth(),
-                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_2).getHeight(),
+                        row * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getWidth(),
+                        col * ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW).getHeight(),
                         0,
                         0,
                         0,
                         ResourceHandler.getImage(ResourceConstants.IMAGES_TANK_ARROW),
                         2,
-                        "Dawn",
+                        "BIDOOF",
                         gw
                 );
             }

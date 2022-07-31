@@ -60,8 +60,6 @@ public class ResourceConstants {
     /*
      * -------------- MAP RESOURCE CONSTANTS ----------------
      */
-
-    //public static final String MAP_DEBUG = "debug.csv";
     public static final String MAP_2FORT = "2fort.csv";
     public static final String MAP_PILLAR = "pillar.csv";
     public static final String MAP_TUNNELS = "tunnels.csv";
