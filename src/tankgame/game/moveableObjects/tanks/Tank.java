@@ -233,7 +233,7 @@ public class Tank extends MoveableObject {
         if(this.currentHealthPoints <= 0 && this.lives > 0) {
             this.lives -= 1;
             this.currentHealthPoints = this.maxHealthPoints;
-            System.out.println(this.name + " LOST A LIFE. LIVES REMAINING: " + this.lives);
+            System.out.println("[TANK]: " + this.name + " LOST A LIFE. LIVES REMAINING: " + this.lives);
             this.randomizeSpawnLocation();
         } else if(this.currentHealthPoints <= 0) {
             this.isLoser = true;
@@ -244,7 +244,7 @@ public class Tank extends MoveableObject {
         int maxChoices = this.validSpawnLocations.size();
         int randomSelection = (new Random()).nextInt(maxChoices);
         int[] location = this.validSpawnLocations.get(randomSelection);
-        System.out.println(this.name + " respawned @: "  + " row: " + (location[0] + 1) + " col: " + (location[1] + 1));
+        System.out.println("[TANK]: " + this.name + " respawned @ row: " + (location[0] + 1) + " col: " + (location[1] + 1));
         this.setPosition(
                 location[1] * ResourceConstants.FLOOR_TILE_DIMENSION,
                 location[0] * ResourceConstants.FLOOR_TILE_DIMENSION

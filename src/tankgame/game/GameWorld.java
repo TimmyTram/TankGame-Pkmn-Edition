@@ -51,7 +51,7 @@ public class GameWorld extends JPanel implements Runnable {
      */
     public GameWorld(Launcher lf) {
         this.lf = lf;
-        System.out.println("Initializing Resources . . .");
+        System.out.println("[Resource Loader]: Initializing Resources . . .");
         ResourceLoader.initImages();
         ResourceLoader.initSounds();
         ResourceLoader.initAnimations();
@@ -62,7 +62,7 @@ public class GameWorld extends JPanel implements Runnable {
     public void run() {
         try {
             if(!this.runningState.getState()) {
-                System.out.println("Resetting Game . . .");
+                System.out.println("[GAME]: Resetting Game . . .");
                 this.resetGame();
             }
             Sound music = new Sound(ResourceLoader.getSound(ResourceConstants.SOUND_MUSIC_DRIFTVEIL_CITY));
@@ -82,7 +82,7 @@ public class GameWorld extends JPanel implements Runnable {
                 Thread.sleep(1000 / 144);
 
                 if(this.t2.getIsLoser()) {
-                    System.out.println("TANK 1 WINS!");
+                    System.out.println("[GAME]: TANK 1 WINS!");
                     GameState.PLAYER_WINNER = 1;
                     this.runningState = this.runningState.nextState();
                     music.stopSound();
@@ -90,7 +90,7 @@ public class GameWorld extends JPanel implements Runnable {
                     this.lf.setFrame("end");
                     return;
                 } else if(this.t1.getIsLoser()) {
-                    System.out.println("TANK 2 WINS!");
+                    System.out.println("[GAME]: TANK 2 WINS!");
                     GameState.PLAYER_WINNER = 2;
                     this.runningState = this.runningState.nextState();
                     music.stopSound();
@@ -130,7 +130,7 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
-        System.out.println("Initializing Game . . .");
+        System.out.println("[GAME]: Initializing Game . . .");
         this.runningState = GameState.RunningState.RUNNING;
         this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
                 GameConstants.WORLD_HEIGHT,
@@ -233,9 +233,9 @@ public class GameWorld extends JPanel implements Runnable {
             int maxChoices = ResourceLoader.getNumberOfMaps();
             int randChoice = (new Random()).nextInt(maxChoices);
             GameMapLoader.getInstance().initializeMap(this, ResourceLoader.getGameMap(randChoice));
-            System.out.println("Loading into " + ResourceLoader.getGameMap(randChoice) + " . . .");
+            System.out.println("[GAME]: Loading into " + ResourceLoader.getGameMap(randChoice) + " . . .");
         } else {
-            System.out.println("Loading into " + this.gameMap + " . . .");
+            System.out.println("[GAME]: Loading into " + this.gameMap + " . . .");
             GameMapLoader.getInstance().initializeMap(this, ResourceLoader.getGameMap(this.gameMap));
         }
     }
