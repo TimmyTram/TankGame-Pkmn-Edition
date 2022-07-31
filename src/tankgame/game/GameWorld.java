@@ -111,6 +111,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.tick = 0;
         this.runningState = GameState.RunningState.RUNNING;
         GameState.hitboxState = GameState.HitboxState.OFF;
+        GameState.oneShotOneKillState = GameState.OneShotOneKillState.OFF;
         this.moveableObjectGameObjectCollections.clear();
         this.stationaryObjectGameObjectCollections.clear();
         this.collisionlessGameObjectCollections.clear();
