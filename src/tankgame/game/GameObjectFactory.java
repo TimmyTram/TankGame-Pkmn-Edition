@@ -46,7 +46,15 @@ public class GameObjectFactory {
                 );
             }
 
-            case GameObjectID.BORDER, GameObjectID.UNBREAKABLE_WALL -> {
+            case GameObjectID.BORDER -> {
+                return new UnbreakableWall(
+                        row * ResourceLoader.getImage(ResourceConstants.IMAGES_BORDER_WALL).getWidth(),
+                        col * ResourceLoader.getImage(ResourceConstants.IMAGES_BORDER_WALL).getHeight(),
+                        ResourceLoader.getImage(ResourceConstants.IMAGES_BORDER_WALL)
+                );
+            }
+
+            case GameObjectID.UNBREAKABLE_WALL -> {
                 return new UnbreakableWall(
                         row * ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getWidth(),
                         col * ResourceLoader.getImage(ResourceConstants.IMAGES_UNBREAKABLE_WALL).getHeight(),
