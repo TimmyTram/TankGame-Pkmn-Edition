@@ -4,6 +4,7 @@ public class GameState {
 
     public static int PLAYER_WINNER;
     public static HitboxState hitboxState = HitboxState.OFF;
+    public static OneShotOneKillState oneShotOneKillState = OneShotOneKillState.OFF;
 
     public enum RunningState {
 
@@ -63,4 +64,36 @@ public class GameState {
         public abstract HitboxState nextState();
         public abstract boolean getState();
     }
+
+    public enum OneShotOneKillState {
+        ON {
+            @Override
+            public OneShotOneKillState nextState() {
+                return OFF;
+            }
+
+            @Override
+            public boolean getState() {
+                return true;
+            }
+        },
+
+        OFF {
+            @Override
+            public OneShotOneKillState nextState() {
+                return ON;
+            }
+
+            @Override
+            public boolean getState() {
+                return false;
+            }
+        };
+
+        public abstract OneShotOneKillState nextState();
+
+        public abstract boolean getState();
+
+    }
+
 }

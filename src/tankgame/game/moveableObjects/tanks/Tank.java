@@ -34,7 +34,7 @@ public class Tank extends MoveableObject {
     private int ticksTillNextShot = 100;
     private final int maxHealthPoints = 100;
     private int currentHealthPoints = 100;
-    private final int damage = 10;
+    private int damage = 10;
     private int lives = 4;
     private boolean isLoser = false;
     private int playerID;
@@ -165,6 +165,7 @@ public class Tank extends MoveableObject {
         this.animation.setY(this.y);
         this.animationHandler();
         tick++;
+        checkOneShotOneKillMode();
         checkAlive();
         checkBorder();
     }
@@ -360,4 +361,15 @@ public class Tank extends MoveableObject {
         this.animation.drawImage(g2d);
         super.drawHitbox(g);
     }
+
+    private void checkOneShotOneKillMode() {
+        if(GameState.oneShotOneKillState == GameState.OneShotOneKillState.ON) {
+            this.damage = 100;
+            this.R = 8;
+        } else if(GameState.oneShotOneKillState == GameState.OneShotOneKillState.OFF) {
+            this.damage = 10;
+            this.R = 4;
+        }
+    }
+
 }

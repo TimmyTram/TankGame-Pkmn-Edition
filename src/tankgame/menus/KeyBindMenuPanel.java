@@ -35,15 +35,7 @@ public class KeyBindMenuPanel extends JPanel {
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
-        help = new JButton("BACK");
-        help.setFont(new Font("Courier New", Font.BOLD, 24));
-        help.setBounds(175, 450, 175, 40);
-        help.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
-        help.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
-        help.setFocusPainted(false);
-        help.addActionListener((actionEvent -> {
-            this.lf.setFrame("help");
-        }));
+        help = createButton("BACK", 24, 175, 450, 175, 40, "help");
 
         String[] labels = {"CONTROL", "FORWARD", "BACKWARD", "ROTATE LEFT", "ROTATE RIGHT", "SHOOT"};
         for(int i = 0; i < labels.length; i++) {
@@ -56,7 +48,7 @@ public class KeyBindMenuPanel extends JPanel {
         }
 
         labels = new String[]{"PLAYER 2", "↑", "↓", "↓", "→", "ENTER"};
-        for(int i = 0; i < labels.length; i++) { // Yes, this is not the best but its GUI Code, I hate making it scalable.
+        for(int i = 0; i < labels.length; i++) { // Yes, this is not the best but its GUI Code, I hate making it scalable for text.
             if(labels[i].equalsIgnoreCase("PLAYER 2") || labels[i].equalsIgnoreCase("ENTER")) {
                 this.add(createLabel(labels[i], 20, STARTING_X + WIDTH * 2, STARTING_Y + (HEIGHT * i), WIDTH, HEIGHT));
             } else {
@@ -80,6 +72,19 @@ public class KeyBindMenuPanel extends JPanel {
         label.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
         label.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
         return label;
+    }
+
+    private JButton createButton(String text, int textSize, int x, int y, int width, int height, String frame) {
+        JButton result = new JButton(text);
+        result.setFont(new Font("Courier New", Font.BOLD, textSize));
+        result.setBounds(x, y, width, height);
+        result.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        result.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
+        result.setFocusPainted(false);
+        result.addActionListener((actionEvent -> {
+            this.lf.setFrame(frame);
+        }));
+        return result;
     }
 
 }

@@ -38,6 +38,10 @@ public class Launcher {
      * power up panel will display what each power up does
      */
     private JPanel powerUpPanel;
+    /**
+     * cheat code panel will display key binds for cheats
+     */
+    private JPanel cheatCodePanel;
     /*
      * game panel is used to show our game to the screen. inside this panel
      * also contains the game loop. This is where out objects are updated and
@@ -78,6 +82,7 @@ public class Launcher {
         this.helpPanel = new HelpMenuPanel(this); // create a new help menu panel
         this.keybindPanel = new KeyBindMenuPanel(this); // create a new key bind menu panel
         this.powerUpPanel = new PowerUpMenuPanel(this); // create a new power up menu panel
+        this.cheatCodePanel = new CheatCodePanel(this); // create new cheat code menu panel
         this.endPanel = new EndGamePanel(this); // create a new end game panel;
         cl = new CardLayout(); // creating a new CardLayout Panel
         this.mainPanel.setLayout(cl); // set the layout of the main panel to our card layout
@@ -87,6 +92,7 @@ public class Launcher {
         this.mainPanel.add(helpPanel, "help"); // add the help panel to the main panel
         this.mainPanel.add(keybindPanel, "keybind"); // add the keybind panel to the main panel
         this.mainPanel.add(powerUpPanel, "powerups"); //add the powerup panel to the main panel
+        this.mainPanel.add(cheatCodePanel, "cheatCodes"); // add the cheatcode panel to the main panel
         this.mainPanel.add(endPanel, "end");    // add the end game panel to the main panel
         this.jf.add(mainPanel); // add the main panel to the JFrame
         this.jf.setResizable(false); //make the JFrame not resizable
@@ -110,7 +116,7 @@ public class Launcher {
                 // not stuck executing the game loop.
                 (new Thread(this.gamePanel)).start();
             }
-            case "help", "keybind", "powerups" ->
+            case "help", "keybind", "powerups", "cheatCodes" ->
                 this.jf.setSize(GameConstants.HELP_MENU_SCREEN_WIDTH, GameConstants.HELP_MENU_SCREEN_HEIGHT);
             case "end" -> {
                 // set the size of the jFrame to the expected size for the end panel

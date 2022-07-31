@@ -10,16 +10,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class HelpMenuPanel extends JPanel {
+public class CheatCodePanel extends JPanel {
 
     private BufferedImage menuBackground;
-    private JButton mainMenu;
-    private JButton viewPowerUps;
-    private JButton viewKeyBinds;
-    private JButton viewCheatCodes;
+    private JButton help;
     private Launcher lf;
+    private static final int STARTING_X = 15;
+    private static final int STARTING_Y = 20;
+    private static final int WIDTH = 225;
+    private static final int HEIGHT = 50;
 
-    public HelpMenuPanel(Launcher lf) {
+
+    public CheatCodePanel(Launcher lf) {
         this.lf = lf;
         try {
             menuBackground = ImageIO.read(
@@ -34,21 +36,34 @@ public class HelpMenuPanel extends JPanel {
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
-        viewKeyBinds = createButton("KEYBIND", 24, 175, 40, 175, 40, "keybind");
-        viewPowerUps = createButton("POWER UPS", 24, 175, 90, 175, 40, "powerups");
-        viewCheatCodes = createButton("CHEAT CODES", 20, 175, 140, 175, 40, "cheatCodes");
-        mainMenu = createButton("BACK", 24, 175, 450, 175, 40, "start");
+        String[] labels = {"CHEAT CODES", "RENDER HITBOXES", "ONE SHOT ONE KILL"};
+        for(int i = 0; i < labels.length; i++) {
+            this.add(createLabel(labels[i], 22, STARTING_X, STARTING_Y + (HEIGHT * i), WIDTH, HEIGHT));
+        }
 
-        this.add(viewKeyBinds);
-        this.add(viewPowerUps);
-        this.add(viewCheatCodes);
-        this.add(mainMenu);
+        labels = new String[]{"KEY BINDS", "F1", "F2"};
+        for(int i = 0; i < labels.length; i++) {
+            this.add(createLabel(labels[i], 22, STARTING_X + WIDTH, STARTING_Y + (HEIGHT * i), WIDTH, HEIGHT));
+        }
+
+        help = createButton("BACK", 24, 175, 450, 175, 40, "help");
+        this.add(help);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(this.menuBackground, 0, 0, null);
+    }
+
+    private JLabel createLabel(String text, int textSize, int x, int y, int width, int height) {
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(new Font("Courier New", Font.BOLD, textSize));
+        label.setBounds(x, y, width, height);
+        label.setOpaque(true);
+        label.setBackground(Color.decode(GameConstants.BUTTON_BACKGROUND_COLOR));
+        label.setForeground(Color.decode(GameConstants.BUTTON_FOREGROUND_COLOR));
+        return label;
     }
 
     private JButton createButton(String text, int textSize, int x, int y, int width, int height, String frame) {
