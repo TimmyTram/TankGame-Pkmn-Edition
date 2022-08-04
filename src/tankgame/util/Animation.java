@@ -56,9 +56,6 @@ public class Animation extends Thread {
         try {
             while(this.isRunning) {
                 this.currentFrame = (this.currentFrame + 1) % this.frames.size();
-//                if(this.currentFrame == this.frames.size() - 1) {
-//                    this.isRunning = false;
-//                }
                 Thread.sleep(currentDelay);
             }
         } catch (InterruptedException e) {

@@ -28,10 +28,24 @@ The jar folder is to be used to store the built jar of your term-project.
 ## IDE used: IntelliJ IDEA Ultimate Edition 2022.1.2
 
 ## Steps to Import project into IDE:
+1. git clone this repo
+2. Open IntelliJ IDEA and Select the open button the top right
+3. Select csc413-tankgame-TimmyTram
 
 ## Steps to Build your Project:
+1. Open the Project Structure (Ctrl+Alt+Shift+S)
+2. In SDK and Language Version select any version of Java that is at least above Java 16
+3. Then on the side where it says Project Settings select modules and make select the resources folder and mark it as Resources
+4. Then build the project using the Build Button at the top of IDE (CTRL+F9)
+5. To build an Artifact / JAR go back to the Project Structure window and select Artifacts and on the + button select JAR --> Module with dependencies
+6. The Module is csc413-tankgame-TimmyTram and the Main Class is Launcher.java
+7. Build the JAR by pressing the Build Button and select Build Artifacts
+8. The newly built JAR will be located in csc413-tankgame-TimmyTram/out/artifacts/csc413-tankgame-TimmyTram.jar
  
 ## Steps to run your Project:
+1. Run the JAR by either double clicking the JAR
+2. OR typing into a console located in the same directory as the jar --> java -jar csc413-tankgame-TimmyTram.jar
+3. Run via IDE by hitting the play button or right clicking Launcher.java and select RUN
 
 ## Controls to play your Game:
 

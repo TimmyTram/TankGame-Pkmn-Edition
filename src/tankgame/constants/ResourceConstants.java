@@ -12,7 +12,7 @@ public class ResourceConstants {
     public static final String IMAGES_MENU_TITLE = "title.png";
     public static final String IMAGES_TANK_ARROW = "arrow.png";
     public static final String IMAGES_BULLET_TRAINER = "pokeball.png";
-    public static String IMAGES_BULLET_POKEMON = "rockproj.png";
+    public static final String IMAGES_BULLET_POKEMON = "rockproj.png";
     public static final String IMAGES_BREAKABLE_WALL = "breakableRock.png";
     public static final String IMAGES_UNBREAKABLE_WALL = "unbreakableRock.png";
     public static final String IMAGES_BORDER_WALL = "tree.png";
